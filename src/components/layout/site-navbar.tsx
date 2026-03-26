@@ -88,7 +88,7 @@ export function SiteNavbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <PushNotificationButton />
+          <PushNotificationButton className={isHomePage ? homeControlClass : undefined} />
           <ThemeToggle className={isHomePage ? homeControlClass : undefined} />
           <Sheet>
             <SheetTrigger

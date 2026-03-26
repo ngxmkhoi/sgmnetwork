@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Bell, BellOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
 
@@ -17,7 +18,7 @@ function urlBase64ToUint8Array(base64String: string) {
   return output;
 }
 
-export function PushNotificationButton() {
+export function PushNotificationButton({ className }: { className?: string }) {
   const [supported, setSupported] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,14 +65,17 @@ export function PushNotificationButton() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggle}
       disabled={loading}
       title={subscribed ? "Tắt thông báo" : "Bật thông báo"}
-      className="h-9 w-9 rounded-xl border-border bg-background"
+      className={cn("theme-control-surface rounded-xl transition hover:brightness-105", className)}
     >
-      {subscribed ? <Bell className="size-4 text-primary" /> : <BellOff className="size-4 text-muted-foreground" />}
+      {subscribed
+        ? <Bell className="size-4 text-primary drop-shadow-[0_0_10px_rgba(0,82,255,0.22)] dark:text-amber-300 dark:drop-shadow-[0_0_10px_rgba(252,211,77,0.38)]" />
+        : <BellOff className="size-4 text-muted-foreground" />
+      }
     </Button>
   );
 }
