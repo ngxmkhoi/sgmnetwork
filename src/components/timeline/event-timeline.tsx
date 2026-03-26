@@ -257,7 +257,7 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
                           width: span * dayWidth,
                         }}
                       >
-                        <div className="theme-control-surface relative h-10 w-16 shrink-0 overflow-hidden rounded-sm p-0.5">
+                        <div className="theme-control-surface relative h-10 w-16 shrink-0 overflow-hidden rounded-[3px] p-0.5">
                           {(event.thumbnail_url?.trim() || event.image_url?.trim()) && !imgErrors[event.id] ? (
                             <Image
                               src={event.thumbnail_url?.trim() || event.image_url}
@@ -268,7 +268,7 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
                               onError={() => setImgErrors((prev) => ({ ...prev, [event.id]: true }))}
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center border border-dashed border-border rounded-sm">
+                            <div className="flex h-full w-full items-center justify-center border border-dashed border-border rounded-[3px]">
                               <span className="text-[7px] font-bold uppercase text-muted-foreground/50 text-center leading-tight px-0.5">ĐANG CẬP NHẬT</span>
                             </div>
                           )}

@@ -1,0 +1,73 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Bell, BellOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
+
+function urlBase64ToUint8Array(base64String: string) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map((c) => c.charCodeAt(0)));
+}
+
+export function PushNotificationButton() {
+  const [supported, setSupported] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator && "PushManager" in window && VAPID_PUBLIC_KEY) {
+      setSupported(true);
+      navigator.serviceWorker.register("/sw.js").then(async (reg) => {
+        const sub = await reg.pushManager.getSubscription();
+        setSubscribed(!!sub);
+      }).catch(() => null);
+    }
+  }, []);
+
+  const toggle = async () => {
+    if (!supported) return;
+    setLoading(true);
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      if (subscribed) {
+        const sub = await reg.pushManager.getSubscription();
+        await sub?.unsubscribe();
+        setSubscribed(false);
+      } else {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") return;
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+        });
+        await fetch("/api/push/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sub),
+        });
+        setSubscribed(true);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!supported) return null;
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggle}
+      disabled={loading}
+      title={subscribed ? "Tắt thông báo" : "Bật thông báo"}
+      className="h-9 w-9 rounded-xl border-border bg-background"
+    >
+      {subscribed ? <Bell className="size-4 text-primary" /> : <BellOff className="size-4 text-muted-foreground" />}
+    </Button>
+  );
+}

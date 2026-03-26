@@ -52,14 +52,14 @@ export function EventModal({ event, open, onOpenChange }: EventModalProps) {
               <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
                 <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground">
                   BẮT ĐẦU:{" "}
-                  <span className="font-normal text-muted-foreground">
+                  <span className="font-bold text-emerald-500">
                     {formatVietnamDate(event.start_date)}
                   </span>
                 </p>
                 <span className="text-muted-foreground/40">→</span>
                 <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground">
                   KẾT THÚC:{" "}
-                  <span className="font-normal text-muted-foreground">
+                  <span className="font-bold text-rose-500">
                     {formatVietnamDate(event.end_date)}
                   </span>
                 </p>

@@ -6,6 +6,7 @@ import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/common/theme-toggle";
+import { PushNotificationButton } from "@/components/common/push-notification-button";
 import {
   Sheet,
   SheetContent,
@@ -42,48 +43,52 @@ export function SiteNavbar() {
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-6">
         <Link href="/" aria-label={siteConfig.shortName} className="inline-flex items-center">
           {/* Light mode logo */}
-          <Image
-            src={ICON_LIGHT}
-            alt={siteConfig.shortName}
-            width={36}
-            height={36}
-            className="block object-contain drop-shadow-[0_8px_22px_rgba(15,23,42,0.18)] dark:hidden"
-          />
-          {/* Dark mode logo */}
-          <Image
-            src={ICON_DARK}
-            alt={siteConfig.shortName}
-            width={36}
-            height={36}
-            className="hidden object-contain drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] dark:block"
-          />
+          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+            <Image
+              src={ICON_LIGHT}
+              alt={siteConfig.shortName}
+              width={36}
+              height={36}
+              className="block object-contain drop-shadow-[0_8px_22px_rgba(15,23,42,0.18)] dark:hidden"
+            />
+            <Image
+              src={ICON_DARK}
+              alt={siteConfig.shortName}
+              width={36}
+              height={36}
+              className="hidden object-contain drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] dark:block"
+            />
+          </motion.div>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => {
             const active = pathname === item.href;
             return (
-              <Link
+              <motion.div
                 key={item.href}
-                href={item.href}
-                className={cn(
-                  navLinkClass,
-                  active && activeNavClass,
-                )}
+                whileHover={{ y: -1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                {item.title}
-                {active ? (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute -bottom-[1px] left-0 h-[2px] w-full rounded-full bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] dark:from-amber-400 dark:to-orange-500"
-                  />
-                ) : null}
-              </Link>
+                <Link
+                  href={item.href}
+                  className={cn(navLinkClass, active && activeNavClass)}
+                >
+                  {item.title}
+                  {active ? (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute -bottom-[1px] left-0 h-[2px] w-full rounded-full bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] dark:from-amber-400 dark:to-orange-500"
+                    />
+                  ) : null}
+                </Link>
+              </motion.div>
             );
           })}
         </nav>
 
         <div className="flex items-center gap-2">
+          <PushNotificationButton />
           <ThemeToggle className={isHomePage ? homeControlClass : undefined} />
           <Sheet>
             <SheetTrigger
@@ -106,18 +111,24 @@ export function SiteNavbar() {
                 </SheetDescription>
               </SheetHeader>
               <div className="mt-8 space-y-2">
-                {navItems.map((item) => (
-                  <Link
+                {navItems.map((item, index) => (
+                  <motion.div
                     key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "block rounded-xl border border-transparent px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground transition hover:border-primary/20 hover:bg-primary/10 hover:text-primary dark:text-white dark:hover:text-amber-300",
-                      pathname === item.href &&
-                        "border-primary/25 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/12 dark:text-amber-300",
-                    )}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.06, duration: 0.3, ease: "easeOut" }}
                   >
-                    {item.title}
-                  </Link>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "block rounded-xl border border-transparent px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground transition hover:border-primary/20 hover:bg-primary/10 hover:text-primary dark:text-white dark:hover:text-amber-300",
+                        pathname === item.href &&
+                          "border-primary/25 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/12 dark:text-amber-300",
+                      )}
+                    >
+                      {item.title}
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             </SheetContent>
