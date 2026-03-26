@@ -70,6 +70,7 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
 
   const { data: events = initialEvents, isLoading } = useEventsQuery({
     search,
@@ -256,22 +257,27 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
                           width: span * dayWidth,
                         }}
                       >
-                        <div className="theme-control-surface relative h-10 w-10 shrink-0 overflow-hidden rounded-lg p-0.5">
-                          <Image
-                            src={event.thumbnail_url ?? event.image_url}
-                            alt={event.title}
-                            fill
-                            sizes="40px"
-                            className="object-contain"
-                          />
+                        <div className="theme-control-surface relative h-10 w-16 shrink-0 overflow-hidden rounded-sm p-0.5">
+                          {(event.thumbnail_url?.trim() || event.image_url?.trim()) && !imgErrors[event.id] ? (
+                            <Image
+                              src={event.thumbnail_url?.trim() || event.image_url}
+                              alt={event.title}
+                              fill
+                              sizes="64px"
+                              className="object-cover"
+                              onError={() => setImgErrors((prev) => ({ ...prev, [event.id]: true }))}
+                            />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center border border-dashed border-border rounded-sm">
+                              <span className="text-[7px] font-bold uppercase text-muted-foreground/50 text-center leading-tight px-0.5">ĐANG CẬP NHẬT</span>
+                            </div>
+                          )}
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-foreground">{event.title}</p>
-                          {showMeta ? (
-                            <p className="text-xs text-foreground/85">
-                              {formatVietnamDate(event.start_date)} - {formatVietnamDate(event.end_date)}
-                            </p>
-                          ) : null}
+                          <p className="text-xs text-foreground/85">
+                            {formatVietnamDate(event.start_date)}{showMeta ? ` - ${formatVietnamDate(event.end_date)}` : ""}
+                          </p>
                         </div>
                       </button>
                     </div>

@@ -31,13 +31,22 @@ export function FeaturedEvents({ events }: FeaturedEventsProps) {
         description="THEO DÕI NHANH CÁC HOẠT ĐỘNG ĐANG CHẠY VÀ SẮP MỞ TRONG CỘNG ĐỒNG."
       />
 
+      {selectedEvent && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+          onClick={() => setSelectedEvent(null)}
+        />
+      )}
+
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {events.slice(0, 3).map((event, index) => (
           <Reveal key={event.id} delay={index * 0.08}>
             <article
               className={cn(
-                "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all dark:bg-card",
+                "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all duration-300 dark:bg-card",
                 featuredStatusCardClassMap[event.status],
+                selectedEvent && selectedEvent.id !== event.id && "opacity-40 scale-[0.98]",
+                selectedEvent && selectedEvent.id === event.id && "relative z-40",
               )}
               onClick={() => setSelectedEvent(event)}
             >

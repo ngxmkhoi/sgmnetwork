@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { DatePickerInput } from "@/components/common/date-picker-input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
 import type { NewsItem } from "@/lib/types/content";
+import { cn } from "@/lib/utils";
 import {
   parseVietnamDateInputEnd,
   parseVietnamDateInputStart,
@@ -110,6 +111,7 @@ export function NewsList({ news: initialNews }: NewsListProps) {
         <div className="space-y-1">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">ĐẾN NGÀY</p>
           <DatePickerInput value={toDate} onChange={setToDate} />
+        </div>
         </div>
       </div>
 

@@ -50,9 +50,8 @@ export function MediaFrame({
         <IKImage
           src={normalizedSrc}
           alt={alt}
-          loading="lazy"
           sizes={sizes}
-          className={cn("absolute inset-0 h-full w-full object-cover", imageClassName)}
+          className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-300", imageClassName)}
           onError={() => setImageError(true)}
         />
       ) : (
@@ -61,7 +60,7 @@ export function MediaFrame({
           alt={alt}
           fill
           sizes={sizes}
-          className={cn("object-cover", imageClassName)}
+          className={cn("object-cover transition-opacity duration-300", imageClassName)}
           referrerPolicy="no-referrer"
           onError={() => setImageError(true)}
         />

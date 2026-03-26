@@ -74,6 +74,13 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
 
   return (
     <>
+      {/* Overlay mờ khi có card được chọn */}
+      {selectedEvent && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+          onClick={() => setSelectedEvent(null)}
+        />
+      )}
       <div className="glass-card mb-6 rounded-2xl p-4 md:grid-cols-2 xl:grid-cols-4">
         {/* Mobile toggle */}
         <button
@@ -140,8 +147,10 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
             <article key={event.id}
               onClick={() => setSelectedEvent(event)}
               className={cn(
-                "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all dark:bg-card",
+                "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all duration-300 dark:bg-card",
                 statusCardClassMap[event.status],
+                selectedEvent && selectedEvent.id !== event.id && "opacity-40 scale-[0.98]",
+                selectedEvent && selectedEvent.id === event.id && "relative z-40",
               )}
             >
               <div className="grid-sheen pointer-events-none absolute inset-y-0 left-0 z-20" />

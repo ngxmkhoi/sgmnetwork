@@ -26,9 +26,9 @@ export function EventModal({ event, open, onOpenChange }: EventModalProps) {
           <div className="max-h-[92vh] overflow-y-auto">
 
             {/* Tiêu đề — Lớp 1 */}
-            <div className="px-6 pb-4 pt-6">
+            <div className="px-5 pb-3 pt-4">
               <DialogHeader>
-                <DialogTitle className="text-center font-heading text-xl font-bold uppercase leading-snug tracking-[0.04em] text-foreground">
+                <DialogTitle className="text-center font-heading text-lg font-bold uppercase leading-snug tracking-[0.04em] text-foreground">
                   {event.title}
                 </DialogTitle>
               </DialogHeader>
@@ -48,22 +48,25 @@ export function EventModal({ event, open, onOpenChange }: EventModalProps) {
             </div>
 
             {/* Ngày + Button — Lớp 1 */}
-            <div className="flex flex-col items-center gap-3 px-6 pb-6 pt-5 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground">
-                NGÀY BẮT ĐẦU:{" "}
-                <span className="font-normal text-muted-foreground">
-                  {formatVietnamDate(event.start_date)}
-                </span>
-              </p>
-              <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground">
-                NGÀY KẾT THÚC:{" "}
-                <span className="font-normal text-muted-foreground">
-                  {formatVietnamDate(event.end_date)}
-                </span>
-              </p>
+            <div className="flex flex-col items-center gap-1.5 px-6 pb-4 pt-3 text-center">
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+                <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground">
+                  BẮT ĐẦU:{" "}
+                  <span className="font-normal text-muted-foreground">
+                    {formatVietnamDate(event.start_date)}
+                  </span>
+                </p>
+                <span className="text-muted-foreground/40">→</span>
+                <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground">
+                  KẾT THÚC:{" "}
+                  <span className="font-normal text-muted-foreground">
+                    {formatVietnamDate(event.end_date)}
+                  </span>
+                </p>
+              </div>
 
               {event.link?.trim() ? (
-                <Button asChild className="mt-1 h-10 w-full max-w-xs rounded-[10px]">
+                <Button asChild className="mt-2 h-9 w-full max-w-xs rounded-[10px]">
                   <a href={event.link} target="_blank" rel="noreferrer">
                     TRUY CẬP LIÊN KẾT
                     <ExternalLink className="ml-2 size-4" />
