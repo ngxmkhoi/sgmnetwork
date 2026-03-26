@@ -19,7 +19,7 @@ export function LatestNews({ news }: LatestNewsProps) {
         title="TIN TỨC MỚI NHẤT"
         description="BÀI VIẾT MỚI NHẤT ĐƯỢC CẬP NHẬT THEO CHUYÊN MỤC."
       />
-      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory md:grid md:grid-cols-2 md:overflow-visible xl:grid-cols-3 [&>*]:shrink-0 [&>*]:w-[82vw] [&>*]:snap-center md:[&>*]:w-auto md:[&>*]:snap-align-none">
+      <div className="-mx-4 flex gap-3 overflow-x-auto overflow-y-hidden px-4 pb-2 scrollbar-none snap-x snap-mandatory touch-pan-x md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 xl:grid-cols-3 [&>*]:shrink-0 [&>*]:w-[75vw] [&>*]:snap-center md:[&>*]:w-auto md:[&>*]:snap-align-none">
         {news.slice(0, 3).map((item, index) => (
           <Reveal key={item.id} delay={index * 0.1}>
             <article className="group relative flex flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all dark:border-border dark:bg-card">
