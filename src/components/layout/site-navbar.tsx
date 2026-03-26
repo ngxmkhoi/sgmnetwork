@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import { PushNotificationButton } from "@/components/common/push-notification-button";
@@ -23,6 +24,7 @@ const ICON_DARK  = "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/w2
 
 export function SiteNavbar() {
   const pathname = usePathname();
+  const [sheetOpen, setSheetOpen] = useState(false);
   const isHomePage = pathname === "/";
   const navLinkClass = isHomePage
     ? "relative py-2 text-sm font-semibold uppercase tracking-[0.08em] text-slate-700 transition hover:text-slate-950 dark:text-white dark:hover:text-white/80"
@@ -90,7 +92,7 @@ export function SiteNavbar() {
         <div className="flex items-center gap-2">
           <PushNotificationButton className={isHomePage ? homeControlClass : undefined} />
           <ThemeToggle className={isHomePage ? homeControlClass : undefined} />
-          <Sheet>
+          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger
               className={cn(
                 "inline-flex size-10 items-center justify-center rounded-xl md:hidden",
@@ -120,6 +122,7 @@ export function SiteNavbar() {
                   >
                     <Link
                       href={item.href}
+                      onClick={() => setSheetOpen(false)}
                       className={cn(
                         "block rounded-xl border border-transparent px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground transition hover:border-primary/20 hover:bg-primary/10 hover:text-primary dark:text-white dark:hover:text-amber-300",
                         pathname === item.href &&
