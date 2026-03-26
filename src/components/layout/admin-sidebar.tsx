@@ -1,5 +1,4 @@
-"use client";
-
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,7 +16,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-function AdminSidebarContent() {
+function AdminSidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
@@ -45,6 +44,7 @@ function AdminSidebarContent() {
           <Link
             key={item.href}
             href={item.href}
+            onClick={onNavigate}
             className={cn(
               "block rounded-xl border border-transparent px-3 py-2 text-sm font-medium uppercase tracking-[0.08em] text-muted-foreground transition hover:border-primary/20 hover:bg-primary/10 hover:text-primary dark:hover:text-amber-300",
               pathname === item.href &&
@@ -64,6 +64,8 @@ function AdminSidebarContent() {
 }
 
 export function AdminSidebar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <div className="hidden w-72 shrink-0 self-start md:sticky md:top-6 md:block">
@@ -71,7 +73,7 @@ export function AdminSidebar() {
       </div>
 
       <div className="md:hidden">
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             aria-label="MỞ SIDEBAR QUẢN TRỊ"
             className="theme-control-surface inline-flex size-10 items-center justify-center rounded-xl"
@@ -87,7 +89,7 @@ export function AdminSidebar() {
                 ĐIỀU HƯỚNG NHANH TỚI CÁC KHU VỰC QUẢN TRỊ.
               </SheetDescription>
             </SheetHeader>
-            <AdminSidebarContent />
+            <AdminSidebarContent onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
       </div>
