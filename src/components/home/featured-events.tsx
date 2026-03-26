@@ -38,7 +38,7 @@ export function FeaturedEvents({ events }: FeaturedEventsProps) {
         />
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="flex gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible xl:grid-cols-3 [&>*]:shrink-0 [&>*]:w-[75vw] md:[&>*]:w-auto">
         {events.slice(0, 3).map((event, index) => (
           <Reveal key={event.id} delay={index * 0.08}>
             <article

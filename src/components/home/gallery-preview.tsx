@@ -23,12 +23,12 @@ export function GalleryPreview({ gallery }: GalleryPreviewProps) {
         title="Khoảnh khắc cộng đồng"
         description="Masonry layout tối ưu mobile, hover zoom mượt và dễ mở rộng."
       />
-      <div className="columns-1 gap-4 space-y-4 sm:columns-2 xl:columns-3">
+      <div className="flex gap-4 overflow-x-auto pb-2 md:columns-2 md:block md:space-y-4 md:overflow-visible xl:columns-3 [&>*]:shrink-0 [&>*]:w-[75vw] md:[&>*]:w-auto md:[&>*]:break-inside-avoid">
         {gallery.slice(0, 3).map((item, index) => {
           const isFailed = failedImages.has(item.image_url);
 
           return (
-            <Reveal key={item.id} delay={index * 0.06} className="break-inside-avoid">
+            <Reveal key={item.id} delay={index * 0.06}>
               <figure className="group relative overflow-hidden rounded-[14px] border bg-white p-2 transition-all dark:border-border dark:bg-card">
                 <div className="grid-sheen pointer-events-none absolute inset-y-0 left-0 z-30" />
                 <div className="relative overflow-hidden rounded-[8px] bg-background">
