@@ -1,71 +1,126 @@
-# PROPRIETARY SOFTWARE LICENSE
+# VFuture Proprietary Software License
 
-**VFuture v5.0.0**
-© 2026 Veltrix Media Group. All Rights Reserved.
+Copyright (c) 2026 Veltrix Media Group. All rights reserved.
 
----
+Effective date: March 28, 2026
 
-## LICENSE TERMS
+This VFuture codebase, together with its documentation, assets, configuration, database schema, prompts, and related materials (collectively, the "Software"), is proprietary and confidential information of Veltrix Media Group ("Company").
 
-This software and associated documentation files (the "Software") are the proprietary and confidential information of Veltrix Media Group ("Company"). 
+By accessing, installing, copying, modifying, deploying, or otherwise using the Software, you agree to the terms of this license unless a separate written agreement signed by the Company states otherwise.
 
-### RESTRICTIONS
+## 1. Ownership
 
-You are **NOT** permitted to:
+The Software is licensed, not sold. The Company retains all right, title, and interest in and to the Software, including all copyrights, trade secrets, trademarks, design rights, database rights, and other intellectual property rights.
 
-1. **Copy** - Copy, duplicate, or reproduce any part of the Software
-2. **Modify** - Alter, adapt, or create derivative works
-3. **Distribute** - Share, transfer, or distribute the Software to any third party
-4. **Reverse Engineer** - Decompile, disassemble, or attempt to derive source code
-5. **Sublicense** - Grant rights to use the Software to others
-6. **Commercial Use** - Use the Software for commercial purposes without explicit written permission
-7. **Public Release** - Publish or release the Software publicly
+No ownership interest is transferred to you by this license.
 
-### PERMITTED USE
+## 2. Authorized users
 
-This Software may ONLY be used by:
-- **Authorized Employees** of Veltrix Media Group
-- **Authorized Contractors** with written agreement from Company
-- **Licensed Partners** with signed licensing agreement
+Use of the Software is limited to:
 
-### CONFIDENTIALITY
+- employees of Veltrix Media Group acting within the scope of their duties
+- contractors expressly authorized by written agreement
+- partners or customers operating under a signed license or services agreement
 
-You agree to:
-1. Keep all source code confidential
-2. Not disclose access to unauthorized persons
-3. Not discuss implementation details publicly
-4. Protect API keys and credentials at all times
-5. Report security breaches immediately
+Any person or entity outside these categories is not an authorized user unless the Company gives prior written permission.
 
-### NO WARRANTY
+## 3. Limited license grant
 
-THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+Subject to continuous compliance with this license and any applicable written agreement, the Company grants authorized users a limited, revocable, non-exclusive, non-transferable, non-sublicensable license to:
 
-### LIMITATION OF LIABILITY
+- access and use the Software for the Company's internal business purposes, or
+- access and use the Software for the specific scope permitted in a separate signed agreement with the Company
 
-IN NO EVENT SHALL VELTRIX MEDIA GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This license permits only the minimum copying and internal backup activity reasonably necessary for authorized use.
 
-### TERMINATION
+## 4. Restrictions
 
-This license is effective until terminated. Your rights under this license will terminate automatically without notice from Company if you fail to comply with any term(s) of this License.
+Unless the Company gives prior written permission, you may not:
 
-Upon termination of this License:
-- You shall cease all use of the Software
-- You shall destroy all copies in your possession
-- All rights granted hereunder shall terminate
+- copy, reproduce, publish, distribute, or make the Software available to any third party
+- sell, sublicense, lease, rent, assign, transfer, or otherwise commercialize the Software
+- modify, adapt, translate, or create derivative works from the Software except as required for authorized internal development
+- reverse engineer, decompile, disassemble, or attempt to derive source code, trade secrets, or underlying structure except where such restriction is prohibited by law
+- remove, alter, or obscure proprietary notices, copyright notices, or attribution markings
+- use the Software to build a competing product or service
+- expose credentials, source code, architecture details, or confidential documentation to unauthorized persons
+- place the Software in any public repository, file-sharing service, model-training corpus, or public distribution channel
 
-### GOVERNING LAW
+## 5. Confidentiality and security
 
-This License is governed by and construed in accordance with the laws of Vietnam, and you irrevocably submit to the exclusive jurisdiction of the courts located in Vietnam.
+You must:
 
-### CONTACT
+- protect the Software as confidential information using at least reasonable care
+- restrict access to authorized users with a legitimate need to know
+- secure credentials, API keys, secrets, backups, and exported data
+- promptly report suspected unauthorized access, disclosure, or security incidents to the Company
+- comply with any security controls, repository policies, or operational instructions issued by the Company
 
-For licensing inquiries or permission requests, contact:
-**Veltrix Media Group**
-Email: contact@veltrixmediagroup.com
+Confidentiality obligations survive termination of this license.
 
----
+## 6. Internal modifications
 
-**VIOLATION OF THIS LICENSE MAY RESULT IN LEGAL ACTION.**
+Authorized users may modify the Software only to the extent necessary for approved internal work or as expressly permitted in a separate written agreement.
 
-Last Updated: March 23, 2026
+All modifications, enhancements, fixes, documentation updates, and derivative materials made to the Software in connection with such work will remain the property of the Company unless another signed agreement expressly states otherwise.
+
+## 7. Third-party components
+
+The Software may include or depend on third-party libraries, frameworks, fonts, or services that are licensed separately by their respective owners.
+
+This license governs only the Company's proprietary rights in the Software. Third-party components remain subject to their own applicable license terms, and nothing in this license overrides those third-party rights or obligations.
+
+## 8. No public or open-source grant
+
+No part of this license shall be interpreted as:
+
+- granting open-source rights
+- permitting public redistribution
+- granting trademark rights in the Company's names, brands, or logos
+- authorizing use outside the scope of an approved business relationship
+
+## 9. Warranty disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, OR THAT THE SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED.
+
+## 10. Limitation of liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COMPANY SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF DATA, PROFITS, REVENUE, GOODWILL, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATED TO THE SOFTWARE OR THIS LICENSE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COMPANY'S TOTAL LIABILITY ARISING OUT OF OR RELATED TO THE SOFTWARE OR THIS LICENSE SHALL NOT EXCEED THE AMOUNT ACTUALLY PAID TO THE COMPANY FOR THE APPLICABLE RIGHT TO USE THE SOFTWARE, OR, IF NO FEE WAS PAID, ONE HUNDRED UNITED STATES DOLLARS (USD 100).
+
+## 11. Term and termination
+
+This license remains effective until terminated.
+
+The Company may suspend or terminate this license immediately if:
+
+- you violate this license
+- your access is no longer authorized
+- the applicable business relationship ends
+- continued access would create legal, security, or operational risk
+
+Upon termination, you must immediately:
+
+- stop using the Software
+- stop accessing any hosted or shared environments containing the Software
+- destroy or return all unauthorized copies, except where retention is required by law
+
+Sections that by their nature should survive termination will survive, including ownership, confidentiality, warranty disclaimer, limitation of liability, and governing law.
+
+## 12. Governing law
+
+This license is governed by and construed in accordance with the laws of Vietnam, without regard to conflict-of-law rules. Any dispute arising from or relating to this license shall be subject to the exclusive jurisdiction of the competent courts located in Vietnam, unless a separate signed agreement provides otherwise.
+
+## 13. Contact
+
+Licensing, access, and permission requests:
+
+Veltrix Media Group  
+contact@veltrixmediagroup.com
+
+Security matters:
+
+security@veltrixmediagroup.com
+
+Unauthorized use, disclosure, or redistribution of the Software may result in suspension of access, contractual remedies, and legal action.

@@ -1,166 +1,211 @@
-# CONTRIBUTING TO VFUTURE
+# Contributing to VFuture
 
-⚠️ **IMPORTANT: This is a PRIVATE, PROPRIETARY repository.**
+VFuture is a private, proprietary repository owned by Veltrix Media Group. Contributions are limited to authorized employees, approved contractors, and partners working under an active agreement.
 
----
+By contributing, you acknowledge the confidentiality and license obligations described in [LICENSE](LICENSE).
 
-## Access & Permissions
+## Who may contribute
 
-This repository is **PRIVATE** and exclusive to Veltrix Media Group.
+Authorized contributors include:
 
-### Who Can Access?
+- Veltrix Media Group team members
+- approved contractors with repository access
+- licensed or delegated partners working within the scope of a signed agreement
 
-✅ **Authorized Personnel Only:**
-- Veltrix Media Group employees
-- Authorized contractors (with written agreement)
-- Licensed partners (with licensing agreement)
+You must not contribute, review, copy, or redistribute material from this repository if you are not explicitly authorized to do so.
 
-### Who CANNOT Access?
+## Contribution workflow
 
-❌ **Strictly Prohibited:**
-- External developers
-- Unauthorized parties
-- Public users
-- Competitors or third parties
+1. Sync from the latest protected branch before starting work.
+2. Create a focused branch from `main`.
+3. Make the smallest change that fully solves the issue.
+4. Run the required verification commands locally.
+5. Update documentation, schema files, or environment references when your change affects them.
+6. Open a pull request with enough context for review.
+7. Merge only after review approval and successful checks.
 
----
+## Local development baseline
 
-## Repository Guidelines for Authorized Users
+Before opening a pull request, make sure you can:
 
-### Code of Conduct
+- install dependencies with `npm install`
+- configure `.env.local`
+- apply `supabase/schema.sql` to a working Supabase project
+- run the application with `npm run dev`
+- pass the required verification commands
 
-When working on this project, you agree to:
+Recommended local toolchain:
 
-1. **Confidentiality**
-   - Keep source code confidential
-   - Don't discuss code publicly
-   - Protect API keys & credentials
-   - Don't share access with unauthorized persons
+- Node.js 20 LTS or newer
+- npm 10 or newer
 
-2. **Security**
-   - Never commit `.env.local` containing real keys
-   - Use `.env.example` for templates only
-   - Report security issues to security@veltrixmediagroup.com
-   - Rotate API keys monthly
+## Branch naming
 
-3. **Quality Standards**
-   - Follow existing code style
-   - Pass all tests: `npm run lint && npm run typecheck && npm run build`
-   - Write clear, descriptive commit messages
-   - Create feature branches before submitting PRs
+Use short, descriptive branch names with one of the following prefixes:
 
-4. **Documentation**
-   - Update README if changing architecture
-   - Comment complex logic
-   - Keep edge cases documented
+- `feature/<short-description>`
+- `fix/<short-description>`
+- `hotfix/<short-description>`
+- `refactor/<short-description>`
+- `docs/<short-description>`
+- `chore/<short-description>`
 
-### Commit Message Standards
+Examples:
 
-```
-Type: Brief description
+- `feature/admin-stream-sync`
+- `fix/news-slug-validation`
+- `docs/readme-refresh`
 
-[Optional detailed explanation]
+## Commit message format
 
-Type: feat, fix, docs, style, refactor, test, chore
+Use concise, imperative commit messages:
 
-Example:
-feat: Add two-factor authentication support
-
-- Implement TOTP-based 2FA
-- Update user settings page
-- Add 2FA verification in login flow
+```text
+<type>: <summary>
 ```
 
-### Branch Naming
+Preferred types:
 
+- `feat`
+- `fix`
+- `docs`
+- `refactor`
+- `test`
+- `chore`
+- `perf`
+
+Examples:
+
+```text
+feat: add admin stream status sync endpoint
+fix: sanitize gallery tags before persistence
+docs: document Supabase bootstrap workflow
 ```
-feature/description       # New features
-bugfix/description        # Bug fixes
-hotfix/description        # Production fixes
-docs/description          # Documentation
-refactor/description      # Code refactoring
-```
 
-### Pull Request Process
+## Engineering standards
 
-1. Create feature branch: `git checkout -b feature/your-feature`
-2. Make changes and test locally
-3. Push to your branch
-4. Create Pull Request with:
-   - Clear title
-   - Description of changes
-   - Screenshot (if UI changes)
-   - Test results
+### General standards
 
-5. Code review required before merge
-6. All tests must pass
-7. Merge to main using squash commit
+- Follow the current Next.js App Router structure and existing project conventions.
+- Keep TypeScript strictness intact; do not weaken compiler settings to land a change.
+- Prefer shared utilities and domain services over duplicating logic across pages or route handlers.
+- Keep public and admin behavior aligned with the existing role model: `editor`, `admin`, `senior_admin`.
+- Avoid dead code, placeholder branches, and commented-out production logic.
 
-### Testing Requirements
+### API and backend standards
 
-All changes must pass:
+For new or modified route handlers:
+
+- validate payloads with Zod
+- apply rate limiting where the endpoint is user- or admin-facing
+- enforce role-aware auth for admin endpoints
+- sanitize user-provided strings or rich text before persistence
+- log security-sensitive or admin-affecting actions when appropriate
+
+### Data and schema standards
+
+If your change affects persisted data:
+
+- update [`supabase/schema.sql`](supabase/schema.sql)
+- update [`supabase/seed-data.sql`](supabase/seed-data.sql) if seed behavior changes
+- document new environment variables in `README.md`
+- document operational changes in the relevant guide if deployment steps change
+
+Remember that not all modules have first-class tables. Invitations and streams are currently stored as settings-backed JSON values, so changes in those areas should preserve backward compatibility or include a clear migration plan.
+
+### Frontend standards
+
+- Reuse shared UI primitives under `src/components/ui` where possible.
+- Preserve both desktop and mobile behavior.
+- If you change public navigation or public route structure, review `sitemap.ts`, `robots.ts`, metadata, and localized route aliases.
+- If you modify rich text rendering or media handling, verify both editor and viewer behavior.
+
+## Verification requirements
+
+Every pull request must, at minimum, pass:
 
 ```bash
-npm run lint        # ESLint check
-npm run typecheck   # TypeScript check
-npm run build       # Production build
+npm run lint
+npm run typecheck
+npm run build
 ```
 
-Existing tests must not break.
+Important note:
 
----
+- The repository does not currently ship a dedicated automated unit/integration test suite. Do not claim broader automated test coverage unless you actually added and ran it.
 
-## Unauthorized Access
+When your change touches auth, Supabase, storage, email, stream sync, or middleware behavior, include manual smoke-test notes in the pull request description.
 
-⚠️ **WARNING: Unauthorized access to this repository is prohibited.**
+## Pull request expectations
 
-If you have gained unauthorized access:
-1. Do not explore the code
-2. Do not copy any files
-3. Report the access immediately to: security@veltrixmediagroup.com
-4. Delete any local copies
+Every pull request should include:
 
-**Violation may result in legal action.**
+- a clear title
+- a concise summary of what changed and why
+- screenshots or recordings for user-facing UI changes
+- verification results
+- notes about schema, env, deployment, or operational impact
+- follow-up items if the work is intentionally partial
 
----
+Prefer small, reviewable pull requests over large mixed-purpose changes.
 
-## Issues & Security Problems
+## Definition of done
 
-### Report Security Issues
+A change is not complete until all of the following are true:
 
-For security vulnerabilities, DO NOT create public issues.
+- the implementation is finished
+- verification has been run and recorded
+- documentation has been updated if needed
+- schema or environment changes are documented
+- no secrets, build artifacts, or local environment files are committed
 
-**Email**: security@veltrixmediagroup.com
+## Secrets and security
 
-Include:
-- Description of vulnerability
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if known)
+Do not commit or expose:
 
-### Report Bugs
+- `.env.local`
+- private API keys
+- Supabase service-role keys
+- credentials, tokens, or exported user data
 
-Use GitHub Issues with template:
-- Title: Clear, concise description
-- Description: What happened, expected behavior
-- Steps to reproduce
-- Environment (OS, Node version, etc.)
+If you add a new environment variable:
 
-### Report Feature Requests
+- update `.env.example` when appropriate
+- document it in `README.md`
+- describe whether it is required, optional, server-only, or public
 
-Use GitHub Discussions or email:
-contact@veltrixmediagroup.com
+Report suspected vulnerabilities privately. Do not open public issues for security-sensitive details.
 
----
+Security contact:
 
-## Questions?
+- `security@veltrixmediagroup.com`
 
-For access requests, licensing, or questions:
-**Email**: contact@veltrixmediagroup.com
+General repository or licensing contact:
 
----
+- `contact@veltrixmediagroup.com`
 
-**Last Updated**: March 23, 2026
-**Status**: PROPRIETARY - PRIVATE REPOSITORY ONLY
+## Confidentiality
 
-🔒 **This project is under copyright protection. All rights reserved.**
+This repository contains confidential business and technical material. By contributing, you agree to:
+
+- keep source code and internal documentation confidential
+- avoid sharing screenshots, snippets, or implementation details outside authorized channels
+- protect local copies of the repository and any generated credentials
+- report accidental exposure immediately
+
+## Unauthorized access
+
+If you believe you have obtained access in error:
+
+1. Stop using the repository immediately.
+2. Do not copy, clone, archive, or share any files.
+3. Notify `security@veltrixmediagroup.com`.
+4. Remove any unauthorized local copies unless legal retention is required.
+
+Unauthorized access or redistribution may result in access revocation, contractual remedies, or legal action.
+
+## License reminder
+
+Contributions are made to a proprietary codebase and do not convert the project into open-source software. Ownership, use rights, and redistribution remain governed by [LICENSE](LICENSE) and any applicable agreements with Veltrix Media Group.
+
+Last updated: March 28, 2026
