@@ -77,7 +77,7 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
       {/* Overlay mờ khi có card được chọn */}
       {selectedEvent && (
         <div
-          className="fixed left-0 top-0 z-[9998] h-screen w-screen bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+          className="fixed left-0 top-0 z-40 h-screen w-screen bg-black/40 backdrop-blur-sm transition-opacity duration-300"
           onClick={() => setSelectedEvent(null)}
         />
       )}
@@ -150,6 +150,7 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
                 "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all duration-300 dark:bg-card",
                 statusCardClassMap[event.status],
                 selectedEvent && "opacity-40 scale-[0.98]",
+                selectedEvent?.id === event.id && "!opacity-100 !scale-100 z-50 relative",
               )}
             >
               <div className="grid-sheen pointer-events-none absolute inset-y-0 left-0 z-20" />
