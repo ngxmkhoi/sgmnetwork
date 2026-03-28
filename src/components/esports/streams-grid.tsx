@@ -73,7 +73,7 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
     <>
       {selectedStream && (
         <div
-          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+          className="fixed left-0 top-0 z-[9998] h-screen w-screen bg-black/40 backdrop-blur-sm transition-opacity duration-300"
           onClick={() => setSelectedStream(null)}
         />
       )}
@@ -149,3 +149,4 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
     </>
   );
 }
+

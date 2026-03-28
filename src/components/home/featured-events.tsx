@@ -33,7 +33,7 @@ export function FeaturedEvents({ events }: FeaturedEventsProps) {
 
       {selectedEvent && (
         <div
-          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+          className="fixed left-0 top-0 z-[9998] h-screen w-screen bg-black/40 backdrop-blur-sm transition-opacity duration-300"
           onClick={() => setSelectedEvent(null)}
         />
       )}
@@ -86,3 +86,4 @@ export function FeaturedEvents({ events }: FeaturedEventsProps) {
     </section>
   );
 }
+
