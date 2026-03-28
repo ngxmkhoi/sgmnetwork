@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Radio } from "lucide-react";
 import { StreamModal } from "@/components/esports/stream-modal";
 import { EmptyState } from "@/components/common/empty-state";
 import { cn } from "@/lib/utils";
 import type { StreamItem, StreamStatus } from "@/lib/types/content";
 import { useQuery } from "@tanstack/react-query";
+import { buildEmbedUrl } from "@/lib/utils/stream-utils";
 
 async function fetchStreams(): Promise<StreamItem[]> {
   const res = await fetch("/api/streams", { cache: "no-store" });
@@ -46,6 +47,7 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
   });
 
   const [selectedStream, setSelectedStream] = useState<StreamItem | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   // Auto-sync YouTube status mỗi 60s
   useEffect(() => {
@@ -80,6 +82,8 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
           <article
             key={stream.id}
             onClick={() => setSelectedStream(stream)}
+            onMouseEnter={() => setHoveredId(stream.id)}
+            onMouseLeave={() => setHoveredId(null)}
             className={cn(
               "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all duration-300 dark:bg-card",
               statusCardClass[stream.status],
@@ -120,6 +124,22 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
         open={Boolean(selectedStream)}
         onOpenChange={(open) => { if (!open) setSelectedStream(null); }}
       />
+
+      {/* Preload iframe ẩn khi hover để giảm độ trễ khi click */}
+      {hoveredId && (() => {
+        const s = visibleStreams.find((x: StreamItem) => x.id === hoveredId);
+        if (!s || s.status === "upcoming") return null;
+        return (
+          <iframe
+            key={hoveredId}
+            src={buildEmbedUrl(s.youtube_url).replace("autoplay=1", "autoplay=0")}
+            className="pointer-events-none absolute opacity-0 h-0 w-0"
+            aria-hidden
+            tabIndex={-1}
+            title="preload"
+          />
+        );
+      })()}
     </>
   );
 }

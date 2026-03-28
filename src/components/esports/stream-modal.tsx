@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import type { StreamItem } from "@/lib/types/content";
 import { buildEmbedUrl, buildWatchUrl } from "@/lib/utils/stream-utils";
+import { StreamPlayer } from "@/components/esports/stream-player";
 
 type StreamModalProps = {
   stream: StreamItem | null;
@@ -104,18 +105,7 @@ export function StreamModal({ stream, open, onOpenChange }: StreamModalProps) {
           <div className="px-5">
             <div className="overflow-hidden rounded-[10px] bg-black">
               {isLive || isEnded ? (
-                <div className="aspect-video w-full">
-                  <iframe
-                    src={embedUrl}
-                    className="h-full w-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; web-share"
-                    allowFullScreen
-                    loading="eager"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    title={stream.title}
-                    style={{ border: 0 }}
-                  />
-                </div>
+                <StreamPlayer embedUrl={embedUrl} title={stream.title} />
               ) : (
                 <div className="relative aspect-video w-full">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
