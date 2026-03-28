@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Radio } from "lucide-react";
 import { StreamModal } from "@/components/esports/stream-modal";
 import { EmptyState } from "@/components/common/empty-state";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { StreamItem, StreamStatus } from "@/lib/types/content";
 import { useQuery } from "@tanstack/react-query";
@@ -101,13 +102,18 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                 />
               </div>
-              <span className={cn(
-                "absolute right-0 top-0 z-10 inline-flex items-center gap-1.5 rounded-[6px] px-[7px] py-3 text-[0.8rem] font-bold uppercase shadow-sm",
-                statusBadgeClass[stream.status],
-              )}>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "absolute right-0 top-0 z-10 inline-flex items-center gap-1.5 rounded-[6px] border px-[7px] py-3 text-[0.8rem] font-bold uppercase leading-none tracking-[0.06em] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
+                  stream.status === "live" && "border-[#ff4444] bg-[#FF0000] text-white",
+                  stream.status === "upcoming" && "border-[#81c784] bg-[#4CAF50] text-white",
+                  stream.status === "ended" && "border-border bg-muted text-muted-foreground",
+                )}
+              >
                 {stream.status === "live" && <Radio className="size-3 animate-pulse" />}
                 {statusLabel[stream.status]}
-              </span>
+              </Badge>
             </div>
 
             <div className="flex flex-1 items-center justify-center p-3 text-center">
