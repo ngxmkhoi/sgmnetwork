@@ -22,7 +22,7 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
       <AutoReload />
       <SiteNavbar />
       <PageTransition>
-        <main className="mx-auto w-full max-w-7xl overflow-x-clip px-4 pb-16 md:px-6">{children}</main>
+        <main className="mx-auto w-full max-w-7xl px-4 pb-16 md:px-6">{children}</main>
       </PageTransition>
       <SiteFooter />
     </div>

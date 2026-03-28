@@ -74,9 +74,11 @@ export default async function HomePage() {
         activeEventCount={events.filter((item) => item.status === "active").length}
         publishedNewsCount={news.length}
       />
-      <FeaturedEvents events={latestEvents} />
-      <LatestNews news={latestNews} />
-      <GalleryPreview gallery={latestGallery} />
+      <div className="overflow-x-clip">
+        <FeaturedEvents events={latestEvents} />
+        <LatestNews news={latestNews} />
+        <GalleryPreview gallery={latestGallery} />
+      </div>
       <JoinCommunityCta />
     </div>
   );
