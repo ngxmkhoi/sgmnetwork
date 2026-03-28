@@ -1,5 +1,17 @@
 export type EventStatus = "active" | "upcoming" | "expired";
 
+export type StreamStatus = "live" | "upcoming" | "ended";
+
+export type StreamItem = {
+  id: string;
+  title: string;
+  youtube_url: string;       // full YouTube URL hoặc video ID
+  thumbnail_url: string;     // https://i.ytimg.com/vi/{id}/maxresdefault.jpg
+  scheduled_at: string;      // ISO datetime
+  status: StreamStatus;
+  created_at: string;
+};
+
 export type PublishStatus = "draft" | "published";
 
 export type UserRole = "admin" | "senior_admin" | "editor";
