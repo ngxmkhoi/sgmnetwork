@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Radio } from "lucide-react";
 import { StreamModal } from "@/components/esports/stream-modal";
 import { EmptyState } from "@/components/common/empty-state";
@@ -47,6 +47,14 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
 
   const [selectedStream, setSelectedStream] = useState<StreamItem | null>(null);
 
+  // Auto-sync YouTube status mỗi 60s
+  useEffect(() => {
+    const sync = () => fetch("/api/streams/sync", { method: "POST" }).catch(() => null);
+    sync();
+    const interval = setInterval(sync, 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
   const visibleStreams = streams.filter((s: StreamItem) => s.status !== "ended");
 
   if (visibleStreams.length === 0) {
@@ -78,13 +86,14 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
               selectedStream && "opacity-40 scale-[0.98]",
             )}
           >
+            <div className="grid-sheen pointer-events-none absolute inset-y-0 left-0 z-20" />
             <div className="relative overflow-hidden rounded-[8px]">
               <div className="aspect-video w-full overflow-hidden rounded-[8px] bg-black">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={stream.thumbnail_url}
                   alt={stream.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                 />
               </div>
