@@ -24,7 +24,6 @@ type SliderLayerProps = {
   durationSeconds: number;
   desktopOnly?: boolean;
   mobileOnly?: boolean;
-  backgroundPosition: string;
 };
 
 function getSliderVariants(effect: HeroSliderEffect) {
@@ -73,7 +72,6 @@ function SliderLayer({
   durationSeconds,
   desktopOnly,
   mobileOnly,
-  backgroundPosition,
 }: SliderLayerProps) {
   const variants = getSliderVariants(effect);
 
@@ -85,13 +83,14 @@ function SliderLayer({
       variants={variants}
       transition={{ duration: durationSeconds, ease: [0.22, 1, 0.36, 1] }}
       className={[
-        "absolute inset-0 bg-cover bg-no-repeat",
+        "absolute inset-0 bg-cover bg-center bg-no-repeat",
         desktopOnly ? "hidden md:block" : "",
         mobileOnly ? "md:hidden" : "",
       ].join(" ")}
       style={{
         backgroundImage: `url(${imageUrl})`,
-        backgroundPosition,
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
       }}
     />
   );
@@ -156,7 +155,6 @@ export function HeroBanner({
               effect={transitionEffect}
               durationSeconds={transitionSeconds}
               desktopOnly
-              backgroundPosition="center 52%"
             />
           ) : null}
         </AnimatePresence>
@@ -169,7 +167,6 @@ export function HeroBanner({
               effect={transitionEffect}
               durationSeconds={transitionSeconds}
               mobileOnly
-              backgroundPosition="center 38%"
             />
           ) : null}
         </AnimatePresence>
