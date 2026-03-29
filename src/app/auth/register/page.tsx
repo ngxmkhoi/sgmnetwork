@@ -14,7 +14,7 @@ const PasswordInput = ({
   onChange,
   placeholder,
   showPassword,
-  onToggleShowPassword
+  onToggleShowPassword,
 }: {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -64,54 +64,26 @@ function RegisterForm() {
 
     setSubmitting(true);
 
-    const invitedCheck = await fetch(`/api/auth/invited-email?email=${encodeURIComponent(email)}`);
-    const invitedData = (await invitedCheck.json().catch(() => ({ allowed: false }))) as { allowed?: boolean };
-
-    if (!invitedData.allowed) {
-      setSubmitting(false);
-      toast.error("EMAIL NÀY CHƯA ĐƯỢC QUẢN TRỊ VIÊN CHO PHÉP TẠO TÀI KHOẢN.");
-      return;
-    }
-
-    const supabase = createClient();
-    if (!supabase) {
-      const response = await fetch("/api/auth/demo-register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      setSubmitting(false);
-
-      if (!response.ok) {
-        toast.error("KHÔNG THỂ TẠO TÀI KHOẢN DEMO.");
-        return;
-      }
-
-      toast.success("ĐÃ TẠO TÀI KHOẢN DEMO. HÃY QUAY LẠI TRANG ĐĂNG NHẬP.");
-      router.push("/auth/login");
-      return;
-    }
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      setSubmitting(false);
-      toast.error(error.message);
-      return;
-    }
-
-    // Tạo record trong bảng users và xóa khỏi danh sách mời
-    await fetch("/api/auth/register", {
+    // Tạo tài khoản qua server API (admin createUser - không cần confirm email)
+    const registerRes = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    }).catch(() => null);
+      body: JSON.stringify({ email, password }),
+    });
+
+    const registerData = (await registerRes.json().catch(() => ({}))) as { error?: string };
+
+    if (!registerRes.ok) {
+      setSubmitting(false);
+      toast.error(registerData.error ?? "KHÔNG THỂ TẠO TÀI KHOẢN.");
+      return;
+    }
+
+    // Đăng nhập ngay sau khi tạo tài khoản thành công
+    const supabase = createClient();
+    if (supabase) {
+      await supabase.auth.signInWithPassword({ email, password });
+    }
 
     setSubmitting(false);
     toast.success("TẠO TÀI KHOẢN THÀNH CÔNG. ĐANG CHUYỂN VÀO TRANG QUẢN TRỊ.");
@@ -128,7 +100,7 @@ function RegisterForm() {
         onChange={(event) => setEmail(event.target.value)}
         type="email"
         required
-        readOnly={!!invitedEmail} // Block editing if email was provided via URL to prevent mistakes
+        readOnly={!!invitedEmail}
         placeholder="EMAIL ĐÃ ĐƯỢC MỜI"
         className={`h-11 rounded-xl ${invitedEmail ? "bg-muted text-muted-foreground opacity-70 cursor-not-allowed" : ""}`}
       />

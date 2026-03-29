@@ -12,6 +12,7 @@ import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
 const schema = z.object({
   email: z.string().email(),
+  password: z.string().min(6),
 });
 
 export async function POST(request: NextRequest) {
@@ -21,28 +22,35 @@ export async function POST(request: NextRequest) {
   const payload = await request.json().catch(() => null);
   const parsed = schema.safeParse(payload);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid email." }, { status: 400 });
+    return NextResponse.json({ error: "Dữ liệu không hợp lệ." }, { status: 400 });
   }
 
   const email = parsed.data.email.trim().toLowerCase();
+  const password = parsed.data.password;
 
   // Kiểm tra email có trong danh sách mời không
   const invitedEmails = await getInvitedEmails();
   if (!isEmailInvited(email, invitedEmails)) {
-    return NextResponse.json({ error: "Email không được mời." }, { status: 403 });
+    return NextResponse.json({ error: "EMAIL NÀY CHƯA ĐƯỢC QUẢN TRỊ VIÊN CHO PHÉP TẠO TÀI KHOẢN." }, { status: 403 });
   }
 
-  // Lấy user ID từ Supabase Auth
   const adminClient = createAdminSupabaseClient();
   if (!adminClient) {
     return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
 
-  const { data: listData } = await adminClient.auth.admin.listUsers();
-  const authUser = listData?.users?.find((u) => u.email?.toLowerCase() === email);
-  if (!authUser) {
-    return NextResponse.json({ error: "User chưa tồn tại trong Auth." }, { status: 404 });
+  // Tạo user qua admin API - không cần confirm email
+  const { data: authData, error: authError } = await adminClient.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true, // Bỏ qua bước xác nhận email
+  });
+
+  if (authError) {
+    return NextResponse.json({ error: authError.message }, { status: 400 });
   }
+
+  const authUser = authData.user;
 
   // Tạo record trong bảng users
   const user = await ensureUserAccount({ id: authUser.id, email, role: "editor" });
@@ -58,5 +66,5 @@ export async function POST(request: NextRequest) {
     summary: `Tạo tài khoản admin qua thư mời cho ${email}`,
   });
 
-  return NextResponse.json({ ok: true, user });
+  return NextResponse.json({ ok: true });
 }
