@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants/site";
 import { AppProviders } from "@/components/providers/app-providers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const heading = Saira_Semi_Condensed({
   subsets: ["latin", "vietnamese"],
@@ -85,6 +86,7 @@ export default function RootLayout({
       <link rel="dns-prefetch" href="https://googlevideo.com" />
       <body className={cn("font-body min-h-screen bg-background text-foreground antialiased")}>
         <AppProviders>{children}</AppProviders>
+        <SpeedInsights />
       </body>
     </html>
   );
