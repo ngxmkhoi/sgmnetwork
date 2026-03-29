@@ -55,8 +55,8 @@ export async function PATCH(request: NextRequest) {
   await logAdminActivity({
     action: "SETTING_UPDATED",
     targetType: "SETTING",
-    targetId: setting.id,
-        summary: `Cập nhật cài đặt ${setting.key}`,
+    targetId: setting?.id ?? parsed.data.key,
+    summary: `Cập nhật cài đặt ${setting?.key ?? parsed.data.key}`,
   });
 
   return NextResponse.json({ setting });
