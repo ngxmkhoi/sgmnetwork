@@ -591,8 +591,9 @@ export async function getInvitedEmails(): Promise<InvitedEmailItem[]> {
   const parsedInvitedEmails = parseInvitedEmails(invited?.value);
   const nextItems = sortInvitedEmails(pruneExpiredInvitedEmails(parsedInvitedEmails));
 
+  // Chỉ update nếu có email hết hạn bị prune, dùng fire-and-forget để tránh đệ quy
   if (nextItems.length !== parsedInvitedEmails.length) {
-    await updateSetting(INVITED_EMAILS_SETTING_KEY, JSON.stringify(nextItems));
+    void updateSetting(INVITED_EMAILS_SETTING_KEY, JSON.stringify(nextItems)).catch(() => null);
   }
 
   return nextItems;
@@ -702,9 +703,9 @@ export async function ensureUserAccount(input: {
       .update({ email: normalizedEmail } as never)
       .eq("id", input.id)
       .select("*")
-      .single();
+      .maybeSingle();
     if (error) throw new Error(error.message);
-    return data;
+    return (data ?? existing) as UserItem;
   }
 
   // Insert new user with default role
@@ -775,24 +776,23 @@ export async function updateSetting(key: string, value: string) {
   }
 
   const supabase = getSupabaseAdminOrThrow();
-  const { data, error } = await supabase
+  // Dùng upsert không có .single() để tránh lỗi "Cannot coerce result to single JSON object"
+  const { error } = await supabase
     .from("settings")
     .upsert(
-      ({
-        key,
-        value,
-        updated_at: new Date().toISOString(),
-      } as never),
-      {
-        onConflict: "key",
-      },
-    )
-    .select("*")
-    .single();
+      ({ key, value, updated_at: new Date().toISOString() } as never),
+      { onConflict: "key" },
+    );
   if (error) {
     throw new Error(error.message);
   }
-  return data;
+  // Fetch lại row sau upsert
+  const { data: fetched } = await supabase
+    .from("settings")
+    .select("*")
+    .eq("key", key)
+    .maybeSingle();
+  return (fetched ?? null) as SiteSetting | null;
 }
 
 export async function getAdminActivityLogs(): Promise<AdminActivityLogItem[]> {

@@ -113,8 +113,8 @@ begin
   insert into public.users (id, email, role)
   values (new.id, new.email, user_role)
   on conflict (id) do update
-    set email = excluded.email,
-        role = excluded.role;
+    set email = excluded.email;
+  -- Không overwrite role để tránh mất quyền đã được cấp
   return new;
 end;
 $$;
