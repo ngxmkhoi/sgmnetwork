@@ -3,6 +3,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants/site";
 import { AppProviders } from "@/components/providers/app-providers";
+import { SecurityGuard } from "@/components/common/security-guard";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // GFF Fonts are loaded from fonts.css
@@ -77,6 +78,7 @@ export default function RootLayout({
       <link rel="dns-prefetch" href="https://googlevideo.com" />
       <body className={cn("font-body min-h-screen bg-background text-foreground antialiased")}>
         <AppProviders>{children}</AppProviders>
+        <SecurityGuard />
         <SpeedInsights />
       </body>
     </html>

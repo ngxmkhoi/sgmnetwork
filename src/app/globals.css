@@ -4,6 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Chặn copy text toàn trang */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Cho phép select trong input/textarea */
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+}
+
 @layer base {
   :root {
     --background: 0 0% 98%;
