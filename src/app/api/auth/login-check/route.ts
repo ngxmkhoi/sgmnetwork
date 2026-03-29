@@ -6,6 +6,7 @@ import {
   resetLoginAttempts,
 } from "@/lib/server/login-guard";
 import { logAdminActivity } from "@/lib/server/admin-activity";
+import { getUserByEmail } from "@/lib/data/content-service";
 
 function getIp(request: NextRequest) {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
@@ -14,6 +15,16 @@ function getIp(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "login-check-get", limit: 30, windowMs: 60_000 });
   if (limited) return limited;
+
+  const { searchParams } = new URL(request.url);
+
+  // Verify user có trong bảng users không
+  if (searchParams.get("verify") === "1") {
+    const email = searchParams.get("email") ?? "";
+    if (!email) return NextResponse.json({ allowed: false });
+    const user = await getUserByEmail(email).catch(() => null);
+    return NextResponse.json({ allowed: Boolean(user) });
+  }
 
   const ip = getIp(request);
   const result = await checkLoginAllowed(ip);

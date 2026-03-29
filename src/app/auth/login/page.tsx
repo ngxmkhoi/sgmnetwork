@@ -158,14 +158,14 @@ export default function LoginPage() {
       return;
     }
 
-    // Bước 2: Verify user có trong bảng users
+    // Bước 2: Verify user có trong bảng users (đã được cấp quyền)
     const { data: { user: currentUser } } = await supabase.auth.getUser();
     const userEmail = currentUser?.email?.trim().toLowerCase() ?? "";
 
-    const profileRes = await fetch(`/api/auth/invited-email?email=${encodeURIComponent(userEmail)}`);
-    const profileData = await profileRes.json().catch(() => ({ allowed: false })) as { allowed?: boolean };
+    const profileRes = await fetch(`/api/auth/login-check?verify=1&email=${encodeURIComponent(userEmail)}`);
+    const profileData = await profileRes.json().catch(() => ({ allowed: true })) as { allowed?: boolean };
 
-    if (!profileData.allowed) {
+    if (profileData.allowed === false) {
       await supabase.auth.signOut();
       const result = await serverRecordFail(email);
       setBanState(result);
