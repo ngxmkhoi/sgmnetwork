@@ -10,8 +10,8 @@ import { getSettings } from "@/lib/data/content-service";
 import { siteConfig } from "@/lib/constants/site";
 import { buildSettingsMap, resolveSocialLinks } from "@/lib/utils/site-settings";
 
-const LOGO_LIGHT = "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/b20262203?updatedAt=1774193355414";
-const LOGO_DARK  = "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/w20262203?updatedAt=1774193489095";
+const LOGO_LIGHT = "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035";
+const LOGO_DARK = "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/w21232026.png?updatedAt=1774797861441";
 
 const footerNav = [
   { label: "Trang Chủ", href: "/" },
@@ -32,8 +32,8 @@ export async function SiteFooter() {
 
   const socialLinks = [
     { label: "Facebook", href: resolvedSocialLinks.facebook, icon: FacebookBrandIcon },
-    { label: "TikTok",   href: resolvedSocialLinks.tiktok,   icon: TiktokBrandIcon  },
-    { label: "YouTube",  href: resolvedSocialLinks.youtube,  icon: YoutubeBrandIcon },
+    { label: "TikTok", href: resolvedSocialLinks.tiktok, icon: TiktokBrandIcon },
+    { label: "YouTube", href: resolvedSocialLinks.youtube, icon: YoutubeBrandIcon },
     {
       label: "Gmail",
       href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(resolvedSocialLinks.email)}`,
@@ -48,29 +48,29 @@ export async function SiteFooter() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[2px] w-1/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary dark:via-amber-400 to-transparent opacity-50" />
 
       <div className="relative mx-auto max-w-7xl px-6 py-10 lg:px-8">
-        
+
         {/* Main 4-column layout */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          
+
           {/* Col 1: Brand */}
           <div className="flex flex-col items-start space-y-5 lg:pr-4">
             <div className="flex items-center gap-3">
               <Image
                 src={LOGO_LIGHT}
-                alt="VFuture"
-                width={56}
-                height={56}
-                className="block drop-shadow-[0_4px_12px_rgba(0,82,255,0.15)] dark:hidden"
+                alt="SGM Network"
+                width={64}
+                height={64}
+                className="block aspect-square object-cover drop-shadow-[0_4px_12px_rgba(0,82,255,0.15)] dark:hidden"
               />
               <Image
                 src={LOGO_DARK}
-                alt="VFuture"
-                width={56}
-                height={56}
-                className="hidden drop-shadow-[0_4px_12px_rgba(247,147,26,0.2)] dark:block"
+                alt="SGM Network"
+                width={64}
+                height={64}
+                className="hidden aspect-square object-cover drop-shadow-[0_4px_12px_rgba(247,147,26,0.2)] dark:block"
               />
               <span className="font-heading text-3xl font-black tracking-[0.05em] text-foreground">
-                VFUTURE
+                SGM NETWORK
               </span>
             </div>
             <p className="text-[15px] leading-relaxed text-muted-foreground text-justify">
@@ -116,7 +116,7 @@ export async function SiteFooter() {
                 </li>
               ))}
             </ul>
-            
+
             <div className="mt-2 pt-2">
               <p className="text-[14px] font-medium text-muted-foreground">
                 <strong className="text-foreground">Email:</strong> {resolvedSocialLinks.email}
@@ -162,7 +162,7 @@ export async function SiteFooter() {
         {/* Bottom Copyright Area */}
         <div className="mt-8 flex flex-col items-center justify-center gap-2 text-center">
           <p className="text-[15px] font-bold text-foreground">
-            © 2026 Veltrix Media Group. All Rights Reserved.
+            © 2026 SGM Network. All Rights Reserved.
           </p>
           <p className="text-[14px] font-semibold text-muted-foreground">
             All images and related assets are the property of Garena Free Fire Vietnam.

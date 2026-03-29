@@ -1,12 +1,12 @@
 #!/usr/bin/env pwsh
 
 # ============================================================
-# VFuture V5 - Local Development Quick Start
+# SGM Network V1 - Local Development Quick Start
 # ============================================================
 # Usage: .\scripts\quick-start.ps1
 # ============================================================
 
-Write-Host "🚀 VFuture V5 - Quick Start Script" -ForegroundColor Cyan
+Write-Host "🚀 SGM Network V1 - Quick Start Script" -ForegroundColor Cyan
 Write-Host "=================================" -ForegroundColor Cyan
 Write-Host ""
 

@@ -8,7 +8,7 @@ export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Esports",
-  description: "Xem trực tiếp và theo dõi các buổi phát sóng ESPORTS của cộng đồng VFuture.",
+  description: "Xem trực tiếp và theo dõi các buổi phát sóng ESPORTS của cộng đồng SGM Network.",
 };
 
 export default async function EsportsPage() {

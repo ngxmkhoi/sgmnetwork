@@ -1,9 +1,9 @@
-const ICON_URL = "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/f20262203?updatedAt=1774193443308";
+const ICON_URL = "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035";
 
 self.addEventListener("push", (event) => {
   const data = event.data?.json() ?? {};
   event.waitUntil(
-    self.registration.showNotification(data.title ?? "VFuture", {
+    self.registration.showNotification(data.title ?? "SGM Network", {
       body: data.body ?? "",
       icon: data.icon ?? ICON_URL,
       badge: ICON_URL,

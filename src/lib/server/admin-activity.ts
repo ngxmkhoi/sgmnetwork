@@ -12,14 +12,14 @@ type AdminActivityInput = {
 export async function resolveCurrentAdminEmail() {
   const supabase = createServerSupabaseClient();
   if (!supabase) {
-    return "system@vfuture.app";
+    return "system@sgmnetwork.app";
   }
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return user?.email?.trim().toLowerCase() || "unknown-admin@vfuture.app";
+  return user?.email?.trim().toLowerCase() || "unknown-admin@sgmnetwork.app";
 }
 
 export async function logAdminActivity(input: AdminActivityInput) {

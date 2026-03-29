@@ -25,7 +25,7 @@ export function MediaFrame({
   const [imageError, setImageError] = useState(false);
   const normalizedSrc = src?.trim();
   const isImageKitSource =
-    normalizedSrc?.startsWith("https://ik.imagekit.io/veltrixmediagroup") ||
+    normalizedSrc?.startsWith("https://ik.imagekit.io/oyvgbkwyt") ||
     normalizedSrc?.startsWith("/");
 
   // Show fallback if no src or image failed to load

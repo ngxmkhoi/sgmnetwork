@@ -180,7 +180,7 @@ export function HeroBanner({
           <div className="glass-card rounded-[28px] p-6 md:p-8">
             <div className="space-y-5">
               <span className="inline-flex rounded-md border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                VFuture
+                SGM Network
               </span>
 
               <h1 className="font-heading text-4xl font-extrabold uppercase leading-[0.95] text-foreground md:text-5xl lg:text-7xl">
@@ -215,20 +215,20 @@ export function HeroBanner({
               TỔNG QUAN TRỰC TIẾP
             </p>
 
-              <div className="grid gap-3">
-                <div className="theme-control-surface flex items-center justify-between rounded-xl px-4 py-3">
-                  <span className="text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-                    SỰ KIỆN ĐANG DIỄN RA
-                  </span>
-                  <strong className="font-heading text-2xl text-primary dark:text-amber-300">{activeEventCount}</strong>
-                </div>
+            <div className="grid gap-3">
+              <div className="theme-control-surface flex items-center justify-between rounded-xl px-4 py-3">
+                <span className="text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                  SỰ KIỆN ĐANG DIỄN RA
+                </span>
+                <strong className="font-heading text-2xl text-primary dark:text-amber-300">{activeEventCount}</strong>
+              </div>
 
-                <div className="theme-control-surface flex items-center justify-between rounded-xl px-4 py-3">
-                  <span className="text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-                    BÀI VIẾT ĐÃ ĐĂNG
-                  </span>
-                  <strong className="font-heading text-2xl text-primary dark:text-amber-300">{publishedNewsCount}</strong>
-                </div>
+              <div className="theme-control-surface flex items-center justify-between rounded-xl px-4 py-3">
+                <span className="text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                  BÀI VIẾT ĐÃ ĐĂNG
+                </span>
+                <strong className="font-heading text-2xl text-primary dark:text-amber-300">{publishedNewsCount}</strong>
+              </div>
 
               <div className="theme-control-surface flex items-center justify-between rounded-xl px-4 py-3">
                 <span className="text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground">

@@ -1,4 +1,4 @@
-# Prompt Bao Gia Website VFuture
+# Prompt Bao Gia Website SGM Network
 
 Tai lieu nay gom 2 phan:
 
@@ -16,7 +16,7 @@ Luu y:
 
 ### 1.1 Muc tieu san pham
 
-Website ten: `VFuture`
+Website ten: `SGM Network`
 
 Muc tieu:
 - Xay dung mot website cong dong game fan-made chuyen nghiep.
@@ -483,8 +483,8 @@ Tien ich he thong:
 - script build id
 
 Domain:
-- domain hien tai: `https://vfuture.vercel.app`
-- domain production: `https://vfuture.vercel.app`
+- domain hien tai: `https://sgmnetwork.vercel.app`
+- domain production: `https://sgmnetwork.vercel.app`
 
 ---
 
@@ -517,7 +517,7 @@ Can neu ro:
 Ban co the copy nguyen khung duoi day:
 
 ```text
-Ban dong vai tro la CTO, Solution Architect, Technical PM va Agency Estimator chuyen bao gia chinh xac cho cac du an web app custom. Toi can ban bao gia mot website cong dong game fan-made ten la VFuture dua tren thong tin codebase va pham vi tinh nang duoi day.
+Ban dong vai tro la CTO, Solution Architect, Technical PM va Agency Estimator chuyen bao gia chinh xac cho cac du an web app custom. Toi can ban bao gia mot website cong dong game fan-made ten la SGM Network dua tren thong tin codebase va pham vi tinh nang duoi day.
 
 Yeu cau:
 - Khong bao gia chung chung.
@@ -779,8 +779,8 @@ Thong tin du an:
 - Co env vars cho Supabase va feature flags.
 - Co utility script tao admin user.
 - Co utility script build id.
-- Current domain: https://vfuture.vercel.app
-- Production domain: https://vfuture.vercel.app
+- Current domain: https://sgmnetwork.vercel.app
+- Production domain: https://sgmnetwork.vercel.app
 
 11. Yeu cau bao gia
 Hay tra loi theo cau truc sau:

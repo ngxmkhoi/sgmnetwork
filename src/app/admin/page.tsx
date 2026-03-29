@@ -6,7 +6,7 @@ import { getDashboardStats } from "@/lib/data/content-service";
 
 export const metadata: Metadata = {
   title: "Dashboard Quản Trị",
-  description: "Tổng quan quản trị VFuture.",
+  description: "Tổng quan quản trị SGM Network.",
 };
 
 export default async function AdminDashboardPage() {

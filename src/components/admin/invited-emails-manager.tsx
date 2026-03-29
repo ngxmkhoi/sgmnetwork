@@ -93,7 +93,7 @@ export function InvitedEmailsManager() {
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="them-email@vfuture.app"
+          placeholder="them-email@sgmnetwork.app"
           className="border-border bg-background text-foreground"
         />
         <Button type="button" onClick={onAdd} disabled={submitting} className="rounded-xl">

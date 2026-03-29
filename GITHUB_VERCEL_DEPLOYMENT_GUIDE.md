@@ -2,7 +2,7 @@
 
 ## 📋 Tổng Quan
 
-Hướng dẫn chi tiết để deploy website VFuture lên GitHub và Vercel. Bao gồm các file cần thiết, file cần loại trừ, và các bước setup.
+Hướng dẫn chi tiết để deploy website SGM Network lên GitHub và Vercel. Bao gồm các file cần thiết, file cần loại trừ, và các bước setup.
 
 ---
 
@@ -27,7 +27,7 @@ Hướng dẫn chi tiết để deploy website VFuture lên GitHub và Vercel. B
 ├── 📄 DEPLOYMENT_SETUP.md             # Detailed setup guide
 ├── 📄 SECURITY_AUDIT.md               # Security documentation
 ├── 📄 GITHUB_VERCEL_COMPLETE_GUIDE.md # GitHub + Vercel guide
-├── 📄 AI_QUOTE_PROMPT_VFUTURE.md      # AI prompt documentation
+├── 📄 AI_QUOTE_PROMPT_SGMNETWORK.md      # AI prompt documentation
 ├── 📄 CONTRIBUTING.md                 # Contributing guidelines
 ├── 📄 LICENSE                         # License file
 ├── 📄 middleware.ts                   # Next.js middleware
@@ -117,8 +117,8 @@ npm run start
 1. Truy cập [https://github.com](https://github.com)
 2. Click **"New repository"**
 3. Điền thông tin:
-   - **Repository name**: `vfuture-website` (hoặc tên bạn muốn)
-   - **Description**: `VFuture Gaming Community CMS`
+   - **Repository name**: `sgm-network` (hoặc tên bạn muốn)
+   - **Description**: `SGM Network Gaming Community CMS`
    - **Visibility**: `Private` (nếu code nhạy cảm) hoặc `Public`
 4. **KHÔNG** check "Add a README file"
 5. Click **"Create repository"**
@@ -144,7 +144,7 @@ cd /path/to/repo
 git add .
 
 # Commit với message
-git commit -m "Initial commit: VFuture website deployment"
+git commit -m "Initial commit: SGM Network website deployment"
 
 # Push lên GitHub
 git push -u origin main
@@ -227,7 +227,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJxxxxx...
 1. Vào [https://app.supabase.com](https://app.supabase.com)
 2. Click **"New project"**
 3. Điền thông tin:
-   - **Name**: `vfuture-prod`
+   - **Name**: `sgm-network-prod`
    - **Database Password**: Tạo mật khẩu mạnh
    - **Region**: Chọn gần nhất (Asia Southeast)
 
@@ -371,5 +371,5 @@ git push origin main
 
 ---
 
-*Hướng dẫn này được tạo cho project VFuture v5.0.0. Cập nhật theo thời gian để phù hợp với phiên bản mới nhất.*</content>
+*Hướng dẫn này được tạo cho project SGM Network v1.0.0. Cập nhật theo thời gian để phù hợp với phiên bản mới nhất.*</content>
 <parameter name="filePath">d:\VS Code Project\WEBSITE_FF_NEW\WEBSITE_FF_NEW_V5_TEST - Sao chép\GITHUB_VERCEL_DEPLOYMENT_GUIDE.md

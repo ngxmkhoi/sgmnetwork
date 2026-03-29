@@ -57,7 +57,7 @@ export default async function HomePage() {
           name={activeEvent.title}
           startDate={activeEvent.start_date}
           endDate={activeEvent.end_date}
-          location="VFuture Hub"
+          location="SGM Network Hub"
           description={activeEvent.description || siteConfig.description}
           url={activeEvent.link ?? `${siteConfig.url}/calendar`}
           image={[activeEvent.image_url]}

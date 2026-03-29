@@ -15,7 +15,7 @@ function buildContactEmailHtml(name: string, email: string, message: string) {
         <!-- Header -->
         <tr>
           <td style="background:linear-gradient(135deg,#0052ff 0%,#003acc 100%);padding:32px 36px;">
-            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.2em;color:rgba(255,255,255,0.6);text-transform:uppercase;">VFUTURE</p>
+            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.2em;color:rgba(255,255,255,0.6);text-transform:uppercase;">SGM NETWORK</p>
             <h1 style="margin:8px 0 0;font-size:22px;font-weight:800;color:#fff;letter-spacing:0.04em;text-transform:uppercase;">Liên Hệ Mới</h1>
           </td>
         </tr>
@@ -50,7 +50,7 @@ function buildContactEmailHtml(name: string, email: string, message: string) {
         <tr>
           <td style="background:#0d0d16;border-top:1px solid #1e1e2e;padding:20px 36px;">
             <p style="margin:0;font-size:11px;color:#4a4a6a;text-align:center;letter-spacing:0.08em;">
-              © ${new Date().getFullYear()} VFUTURE · <a href="${siteConfig.url}" style="color:#0052ff;text-decoration:none;">${siteConfig.url}</a>
+              © ${new Date().getFullYear()} SGM NETWORK · <a href="${siteConfig.url}" style="color:#0052ff;text-decoration:none;">${siteConfig.url}</a>
             </p>
           </td>
         </tr>
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
         from: fromEmail,
         to: siteConfig.contactEmail,
         replyTo: email,
-        subject: `[VFuture] Liên hệ từ ${name}`,
+        subject: `[SGM Network] Liên hệ từ ${name}`,
         html: buildContactEmailHtml(name, email, message),
       });
     } catch {

@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Chính Sách Bảo Mật",
-  description: "Chính sách bảo mật và bảo vệ dữ liệu người dùng của VFuture — dự án cộng đồng fan-made Free Fire.",
+  description: "Chính sách bảo mật và bảo vệ dữ liệu người dùng của SGM Network — dự án cộng đồng fan-made Free Fire.",
 };
 
 const modules = [
   {
     icon: "🎯",
     title: "1. Sứ Mệnh & Mục Tiêu",
-    intro: "VFuture là dự án cộng đồng phi lợi nhuận, chuyên theo dõi sự kiện, tin tức và nội dung nổi bật của Free Fire Việt Nam.",
+    intro: "SGM Network là dự án cộng đồng phi lợi nhuận, chuyên theo dõi sự kiện, tin tức và nội dung nổi bật của Free Fire Việt Nam.",
     items: [
       {
         strong: "Lưu Trữ Media",
@@ -43,7 +43,7 @@ const modules = [
   {
     icon: "📋",
     title: "3. Quản Lý Nội Dung",
-    intro: "Nội dung trên VFuture được kiểm duyệt bởi đội ngũ quản trị chuyên trách.",
+    intro: "Nội dung trên SGM Network được kiểm duyệt bởi đội ngũ quản trị chuyên trách.",
     items: [
       {
         strong: "Nguồn Xác Minh",
@@ -58,7 +58,7 @@ const modules = [
   {
     icon: "⚖️",
     title: "4. Trạng Thái Pháp Lý",
-    intro: "VFuture hoạt động như một trang lưu trữ truyền thông độc lập do cộng đồng điều hành.",
+    intro: "SGM Network hoạt động như một trang lưu trữ truyền thông độc lập do cộng đồng điều hành.",
     items: [
       {
         strong: "Không Liên Kết Chính Thức",
@@ -101,7 +101,7 @@ export default function PrivacyPolicyPage() {
           <span>🔒 Tài liệu chính thức</span>
         </div>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70">
-          Chào mừng bạn đến với <strong className="text-white">VFuture</strong>. Trang này trình bày
+          Chào mừng bạn đến với <strong className="text-white">SGM Network</strong>. Trang này trình bày
           các cam kết bảo mật và quyền riêng tư của chúng tôi dành cho cộng đồng.
         </p>
       </div>

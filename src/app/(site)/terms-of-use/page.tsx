@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Điều Khoản Sử Dụng",
-  description: "Điều khoản sử dụng của VFuture — hiểu rõ quyền sở hữu trí tuệ, trách nhiệm người dùng và các tuyên bố miễn trừ trách nhiệm.",
+  description: "Điều khoản sử dụng của SGM Network — hiểu rõ quyền sở hữu trí tuệ, trách nhiệm người dùng và các tuyên bố miễn trừ trách nhiệm.",
 };
 
 const modules = [
   {
     icon: "©️",
     title: "1. Quyền Sở Hữu Trí Tuệ (Garena)",
-    intro: "Đây là quy định quan trọng nhất liên quan đến toàn bộ nội dung trên VFuture.",
+    intro: "Đây là quy định quan trọng nhất liên quan đến toàn bộ nội dung trên SGM Network.",
     items: [
       {
         strong: "Tôn Trọng Bản Quyền",
@@ -17,7 +17,7 @@ const modules = [
       },
       {
         strong: "Không Xác Nhận Quyền Sở Hữu",
-        text: "VFuture tuyên bố rõ ràng rằng chúng tôi KHÔNG sở hữu bản quyền đối với bất kỳ tài sản nào được đăng tải.",
+        text: "SGM Network tuyên bố rõ ràng rằng chúng tôi KHÔNG sở hữu bản quyền đối với bất kỳ tài sản nào được đăng tải.",
       },
       {
         strong: "Sử Dụng Phi Thương Mại",
@@ -69,7 +69,7 @@ const modules = [
   {
     icon: "📝",
     title: "5. Sửa Đổi Chính Sách",
-    intro: "VFuture bảo lưu quyền sửa đổi nội dung hoặc chấm dứt hoạt động mà không cần báo trước.",
+    intro: "SGM Network bảo lưu quyền sửa đổi nội dung hoặc chấm dứt hoạt động mà không cần báo trước.",
     items: [
       {
         strong: "Yêu Cầu Bản Quyền",
@@ -97,7 +97,7 @@ export default function TermsOfUsePage() {
           <span>🔒 Tài liệu chính thức</span>
         </div>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70">
-          Bằng cách sử dụng <strong className="text-white">VFuture</strong>, bạn đồng ý với các
+          Bằng cách sử dụng <strong className="text-white">SGM Network</strong>, bạn đồng ý với các
           điều kiện sau. Vui lòng đọc kỹ để đảm bảo sử dụng nền tảng đúng cách.
         </p>
       </div>

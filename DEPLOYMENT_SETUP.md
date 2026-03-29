@@ -1,6 +1,6 @@
-# 📚 VFUTURE V5 - Complete Deployment & Setup Guide
+# 📚 SGM NETWORK V1 - Complete Deployment & Setup Guide
 
-**© 2026 Veltrix Media Group. All Rights Reserved.**
+**© 2026 SGM Network. All Rights Reserved.**
 
 **Status**: Production Ready | **Last Updated**: 24/03/2026
 
@@ -43,7 +43,7 @@ npm run dev
 # Phase 4: GitHub (5 phút)
 git init
 git add .
-git commit -m "VFuture V5 Production"
+git commit -m "SGM Network V1 Production"
 git remote add origin [your-private-repo]
 git push -u origin main
 
@@ -238,8 +238,8 @@ Verify these pages load:
 ### Step 4.1: Create GitHub Repository
 
 1. Go to [github.com/new](https://github.com/new)
-2. **Repository name**: `vfuture-v5` (or your choice)
-3. **Description**: "VFuture V5 CMS Platform"
+2. **Repository name**: `sgm-network-v1` (or your choice)
+3. **Description**: "SGM Network V1 CMS Platform"
 4. **Visibility**: Private ⚠️ IMPORTANT
 5. Click **Create repository**
 
@@ -253,10 +253,10 @@ git init
 git add .
 
 # Commit
-git commit -m "Initial commit: VFuture V5 Production-Ready CMS"
+git commit -m "Initial commit: SGM Network V1 Production-Ready CMS"
 
 # Add remote
-git remote add origin https://github.com/YOUR_USERNAME/vfuture-v5.git
+git remote add origin https://github.com/YOUR_USERNAME/sgm-network-v1.git
 
 # Push to main branch
 git branch -M main
@@ -293,7 +293,7 @@ git check-ignore .env.local
 2. Login/Signup
 3. Click **New Project**
 4. Click **Import Git Repository**
-5. Select your GitHub repo (`vfuture-v5`)
+5. Select your GitHub repo (`sgm-network-v1`)
 6. Click **Import**
 
 ### Step 5.2: Configure Environment Variables
@@ -319,7 +319,7 @@ NEXT_PUBLIC_SITE_URL = https://your-project.vercel.app
 
 ### Step 5.4: Test Production
 
-1. Go to your Vercel domain (e.g., `https://vfuture-v5.vercel.app`)
+1. Go to your Vercel domain (e.g., `https://sgm-network-v1.vercel.app`)
 2. Test public pages load ✅
 3. Test login at `/auth/login` ✅
 4. Test admin dashboard at `/admin` ✅
@@ -354,7 +354,7 @@ To use custom domain:
 
 ```
 RESEND_API_KEY=re_your_key_here
-ADMIN_INVITE_FROM_EMAIL=VFuture Admin <noreply@your-email.com>
+ADMIN_INVITE_FROM_EMAIL=SGM Network Admin <noreply@your-email.com>
 ADMIN_INVITE_REPLY_TO_EMAIL=support@your-email.com
 ```
 
@@ -501,7 +501,7 @@ Once you reach this point:
 ✅ **GitHub**: Code pushed to private repo  
 ✅ **Production**: Live on Vercel  
 
-**Congratulations! Your VFuture V5 system is live! 🚀**
+**Congratulations! Your SGM Network V1 system is live! 🚀**
 
 ---
 
@@ -519,4 +519,4 @@ For issues not covered here:
 
 ---
 
-**© 2026 Veltrix Media Group. All Rights Reserved.**
+**© 2026 SGM Network. All Rights Reserved.**

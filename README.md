@@ -1,16 +1,16 @@
-# VFuture
+# SGM Network
 
 Private, proprietary CMS and community platform for a Free Fire-focused audience, built with Next.js 14, TypeScript, Tailwind CSS, and Supabase.
 
 Hệ thống CMS và nền tảng cộng đồng độc quyền dành cho tệp người dùng Free Fire, được xây dựng bằng Next.js 14, TypeScript, Tailwind CSS và Supabase.
 
-> **English:** This repository is not open source. Access and use are limited to authorized personnel and approved partners of Veltrix Media Group. See [LICENSE](LICENSE).
+> **English:** This repository is not open source. Access and use are limited to authorized personnel and approved partners of SGM Network. See [LICENSE](LICENSE).
 >
 > **Tiếng Việt:** Đây không phải là dự án mã nguồn mở. Quyền truy cập và sử dụng chỉ dành cho nhân sự được ủy quyền và đối tác đã được phê duyệt của Veltrix Media Group. Xem [LICENSE](LICENSE).
 
 ## Overview / Tổng Quan
 
-**English:** VFuture combines a public-facing fan/community website with a protected admin control plane. The public experience includes event timelines, news, eSports stream surfaces, gallery content, contact channels, policy pages, SEO metadata, and localized route aliases. The admin experience provides content management, role management, invitation-based onboarding, activity visibility, site settings management, and media upload support.
+**English:** SGM Network combines a public-facing fan/community website with a protected admin control plane. The public experience includes event timelines, news, eSports stream surfaces, gallery content, contact channels, policy pages, SEO metadata, and localized route aliases. The admin experience provides content management, role management, invitation-based onboarding, activity visibility, site settings management, and media upload support.
 
 **Tiếng Việt:** VFuture kết hợp giữa website cộng đồng fan/public và một khu vực quản trị được bảo vệ. Phần công khai bao gồm timeline sự kiện, tin tức, khu vực eSports, gallery, kênh liên hệ, các trang chính sách, metadata SEO và các route alias đã bản địa hóa. Phần quản trị cung cấp quản lý nội dung, quản lý vai trò, quy trình mời thành viên, theo dõi hoạt động, quản lý cài đặt website và hỗ trợ tải media.
 

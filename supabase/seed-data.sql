@@ -1,5 +1,5 @@
 -- ============================================================
--- VFuture V5 – SEED INITIAL DATA
+-- SGM Network V1 – SEED INITIAL DATA
 -- ============================================================
 -- Chạy file này SAU khi đã run schema.sql
 -- Location: Supabase Dashboard → SQL Editor

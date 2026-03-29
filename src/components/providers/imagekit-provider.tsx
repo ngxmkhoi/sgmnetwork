@@ -9,7 +9,7 @@ type ImageKitProviderProps = {
 
 export function ImageKitProvider({ children }: ImageKitProviderProps) {
   return (
-    <Provider urlEndpoint="https://ik.imagekit.io/veltrixmediagroup">
+    <Provider urlEndpoint="https://ik.imagekit.io/oyvgbkwyt">
       {children}
     </Provider>
   );

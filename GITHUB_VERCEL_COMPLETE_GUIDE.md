@@ -1,6 +1,6 @@
 # 🚀 Complete Guide: GitHub Push & Vercel Deployment
 
-**VFuture V5.0.0** - Next.js 14 CMS Platform  
+**SGM Network V1.0.0** - Next.js 14 CMS Platform  
 **Status:** ✅ Production Ready  
 **Build:** 201 kB | 46 Pages | 0 Errors
 
@@ -40,14 +40,14 @@ SUPABASE_SERVICE_ROLE_KEY=eyJxx...
 **On GitHub:**
 
 1. Go to https://github.com/new
-2. Enter repository name: `vfuture` (or your preferred name)
+2. Enter repository name: `sgm-network` (or your preferred name)
 3. Select **Private** (keep code confidential)
 4. Initialize with `.gitignore` (Node.js)
 5. Click **Create repository**
 
 **Copy the repository URL:**
 ```
-https://github.com/YOUR_USERNAME/vfuture.git
+https://github.com/YOUR_USERNAME/sgm-network.git
 ```
 
 ### Step 2️⃣: Configure Git Locally
@@ -65,13 +65,13 @@ git config user.email "your@email.com"
 git config user.name "Your Name"
 
 # Add GitHub repository as remote
-git remote add origin https://github.com/YOUR_USERNAME/vfuture.git
+git remote add origin https://github.com/YOUR_USERNAME/sgm-network.git
 
 # Verify remote configured
 git remote -v
 # Output should show:
-# origin  https://github.com/YOUR_USERNAME/vfuture.git (fetch)
-# origin  https://github.com/YOUR_USERNAME/vfuture.git (push)
+# origin  https://github.com/YOUR_USERNAME/sgm-network.git (fetch)
+# origin  https://github.com/YOUR_USERNAME/sgm-network.git (push)
 ```
 
 ### Step 3️⃣: Check .gitignore
@@ -122,7 +122,7 @@ git add .
 git status
 
 # Commit with message
-git commit -m "🚀 Initial commit: VFuture V5.0.0 - Production Ready CMS"
+git commit -m "🚀 Initial commit: SGM Network V1.0.0 - Production Ready CMS"
 ```
 
 **Output should show:**
@@ -150,7 +150,7 @@ git push
 
 ### Step 6️⃣: Verify on GitHub
 
-1. Go to https://github.com/YOUR_USERNAME/vfuture
+1. Go to https://github.com/YOUR_USERNAME/sgm-network
 2. Verify files are visible:
    - ✅ `src/` folder with all components
    - ✅ `public/` folder with assets
@@ -174,7 +174,7 @@ git push
 **On Vercel Dashboard:**
 
 1. Click **Add New...** → **Project**
-2. Search for repository: `vfuture`
+2. Search for repository: `sgm-network`
 3. Click **Import**
 
 ### Step 3️⃣: Configure Project Settings
@@ -213,7 +213,7 @@ npm run build
 2. Wait for build to complete (usually 2-3 minutes)
 3. See success message: "✅ Production Ready"
 
-**Deployment URL:** https://vfuture.vercel.app (automatically assigned)
+**Deployment URL:** https://sgmnetwork.vercel.app (automatically assigned)
 
 ### Step 5️⃣: Configure Custom Domain (Optional)
 
@@ -221,7 +221,7 @@ npm run build
 
 1. Go to **Project Settings** → **Domains**
 2. Click **Add Domain**
-3. Enter your domain: e.g., `vfuture.com`
+3. Enter your domain: e.g., `sgmnetwork.com`
 4. Update DNS records as per Vercel instructions
 
 ---
@@ -241,9 +241,9 @@ npm run build
 **Test Command:**
 ```powershell
 # Visit in browser
-https://vfuture.vercel.app
-https://vfuture.vercel.app/events
-https://vfuture.vercel.app/news
+https://sgmnetwork.vercel.app
+https://sgmnetwork.vercel.app/events
+https://sgmnetwork.vercel.app/news
 ```
 
 ### 2. Admin Dashboard
@@ -260,18 +260,18 @@ https://vfuture.vercel.app/news
 
 **Login URL:**
 ```
-https://vfuture.vercel.app/auth/login
+https://sgmnetwork.vercel.app/auth/login
 ```
 
 **Admin Panel:**
 ```
-https://vfuture.vercel.app/admin
+https://sgmnetwork.vercel.app/admin
 ```
 
 ### 3. Verify Favicon
 
 Check browser tab:
-- ✅ Branded icon shows (VFuture logo)
+- ✅ Branded icon shows (SGM Network logo)
 - ✅ Both main pages and admin show same icon
 
 ### 4. Check Console for Errors
@@ -288,7 +288,7 @@ Check browser tab:
 ### Essential Files to Commit
 
 ```
-vfuture/
+sgm-network/
 ├── src/                           # ✅ Source code
 │   ├── app/                      # ✅ Next.js routes & layouts
 │   ├── components/               # ✅ React components
@@ -436,7 +436,7 @@ Get-ChildItem -Recurse -ErrorAction SilentlyContinue | Measure-Object -Sum lengt
 When deployed on Vercel, you should see:
 
 ```
-✅ vfuture.vercel.app is live
+✅ sgmnetwork.vercel.app is live
 ✅ Home page loads instantly
 ✅ Navigation works (Events, News, etc.)
 ✅ Admin panel accessible
@@ -466,5 +466,5 @@ When deployed on Vercel, you should see:
 ---
 
 **Last Updated:** March 24, 2026  
-**Version:** VFuture 5.0.0  
+**Version:** SGM Network 1.0.0  
 **Status:** ✅ Production Ready for Deployment

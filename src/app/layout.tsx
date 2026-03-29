@@ -1,22 +1,13 @@
 import type { Metadata } from "next";
-import { Saira_Semi_Condensed } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants/site";
 import { AppProviders } from "@/components/providers/app-providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const heading = Saira_Semi_Condensed({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-heading",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const body = Saira_Semi_Condensed({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700", "800"],
-});
+// GFF Fonts are loaded from fonts.css
+// Heading: --font-heading (GFF Latin ExtraBold)
+// Body: --font-body (GFF Latin Regular)
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -29,7 +20,7 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
   keywords: [
-    "VFuture",
+    "SGM Network",
     "Free Fire fan made",
     "lịch sự kiện Free Fire",
     "tin tức Free Fire",
@@ -74,7 +65,7 @@ export default function RootLayout({
 }>) {
   const faviconUrl = siteConfig.favicon;
   return (
-    <html lang="vi" suppressHydrationWarning className={cn(heading.variable, body.variable)}>
+    <html lang="vi" suppressHydrationWarning>
       {/* Manually declared link tags for favicon to bypass caching or next-metadata bugs */}
       <link rel="icon" href={faviconUrl} sizes="any" />
       <link rel="apple-touch-icon" href={faviconUrl} />

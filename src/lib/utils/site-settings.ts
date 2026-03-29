@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/constants/site";
 export type HeroSliderEffect = "fade" | "zoom" | "slide" | "drift" | "cinematic";
 
 export const defaultSiteSettingValues: Record<string, string> = {
-  "home.hero.title": "VFuture",
+  "home.hero.title": "SGM Network",
   "home.background.desktop_urls":
     "https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20263/697b5d2e34ac088f5b5a4427d57f6281.jpg",
   "home.background.mobile_urls":
@@ -72,10 +72,10 @@ export function resolveHeroSliderSettings(settingsMap: Record<string, string>) {
   const effect = settingsMap["home.background.transition_effect"];
   const transitionEffect: HeroSliderEffect =
     effect === "zoom" ||
-    effect === "slide" ||
-    effect === "drift" ||
-    effect === "cinematic" ||
-    effect === "fade"
+      effect === "slide" ||
+      effect === "drift" ||
+      effect === "cinematic" ||
+      effect === "fade"
       ? effect
       : "fade";
 

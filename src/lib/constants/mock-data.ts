@@ -25,7 +25,7 @@ export const mockSettings: SiteSetting[] = [
   {
     id: "stg-1",
     key: "home.hero.title",
-    value: "VFuture",
+    value: "SGM Network",
     updated_at: formatISO(subDays(now, 1)),
   },
   {
@@ -63,7 +63,7 @@ export const mockSettings: SiteSetting[] = [
   {
     id: "stg-7",
     key: "seo.default_title",
-    value: "VFuture",
+    value: "SGM Network",
     updated_at: formatISO(subDays(now, 1)),
   },
   {

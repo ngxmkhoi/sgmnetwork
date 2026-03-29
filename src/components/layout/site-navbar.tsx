@@ -19,8 +19,8 @@ import {
 import { cn } from "@/lib/utils";
 import { navItems, siteConfig } from "@/lib/constants/site";
 
-const ICON_LIGHT = "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/b20262203?updatedAt=1774193355414";
-const ICON_DARK  = "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/w20262203?updatedAt=1774193489095";
+const ICON_LIGHT = "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035";
+const ICON_DARK = "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/w21232026.png?updatedAt=1774797861441";
 
 export function SiteNavbar() {
   const pathname = usePathname();
@@ -49,16 +49,16 @@ export function SiteNavbar() {
             <Image
               src={ICON_LIGHT}
               alt={siteConfig.shortName}
-              width={36}
-              height={36}
-              className="block object-contain drop-shadow-[0_8px_22px_rgba(15,23,42,0.18)] dark:hidden"
+              width={40}
+              height={40}
+              className="block aspect-square object-cover drop-shadow-[0_8px_22px_rgba(15,23,42,0.18)] dark:hidden"
             />
             <Image
               src={ICON_DARK}
               alt={siteConfig.shortName}
-              width={36}
-              height={36}
-              className="hidden object-contain drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] dark:block"
+              width={40}
+              height={40}
+              className="hidden aspect-square object-cover drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] dark:block"
             />
           </motion.div>
         </Link>
@@ -126,7 +126,7 @@ export function SiteNavbar() {
                       className={cn(
                         "block rounded-xl border border-transparent px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground transition hover:border-primary/20 hover:bg-primary/10 hover:text-primary dark:text-white dark:hover:text-amber-300",
                         pathname === item.href &&
-                          "border-primary/25 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/12 dark:text-amber-300",
+                        "border-primary/25 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/12 dark:text-amber-300",
                       )}
                     >
                       {item.title}

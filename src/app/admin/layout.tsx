@@ -11,8 +11,8 @@ type AdminLayoutProps = {
 
 export const metadata: Metadata = {
   title: {
-    default: "VFUTURE Admin",
-    template: "VFUTURE Admin | %s",
+    default: "SGM Network Admin",
+    template: "SGM Network Admin | %s",
   },
   icons: {
     icon: siteConfig.favicon,

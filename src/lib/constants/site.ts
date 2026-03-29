@@ -1,13 +1,13 @@
 export const siteConfig = {
-  name: "VFuture",
-  shortName: "VFuture",
+  name: "SGM Network",
+  shortName: "SGM Network",
   description:
     "Cộng đồng game fan-made với lịch sự kiện, tin tức, gallery và hệ thống quản trị hiện đại theo phong cách Free Fire.",
-  url: "https://vfuture.vercel.app",
-  productionUrl: "https://vfuture.vercel.app",
+  url: "https://sgmnetwork.vercel.app",
+  productionUrl: "https://sgmnetwork.vercel.app",
   ogImage: "/og-image.png",
-  favicon: "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/f20262203?updatedAt=1774193443308",
-  sidebarIcon: "https://ik.imagekit.io/veltrixmediagroup/vfuture/20262203/f20262203?updatedAt=1774193443308",
+  favicon: "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035",
+  sidebarIcon: "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035",
   links: {
     facebook: "https://facebook.com",
     tiktok: "https://tiktok.com",

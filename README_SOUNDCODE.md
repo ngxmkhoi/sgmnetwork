@@ -1,4 +1,4 @@
-# 🎮 VFUTURE v5 - Premium News & Events CMS Platform
+# 🎮 SGM Network v1 - Premium News & Events CMS Platform
 **Professional. Scalable. Production-Ready.**
 
 ---
@@ -15,13 +15,13 @@
 
 | Property | Details |
 |----------|---------|
-| **Product Name** | VFUTURE v5 - News + Events CMS + Gallery |
-| **Version** | 5.0.0 (Latest) |
+| **Product Name** | SGM Network v1 - News + Events CMS + Gallery |
+| **Version** | 1.0.0 (Latest) |
 | **Type** | Professional News/Events Management System |
 | **Target Market** | Agencies, Startups, Streamers, Gaming Communities, Sports Organizations |
 | **Build Date** | 2026 |
 | **Support Status** | Active Development & Support |
-| **Copyright** | © Veltrix Media Group |
+| **Copyright** | © SGM Network |
 
 ### 🎯 Key Features at a Glance
 
@@ -244,7 +244,7 @@ src/
 
 ## 🎯 Use Cases
 
-| Use Case | Suitability | Why Choose VFUTURE |
+| Use Case | Suitability | Why Choose SGM Network |
 |----------|-------------|-------------------|
 | **Gaming Communities** | ⭐⭐⭐⭐⭐ | Event management, news, gallery |
 | **Esports Teams** | ⭐⭐⭐⭐⭐ | Tournament management, team news |
@@ -294,7 +294,7 @@ src/
 
 | Thuộc Tính | Chi Tiết |
 |-----------|---------|
-| **Tên Sản Phẩm** | VFUTURE v5 - Hệ Thống Quản Lý Tin Tức + Sự Kiện + Gallery |
+| **Tên Sản Phẩm** | SGM Network v1 - Hệ Thống Quản Lý Tin Tức + Sự Kiện + Gallery |
 | **Phiên Bản** | 5.0.0 (Mới Nhất) |
 | **Loại** | Hệ Thống Quản Lý Nội Dung Chuyên Nghiệp |
 | **Thị Trường Mục Tiêu** | Agency, Startup, Streamer, Cộng Đồng Gaming, Tổ Chức Thể Thao |
@@ -523,7 +523,7 @@ src/
 
 ## 🎯 Use Cases
 
-| Use Case | Phù Hợp | Lý Do Chọn VFUTURE |
+| Use Case | Phù Hợp | Lý Do Chọn SGM Network |
 |----------|---------|-------------------|
 | **Gaming Communities** | ⭐⭐⭐⭐⭐ | Quản lý event, tin tức, gallery |
 | **Esports Teams** | ⭐⭐⭐⭐⭐ | Quản lý giải đấu, tin tức team |
@@ -567,7 +567,7 @@ src/
 
 ## 🎯 Tổng Kết
 
-**VFUTURE v5** là một giải pháp hoàn chỉnh để xây dựng website quản lý tin tức, sự kiện chuyên nghiệp. Với công nghệ hiện đại, bảo mật cao, hiệu suất tốt và tài liệu đầy đủ, nó là lựa chọn tối ưu cho các agency, startup và tổ chức muốn có một platform quản lý nội dung chất lượng.
+**SGM Network v1** là một giải pháp hoàn chỉnh để xây dựng website quản lý tin tức, sự kiện chuyên nghiệp. Với công nghệ hiện đại, bảo mật cao, hiệu suất tốt và tài liệu đầy đủ, nó là lựa chọn tối ưu cho các agency, startup và tổ chức muốn có một platform quản lý nội dung chất lượng.
 
 **Hãy liên hệ ngay để nhận được thông tin chi tiết và giá cụ thể!**
 

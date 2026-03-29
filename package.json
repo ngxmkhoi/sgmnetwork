@@ -1,14 +1,14 @@
 {
-  "name": "vfuture",
-  "version": "5.0.0",
-  "description": "VFuture - Modern Gaming Community CMS (Proprietary Software)",
+  "name": "sgm-network",
+  "version": "1.0.0",
+  "description": "SGM Network - Modern Gaming Community CMS (Proprietary Software)",
   "private": true,
   "repository": {
     "type": "git",
     "url": "private",
     "private": true
   },
-  "author": "Veltrix Media Group",
+  "author": "SGM Network",
   "license": "PROPRIETARY",
   "scripts": {
     "dev": "next dev",

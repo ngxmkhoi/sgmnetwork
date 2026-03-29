@@ -1,5 +1,5 @@
 -- ============================================================
--- VFuture V5 – Supabase Schema
+-- SGM NETWORK V1 – Supabase Schema
 -- Chạy toàn bộ file này trong Supabase SQL Editor
 -- ============================================================
 
@@ -402,9 +402,9 @@ using (public.is_admin());
 
 insert into public.settings (key, value)
 values
-  ('seo.default_title', 'VFuture'),
+  ('seo.default_title', 'SGM Network'),
   ('seo.default_description', 'Fan-made gaming community hub for Free Fire events, news and gallery'),
-  ('home.hero.title', 'VFuture'),
+  ('home.hero.title', 'SGM Network'),
   ('home.background.desktop_urls', 'https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20263/697b5d2e34ac088f5b5a4427d57f6281.jpg'),
   ('home.background.mobile_urls', 'https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20263/0680c1792156b8a80095c669520f019a.jpg'),
   ('home.background.interval_seconds', '5'),
