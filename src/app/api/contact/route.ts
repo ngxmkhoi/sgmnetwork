@@ -81,22 +81,25 @@ export async function POST(request: NextRequest) {
   const email = sanitizePlainText(parsed.data.email);
   const message = sanitizePlainText(parsed.data.message);
 
-  const resendKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.ADMIN_INVITE_FROM_EMAIL ?? "onboarding@resend.dev";
+  const gmailUser = process.env.GMAIL_USER;
+  const gmailPass = process.env.GMAIL_APP_PASSWORD;
 
-  if (resendKey && !resendKey.startsWith("re_xxx")) {
+  if (gmailUser && gmailPass) {
     try {
-      const { Resend } = await import("resend");
-      const resend = new Resend(resendKey);
-      await resend.emails.send({
-        from: fromEmail,
+      const nodemailer = await import("nodemailer");
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: { user: gmailUser, pass: gmailPass },
+      });
+      await transporter.sendMail({
+        from: `"SGM Network" <${gmailUser}>`,
         to: siteConfig.contactEmail,
         replyTo: email,
         subject: `[SGM Network] Liên hệ từ ${name}`,
         html: buildContactEmailHtml(name, email, message),
       });
-    } catch {
-      // Không block response nếu gửi email lỗi
+    } catch (err) {
+      console.error("[contact] Gửi email thất bại:", err);
     }
   }
 
