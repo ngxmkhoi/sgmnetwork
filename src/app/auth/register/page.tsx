@@ -115,8 +115,11 @@ function RegisterForm() {
       body: JSON.stringify({ email }),
     }).catch(() => null);
 
-    toast.success("TẠO TÀI KHOẢN THÀNH CÔNG. HÃY KIỂM TRA EMAIL ĐỂ XÁC NHẬN NẾU CẦN.");
-    router.push("/auth/login");
+    toast.success("TẠO TÀI KHOẢN THÀNH CÔNG. ĐANG CHUYỂN VÀO TRANG QUẢN TRỊ.");
+    window.setTimeout(() => {
+      router.push("/admin");
+      router.refresh();
+    }, 800);
   };
 
   return (

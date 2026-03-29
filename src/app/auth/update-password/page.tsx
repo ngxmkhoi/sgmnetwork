@@ -72,7 +72,15 @@ export default function UpdatePasswordPage() {
       return;
     }
 
-    // Since the user is logged in via the verifyOtp recovery token, we can update them directly:
+    // Restore recovery session từ sessionStorage
+    const accessToken = sessionStorage.getItem("recovery_access_token");
+    const refreshToken = sessionStorage.getItem("recovery_refresh_token");
+    if (accessToken && refreshToken) {
+      await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+      sessionStorage.removeItem("recovery_access_token");
+      sessionStorage.removeItem("recovery_refresh_token");
+    }
+
     const { error } = await supabase.auth.updateUser({
       password: password,
     });

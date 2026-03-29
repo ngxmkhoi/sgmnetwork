@@ -39,7 +39,7 @@ export default function VerifyOtpPage() {
       return;
     }
 
-    const { error } = await supabase.auth.verifyOtp({
+    const { data, error } = await supabase.auth.verifyOtp({
       email,
       token: otp,
       type: "recovery",
@@ -55,6 +55,12 @@ export default function VerifyOtpPage() {
           : "MÃ XÁC NHẬN KHÔNG NHẬN DẠNG HOẶC ĐÃ HẾT HẠN."
       );
       return;
+    }
+
+    // Lưu access_token để update-password page dùng lại
+    if (data.session) {
+      sessionStorage.setItem("recovery_access_token", data.session.access_token);
+      sessionStorage.setItem("recovery_refresh_token", data.session.refresh_token);
     }
 
     toast.success("XÁC NHẬN THÀNH CÔNG. HÃY NHẬP MẬT KHẨU MỚI.");
