@@ -87,7 +87,7 @@ export function StreamModal({ stream, open, onOpenChange }: StreamModalProps) {
         <div className="max-h-[92vh] overflow-y-auto">
           <div className="px-5 pb-3 pt-4">
             <DialogHeader>
-              <DialogTitle className="font-heading text-lg font-bold uppercase leading-snug tracking-[0.04em] text-foreground line-clamp-2">
+              <DialogTitle className="font-heading text-lg font-bold uppercase leading-snug tracking-[0.04em] text-foreground line-clamp-2 pr-8">
                 {stream.title}
               </DialogTitle>
             </DialogHeader>
