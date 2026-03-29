@@ -74,6 +74,10 @@ export async function POST(request: NextRequest) {
         summary: `Thêm email mời ${invitedEmail.email} hiệu lực đến ${new Date(invitedEmail.expires_at).toLocaleString("vi-VN")}`,
   });
 
+  if (!emailDelivery.sent) {
+    console.error("[invite] Email gửi thất bại:", JSON.stringify(emailDelivery));
+  }
+
   return NextResponse.json({ invitedEmail, emailDelivery }, { status: 201 });
 }
 

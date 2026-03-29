@@ -8,59 +8,8 @@ type SendAdminInviteEmailInput = {
 
 function buildInviteEmailHtml(email: string, expiresAt: string, redirectTo?: string) {
   const expireDate = new Date(expiresAt).toLocaleString("vi-VN");
-  return `<!DOCTYPE html>
-<html lang="vi">
-<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /></head>
-<body style="margin:0;padding:0;background:#0a0a0f;font-family:'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0f;padding:40px 16px;">
-    <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" style="background:#111118;border:1px solid #1e1e2e;border-radius:16px;overflow:hidden;max-width:560px;width:100%;">
-        <tr>
-          <td style="background:linear-gradient(135deg,#0052ff 0%,#003acc 100%);padding:32px 36px;">
-            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.2em;color:rgba(255,255,255,0.6);text-transform:uppercase;">SGM NETWORK</p>
-            <h1 style="margin:8px 0 0;font-size:22px;font-weight:800;color:#fff;letter-spacing:0.04em;text-transform:uppercase;">Lời Mời Tạo Tài Khoản Admin</h1>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:32px 36px;">
-            <p style="margin:0 0 16px;font-size:15px;color:#c8c8d8;line-height:1.7;">
-              Bạn được mời tạo tài khoản quản trị viên cho <strong style="color:#fff;">SGM Network</strong>.
-            </p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#0d0d16;border:1px solid #1e1e2e;border-radius:10px;padding:16px 18px;margin-bottom:24px;">
-              <tr>
-                <td>
-                  <p style="margin:0 0 6px;font-size:10px;font-weight:700;letter-spacing:0.16em;color:#4a4a6a;text-transform:uppercase;">Email được mời</p>
-                  <p style="margin:0 0 16px;font-size:15px;font-weight:600;color:#e8e8f0;">${email}</p>
-                  <p style="margin:0 0 6px;font-size:10px;font-weight:700;letter-spacing:0.16em;color:#4a4a6a;text-transform:uppercase;">Hết hạn lúc</p>
-                  <p style="margin:0;font-size:14px;color:#e8e8f0;">${expireDate}</p>
-                </td>
-              </tr>
-            </table>
-            ${redirectTo ? `
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td align="center">
-                  <a href="${redirectTo}" style="display:inline-block;background:linear-gradient(135deg,#0052ff,#003acc);color:#fff;font-size:14px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:14px 32px;border-radius:10px;">
-                    Tạo Tài Khoản Ngay
-                  </a>
-                </td>
-              </tr>
-            </table>
-            ` : ""}
-          </td>
-        </tr>
-        <tr>
-          <td style="background:#0d0d16;border-top:1px solid #1e1e2e;padding:20px 36px;">
-            <p style="margin:0;font-size:11px;color:#4a4a6a;text-align:center;letter-spacing:0.08em;">
-              © ${new Date().getFullYear()} SGM NETWORK · <a href="${siteConfig.url}" style="color:#0052ff;text-decoration:none;">${siteConfig.url}</a>
-            </p>
-          </td>
-        </tr>
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`;
+  const actionUrl = redirectTo ?? siteConfig.url;
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Lời Mời Tạo Tài Khoản Quản Trị</title></head><body style="margin: 0; padding: 24px; background-color: #f1f5f9; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;"><div style="max-width: 520px; margin: 0 auto; background-color: #ffffff; padding: 48px 32px; border-radius: 16px; box-shadow: 0 12px 32px rgba(15, 23, 42, 0.04); text-align: center; border: 1px solid #e2e8f0;"><img src="${siteConfig.favicon}" alt="SGM Network" style="width: 72px; height: 72px; margin-bottom: 24px; display: block; margin-left: auto; margin-right: auto;"><h1 style="color: #0f172a; font-size: 26px; font-weight: 800; margin: 0 0 16px; letter-spacing: -0.02em;">Lời Mời Quản Trị Viên</h1><p style="color: #475569; font-size: 15px; line-height: 1.6; margin: 0 0 40px; text-align: left;">Xin chào,<br><br>Email của bạn vừa được chỉ định để khởi tạo tài khoản quản trị trên hệ thống SGM Network. Vui lòng nhấp vào nút bên dưới để hoàn tất việc thiết lập tài khoản và mật khẩu của bạn:</p><div style="margin-bottom: 40px;"><a href="${actionUrl}" style="display: inline-block; background: linear-gradient(135deg, #0052ff 0%, #4d7cff 100%); color: #ffffff; font-size: 16px; font-weight: 700; text-decoration: none; padding: 16px 36px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 82, 255, 0.25); letter-spacing: 0.5px;">TẠO TÀI KHOẢN KẾT NỐI</a></div><div style="text-align: left; background-color: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 24px;"><p style="color: #64748b; font-size: 13px; margin: 0 0 8px; font-weight: 600; text-transform: uppercase;">Lưu Ý Quan Trọng:</p><ul style="color: #475569; font-size: 14px; margin: 0; padding-left: 20px; line-height: 1.6;"><li>Đây là lời mời bảo mật, vui lòng không chuyển tiếp email này.</li><li>Lời mời này sẽ hết hạn lúc ${expireDate}.</li></ul></div><div style="border-top: 1px solid #e2e8f0; margin: 40px 0 24px;"></div><div style="text-align: center;"><p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 4px;">© ${new Date().getFullYear()} SGM Network.</p><p style="color: #cbd5e1; font-size: 12px; margin: 0;">Nếu bạn chưa từng yêu cầu quyền quản trị, vui lòng báo cáo hoặc bỏ qua email này một cách an toàn.</p></div></div></body></html>`;
 }
 
 export async function sendAdminInviteEmail(input: SendAdminInviteEmailInput) {
