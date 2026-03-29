@@ -65,15 +65,16 @@ export async function POST(request: NextRequest) {
   const streams = await getStreams();
   const updates: string[] = [];
 
+  // Chỉ bỏ qua nếu không có YouTube URL
+  const streamsToCheck = streams.filter((s) => s.youtube_url?.trim());
+
   await Promise.all(
-    streams
-      .filter((s) => s.status !== "ended") // Bỏ qua đã kết thúc
-      .map(async (stream) => {
-        const detected = await detectYouTubeStatus(stream.youtube_url);
-        if (!detected || detected === stream.status) return;
-        await updateStream(stream.id, { status: detected });
-        updates.push(stream.id);
-      })
+    streamsToCheck.map(async (stream) => {
+      const detected = await detectYouTubeStatus(stream.youtube_url);
+      if (!detected || detected === stream.status) return;
+      await updateStream(stream.id, { status: detected });
+      updates.push(stream.id);
+    })
   );
 
   return NextResponse.json({ synced: updates.length, updated: updates });

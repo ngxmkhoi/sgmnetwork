@@ -58,7 +58,8 @@ export function StreamsGrid({ initialStreams }: StreamsGridProps) {
     return () => clearInterval(interval);
   }, []);
 
-  const visibleStreams = streams.filter((s: StreamItem) => s.status !== "ended");
+  // Hiện tất cả: live, upcoming, và ended (để xem lại)
+  const visibleStreams = streams;
 
   if (visibleStreams.length === 0) {
     return (

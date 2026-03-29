@@ -87,17 +87,9 @@ export function StreamModal({ stream, open, onOpenChange }: StreamModalProps) {
         <div className="max-h-[92vh] overflow-y-auto">
           <div className="px-5 pb-3 pt-4">
             <DialogHeader>
-              <div className="flex items-center justify-between gap-2">
-                <DialogTitle className="font-heading text-lg font-bold uppercase leading-snug tracking-[0.04em] text-foreground line-clamp-2">
-                  {stream.title}
-                </DialogTitle>
-                {isLive && (
-                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-[#FF0000] px-2.5 py-1 text-xs font-bold uppercase text-white">
-                    <Radio className="size-3 animate-pulse" />
-                    TRỰC TIẾP
-                  </span>
-                )}
-              </div>
+              <DialogTitle className="font-heading text-lg font-bold uppercase leading-snug tracking-[0.04em] text-foreground line-clamp-2">
+                {stream.title}
+              </DialogTitle>
             </DialogHeader>
           </div>
 
@@ -127,6 +119,12 @@ export function StreamModal({ stream, open, onOpenChange }: StreamModalProps) {
           {/* Actions */}
           <div className="flex flex-col gap-2 px-5 pb-4 pt-3">
             <div className="flex gap-2">
+              {isLive && (
+                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-[10px] bg-[#FF0000] px-3 py-1 text-xs font-bold uppercase text-white">
+                  <Radio className="size-3 animate-pulse" />
+                  TRỰC TIẾP
+                </span>
+              )}
               <Button asChild className="h-9 flex-1 rounded-[10px]">
                 <a href={watchUrl} target="_blank" rel="noreferrer">
                   {isLive ? "XEM TRỰC TIẾP" : isEnded ? "XEM LẠI VIDEO" : "XEM TRỰC TIẾP"}
