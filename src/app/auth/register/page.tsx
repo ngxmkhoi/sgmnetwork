@@ -100,21 +100,20 @@ function RegisterForm() {
       password,
     });
 
-    setSubmitting(false);
-
     if (error) {
+      setSubmitting(false);
       toast.error(error.message);
       return;
     }
 
-    await fetch("/api/auth/invited-email", {
+    // Tạo record trong bảng users và xóa khỏi danh sách mời
+    await fetch("/api/auth/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     }).catch(() => null);
 
+    setSubmitting(false);
     toast.success("TẠO TÀI KHOẢN THÀNH CÔNG. ĐANG CHUYỂN VÀO TRANG QUẢN TRỊ.");
     window.setTimeout(() => {
       router.push("/admin");
