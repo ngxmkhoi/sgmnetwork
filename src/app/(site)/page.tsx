@@ -5,6 +5,7 @@ import { FeaturedEvents } from "@/components/home/featured-events";
 import { LatestNews } from "@/components/home/latest-news";
 import { GalleryPreview } from "@/components/home/gallery-preview";
 import { JoinCommunityCta } from "@/components/home/join-community-cta";
+import { AnnouncementPopup } from "@/components/home/announcement-popup";
 import {
   getEvents,
   getGalleryItems,
@@ -40,11 +41,17 @@ export default async function HomePage() {
   const latestNews = [...news].sort((left, right) => new Date(right.created_at).getTime() - new Date(left.created_at).getTime());
   const latestGallery = [...gallery].sort((left, right) => new Date(right.created_at).getTime() - new Date(left.created_at).getTime());
 
+  const popupEnabled = settingsMap["popup.enabled"] === "true";
+  const popupTitle = settingsMap["popup.title"] ?? "";
+  const popupContent = settingsMap["popup.content"] ?? "";
   const heroTitle = settingsMap["home.hero.title"];
   const activeEvent = latestEvents.find((item) => item.status === "active");
 
   return (
     <div className="space-y-14">
+      {popupEnabled && popupContent && (
+        <AnnouncementPopup title={popupTitle} content={popupContent} />
+      )}
       <OrganizationJsonLd
         type="Organization"
         name={siteConfig.name}

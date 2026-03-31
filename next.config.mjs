@@ -28,6 +28,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "ik.imagekit.io",
       },
+      {
+        protocol: "https",
+        hostname: "files.garena.vn",
+      },
+      {
+        protocol: "https",
+        hostname: "*.garena.vn",
+      },
     ],
     minimumCacheTTL: 31536000,
     formats: ['image/avif', 'image/webp'],
