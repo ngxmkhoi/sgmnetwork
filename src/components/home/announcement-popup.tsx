@@ -67,7 +67,7 @@ export function AnnouncementPopup({ title, content }: Props) {
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-xl bg-primary px-6 py-2 text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground text-center transition hover:bg-primary/90"
+            className="rounded-xl bg-primary px-6 py-2 text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground text-center"
           >
             ĐÃ HIỂU
           </button>
