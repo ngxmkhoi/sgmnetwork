@@ -73,6 +73,7 @@ function Divider() {
 
 export function RichTextEditor({ value, onChange, placeholder = "Nhập nội dung...", className }: RichTextEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({ strike: false }),
       Underline,
@@ -102,11 +103,17 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
     },
   });
 
+  // Chỉ sync content từ ngoài vào khi editor chưa có nội dung (lần đầu mount)
+  // KHÔNG sync liên tục để tránh reset định dạng khi đang gõ
+  const initializedRef = { current: false };
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
-      editor.commands.setContent(value);
+    if (!editor || initializedRef.current) return;
+    if (value && editor.isEmpty) {
+      editor.commands.setContent(value, false);
     }
-  }, [value, editor]);
+    initializedRef.current = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor]);
 
   const setLink = useCallback(() => {
     if (!editor) return;

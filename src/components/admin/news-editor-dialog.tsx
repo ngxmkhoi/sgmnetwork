@@ -338,6 +338,7 @@ export function NewsEditorDialog({
                 NỘI DUNG TIN TỨC
               </label>
               <RichTextEditor
+                key={initialData?.id ?? "new"}
                 value={content}
                 onChange={(html) => {
                   setContent(html);
