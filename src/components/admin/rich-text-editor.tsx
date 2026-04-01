@@ -109,7 +109,7 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
   useEffect(() => {
     if (!editor || initializedRef.current) return;
     if (value && editor.isEmpty) {
-      editor.commands.setContent(value, false);
+      editor.commands.setContent(value);
     }
     initializedRef.current = true;
   // eslint-disable-next-line react-hooks/exhaustive-deps
