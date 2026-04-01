@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/constants/site";
 import { AppProviders } from "@/components/providers/app-providers";
 import { SecurityGuard } from "@/components/common/security-guard";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 // GFF Fonts are loaded from fonts.css
 // Heading: --font-heading (GFF Latin ExtraBold)
@@ -67,18 +68,21 @@ export default function RootLayout({
   const faviconUrl = siteConfig.favicon;
   return (
     <html lang="vi" suppressHydrationWarning>
-      {/* Manually declared link tags for favicon to bypass caching or next-metadata bugs */}
-      <link rel="icon" href={faviconUrl} sizes="any" />
-      <link rel="apple-touch-icon" href={faviconUrl} />
-      <link rel="shortcut icon" href={faviconUrl} />
-      {/* Preconnect YouTube để giảm độ trễ khi load video */}
-      <link rel="preconnect" href="https://www.youtube-nocookie.com" />
-      <link rel="preconnect" href="https://www.youtube.com" />
-      <link rel="preconnect" href="https://i.ytimg.com" />
-      <link rel="dns-prefetch" href="https://googlevideo.com" />
+      <head>
+        <link rel="icon" href={faviconUrl} sizes="any" />
+        <link rel="apple-touch-icon" href={faviconUrl} />
+        <link rel="shortcut icon" href={faviconUrl} />
+        <link rel="preconnect" href="https://www.youtube-nocookie.com" />
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://googlevideo.com" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJCSBSTY7Y" />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GJCSBSTY7Y');` }} />
+      </head>
       <body className={cn("font-body min-h-screen bg-background text-foreground antialiased")}>
         <AppProviders>{children}</AppProviders>
         <SecurityGuard />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>

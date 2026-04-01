@@ -224,7 +224,9 @@ export function NewsEditorDialog({
         created_at: formatVietnamDateInput(initialData.created_at),
         content: initialData.content ?? "",
       });
-      setContent(initialData.content ?? "");
+      const initialContent = initialData.content ?? "";
+      setContent(initialContent);
+      setValue("content", initialContent, { shouldValidate: false });
       return;
     }
 
@@ -236,7 +238,8 @@ export function NewsEditorDialog({
       content: "",
     });
     setContent("");
-  }, [initialData, loadCategories, open, reset]);
+    setValue("content", "", { shouldValidate: false });
+  }, [initialData, loadCategories, open, reset, setValue]);
 
   useEffect(() => {
     setValue("content", content, { shouldValidate: true });

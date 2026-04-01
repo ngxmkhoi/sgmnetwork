@@ -5,7 +5,6 @@ import Link from "next/link";
 import { isAfter, isBefore } from "date-fns";
 import { ArrowUpRight } from "lucide-react";
 import { EmptyState } from "@/components/common/empty-state";
-import { MediaFrame } from "@/components/common/media-frame";
 import { useNewsQuery } from "@/hooks/use-news-query";
 import { Button } from "@/components/ui/button";
 import { DatePickerInput } from "@/components/common/date-picker-input";
@@ -121,20 +120,26 @@ export function NewsList({ news: initialNews }: NewsListProps) {
           description="THỬ ĐỔI CHUYÊN MỤC HOẶC KHOẢNG NGÀY ĐỂ XEM THÊM BÀI VIẾT."
         />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {filteredNews.map((item) => (
             <article key={item.id} className="group relative flex flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all dark:border-border dark:bg-card">
               <div className="grid-sheen pointer-events-none absolute inset-y-0 left-0 z-20" />
               <Link href={`/news/${item.slug}`} className="absolute inset-0 z-40" aria-label={item.title} />
 
               <div className="relative overflow-hidden rounded-[8px]">
-                <MediaFrame
-                  src={item.cover}
-                  alt={item.title}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                  aspectClassName="aspect-[16/9]"
-                  imageClassName="object-cover"
-                />
+                {item.cover ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={item.cover}
+                    alt={item.title}
+                    className="w-full aspect-[16/9] object-cover rounded-[8px]"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="aspect-[16/9] flex items-center justify-center border-2 border-dashed border-border rounded-[8px]">
+                    <span className="text-sm font-bold uppercase text-foreground/40">ĐANG CẬP NHẬT</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-1 items-center justify-center p-3 text-center">

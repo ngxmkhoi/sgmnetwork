@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { BreadcrumbJsonLd } from "next-seo";
@@ -66,8 +65,9 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
         </p>
       </div>
-      <div className="relative h-[320px] overflow-hidden rounded-2xl border border-border">
-        <Image src={article.cover} alt={article.title} fill className="object-cover" />
+      <div className="overflow-hidden rounded-2xl border border-border">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={article.cover} alt={article.title} className="w-full h-auto object-contain" referrerPolicy="no-referrer" />
       </div>
       <div className="glass-card rounded-2xl p-6">
         <RichTextRenderer html={article.content} />

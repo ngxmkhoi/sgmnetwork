@@ -20,7 +20,7 @@ export const navItems = [
   { title: "TRANG CHỦ", href: "/" },
   { title: "LỊCH", href: "/calendar" },
   { title: "SỰ KIỆN", href: "/events" },
-  { title: "ESPORTS", href: "/esports" },
+  { title: "PHÁT TRỰC TIẾP", href: "/esports" },
   { title: "TIN TỨC", href: "/news" },
   { title: "LIÊN HỆ", href: "/contact" },
 ] as const;
@@ -28,7 +28,7 @@ export const navItems = [
 export const adminNavItems = [
   { title: "DASHBOARD", href: "/admin" },
   { title: "SỰ KIỆN", href: "/admin/events" },
-  { title: "ESPORTS", href: "/admin/esports" },
+  { title: "PHÁT TRỰC TIẾP", href: "/admin/esports" },
   { title: "TIN TỨC", href: "/admin/news" },
   { title: "THƯ VIỆN", href: "/admin/gallery" },
   { title: "NGƯỜI DÙNG", href: "/admin/users" },

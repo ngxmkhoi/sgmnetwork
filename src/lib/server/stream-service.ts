@@ -3,6 +3,8 @@ import { getSettings, updateSetting } from "@/lib/data/content-service";
 import type { StreamItem, StreamStatus } from "@/lib/types/content";
 
 const STREAMS_KEY = "esports.streams";
+const STREAM_CATEGORIES_KEY = "esports.categories";
+const DEFAULT_STREAM_CATEGORIES = ["ESPORTS", "GAMING", "CỘNG ĐỒNG"];
 
 function extractYouTubeId(url: string): string {
   const trimmed = url.trim();
@@ -45,6 +47,18 @@ function parseStreams(raw?: string | null): StreamItem[] {
   }
 }
 
+export async function getStreamCategories(): Promise<string[]> {
+  const settings = await getSettings();
+  const raw = settings.find((s) => s.key === STREAM_CATEGORIES_KEY)?.value;
+  if (!raw?.trim()) return DEFAULT_STREAM_CATEGORIES;
+  const cats = raw.split(/\r?\n|,/).map((s) => s.trim().toUpperCase()).filter(Boolean);
+  return cats.length > 0 ? cats : DEFAULT_STREAM_CATEGORIES;
+}
+
+export async function saveStreamCategories(categories: string[]): Promise<void> {
+  await updateSetting(STREAM_CATEGORIES_KEY, categories.join("\n"));
+}
+
 export async function getStreams(): Promise<StreamItem[]> {
   const settings = await getSettings();
   const raw = settings.find((s) => s.key === STREAMS_KEY)?.value;
@@ -63,6 +77,7 @@ export async function createStream(payload: Omit<StreamItem, "id" | "created_at"
   const item: StreamItem = {
     ...payload,
     id: crypto.randomUUID(),
+    category: payload.category || DEFAULT_STREAM_CATEGORIES[0],
     thumbnail_url: payload.thumbnail_url || buildThumbnailUrl(payload.youtube_url),
     created_at: new Date().toISOString(),
   };
