@@ -44,9 +44,9 @@ export function AnnouncementPopup({ title, content }: Props) {
       >
         {/* Header */}
         <div className="relative border-b border-border bg-gradient-to-r from-primary/[0.03] via-transparent to-primary/[0.08] px-5 py-4 dark:from-amber-400/[0.03] dark:to-amber-400/[0.08]">
-          <h2 className="font-heading text-lg font-bold uppercase tracking-[0.08em] text-foreground text-center">
-            {title || "THÔNG BÁO"}
-          </h2>
+          <h2 className="font-heading text-lg font-bold uppercase tracking-[0.08em] text-foreground text-center"
+            dangerouslySetInnerHTML={{ __html: title || "THÔNG BÁO" }}
+          />
           <button
             type="button"
             onClick={handleClose}

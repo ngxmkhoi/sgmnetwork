@@ -28,13 +28,7 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "admin-users", limit: 30, windowMs: 60_000 });
-  if (limited) {
-    return limited;
-  }
-  const denied = await enforceAdminApiAuth({ minimumRole: "admin" });
-  if (denied) {
-    return denied;
-  }
+  if (limited) return limited;
 
   const payload = await request.json();
   const parsed = updateUserSchema.safeParse(payload);
@@ -42,12 +36,22 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "Invalid user payload." }, { status: 400 });
   }
 
-  const user = await updateUserRole(parsed.data.id, parsed.data.role);
+  // Chỉ senior_admin mới được gán role admin hoặc senior_admin
+  const targetRole = parsed.data.role;
+  if (targetRole === "senior_admin" || targetRole === "admin") {
+    const denied = await enforceAdminApiAuth({ minimumRole: "senior_admin" });
+    if (denied) return denied;
+  } else {
+    const denied = await enforceAdminApiAuth({ minimumRole: "admin" });
+    if (denied) return denied;
+  }
+
+  const user = await updateUserRole(parsed.data.id, targetRole);
   await logAdminActivity({
     action: "USER_ROLE_UPDATED",
     targetType: "USER",
     targetId: user.id,
-    summary: `CAP NHAT VAI TRO ${user.email} THANH ${user.role}`,
+    summary: `Cập nhật vai trò ${user.email} thành ${user.role}`,
   });
   return NextResponse.json({ user });
 }

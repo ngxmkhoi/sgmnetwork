@@ -27,8 +27,8 @@ export function SiteNavbar() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const isHomePage = pathname === "/";
   const navLinkClass = isHomePage
-    ? "relative py-2 text-sm font-semibold uppercase tracking-[0.08em] text-slate-700 transition hover:text-slate-950 dark:text-white dark:hover:text-white/80"
-    : "relative py-2 text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground transition hover:text-foreground dark:text-white dark:hover:text-white/80";
+    ? "relative py-2 text-sm font-semibold uppercase tracking-[0.02em] text-slate-700 transition hover:text-slate-950 dark:text-white dark:hover:text-white/80"
+    : "relative py-2 text-sm font-semibold uppercase tracking-[0.02em] text-muted-foreground transition hover:text-foreground dark:text-white dark:hover:text-white/80";
   const activeNavClass = isHomePage ? "text-primary dark:text-amber-300" : "text-primary dark:text-amber-300";
   const homeControlClass =
     "theme-control-surface border-slate-200/90 bg-white/84 text-slate-900 hover:bg-white dark:border-white/15 dark:bg-[#0F1115]/72 dark:text-white dark:hover:bg-[#151820]";
