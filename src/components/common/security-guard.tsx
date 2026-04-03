@@ -27,6 +27,7 @@ export function SecurityGuard() {
   useEffect(() => {
     // Chặn phím tắt DevTools (áp dụng mọi nơi)
     const blockKeys = (e: KeyboardEvent) => {
+      if (!e.key) return;
       const key = e.key.toLowerCase();
       if (e.key === "F12") { e.preventDefault(); return; }
       if (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(key)) { e.preventDefault(); return; }

@@ -43,14 +43,15 @@ export function AnnouncementPopup({ title, content }: Props) {
         className="glass-card relative w-full max-w-lg overflow-hidden rounded-[28px] border border-border shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
       >
         {/* Header */}
-        <div className="relative border-b border-border bg-gradient-to-r from-primary/[0.03] via-transparent to-primary/[0.08] px-5 py-4 dark:from-amber-400/[0.03] dark:to-amber-400/[0.08]">
-          <h2 className="font-heading text-lg font-bold uppercase tracking-[0.08em] text-foreground text-center"
+        <div className="flex items-start justify-between gap-3 border-b border-border bg-gradient-to-r from-primary/[0.03] via-transparent to-primary/[0.08] px-5 py-4 dark:from-amber-400/[0.03] dark:to-amber-400/[0.08]">
+          <h2
+            className="font-heading text-lg font-bold uppercase text-foreground text-center flex-1"
             dangerouslySetInnerHTML={{ __html: title || "THÔNG BÁO" }}
           />
           <button
             type="button"
             onClick={handleClose}
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex size-7 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive"
+            className="flex-shrink-0 flex size-7 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive"
             aria-label="Đóng thông báo"
           >
             <X size={16} />

@@ -5,6 +5,7 @@ import { vi } from "date-fns/locale";
 import { BreadcrumbJsonLd } from "next-seo";
 import { getNewsBySlug } from "@/lib/data/content-service";
 import { RichTextRenderer } from "@/components/news/rich-text-renderer";
+import { NewsRating } from "@/components/news/news-rating";
 import { siteConfig } from "@/lib/constants/site";
 
 type NewsDetailPageProps = {
@@ -72,6 +73,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
       <div className="glass-card rounded-2xl p-6">
         <RichTextRenderer html={article.content} />
       </div>
+      <NewsRating slug={article.slug} title={article.title} />
     </div>
   );
 }

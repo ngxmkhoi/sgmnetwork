@@ -154,8 +154,8 @@ export function EventFormDialog({
 
       <DialogContent className="max-h-[92vh] overflow-hidden border-border bg-card p-0 text-foreground sm:max-w-3xl">
         <div className="max-h-[92vh] overflow-y-auto px-6 py-6">
-          <DialogHeader className="mb-4 pr-10">
-            <DialogTitle className="font-heading text-xl uppercase tracking-[0.08em] text-foreground">
+          <DialogHeader className="mb-4">
+            <DialogTitle className="font-heading text-xl uppercase text-foreground pr-8">
               {initialData ? "Chỉnh sửa sự kiện" : "Tạo sự kiện mới"}
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
