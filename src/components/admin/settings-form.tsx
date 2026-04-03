@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { SiteSetting } from "@/lib/types/content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
-import { defaultSiteSettingValues } from "@/lib/utils/site-settings";
+import {
+  defaultSiteSettingValues,
+  getSettingsFormInitialState,
+  settingsFormFieldOrder,
+} from "@/lib/utils/site-settings";
 
 type SettingsFormProps = {
   settings: SiteSetting[];
@@ -60,25 +64,6 @@ const settingsMeta: Record<string, { label: string; description: string }> = {
   },
 };
 
-const hiddenSettingKeys = new Set([
-  "home.background.desktop_url",
-  "home.background.mobile_url",
-]);
-
-const settingsFieldOrder = [
-  "home.hero.title",
-  "home.background.desktop_urls",
-  "home.background.mobile_urls",
-  "home.background.transition_effect",
-  "home.background.interval_seconds",
-  "home.background.transition_seconds",
-  "seo.default_title",
-  "social.facebook_url",
-  "social.tiktok_url",
-  "social.youtube_url",
-  "social.email",
-] as const;
-
 const sliderEffectOptions = [
   { value: "fade", label: "FADE" },
   { value: "zoom", label: "ZOOM CINEMATIC" },
@@ -93,13 +78,12 @@ function getImageSlots(value: string) {
 }
 
 export function SettingsForm({ settings, onSaved }: SettingsFormProps) {
-  const [state, setState] = useState<Record<string, string>>(
-    settings.reduce((acc, item) => {
-      acc[item.key] = item.value;
-      return acc;
-    }, { ...defaultSiteSettingValues } as Record<string, string>),
-  );
+  const [state, setState] = useState<Record<string, string>>(() => getSettingsFormInitialState(settings));
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    setState(getSettingsFormInitialState(settings));
+  }, [settings]);
 
   const updateImageSlot = (key: string, slotIndex: number, nextValue: string) => {
     setState((prev) => {
@@ -112,15 +96,7 @@ export function SettingsForm({ settings, onSaved }: SettingsFormProps) {
     });
   };
 
-  const entries = Object.entries(state)
-    .filter(([key]) => !hiddenSettingKeys.has(key))
-    .sort((left, right) => {
-      const leftIndex = settingsFieldOrder.indexOf(left[0] as (typeof settingsFieldOrder)[number]);
-      const rightIndex = settingsFieldOrder.indexOf(right[0] as (typeof settingsFieldOrder)[number]);
-      const safeLeft = leftIndex === -1 ? Number.MAX_SAFE_INTEGER : leftIndex;
-      const safeRight = rightIndex === -1 ? Number.MAX_SAFE_INTEGER : rightIndex;
-      return safeLeft - safeRight;
-    });
+  const entries = settingsFormFieldOrder.map((key) => [key, state[key] ?? defaultSiteSettingValues[key] ?? ""] as const);
 
   const saveSetting = async (key: string, value: string) => {
     const response = await fetch("/api/admin/settings", {
@@ -144,7 +120,7 @@ export function SettingsForm({ settings, onSaved }: SettingsFormProps) {
     setIsSaving(true);
 
     const results = await Promise.all(
-      Object.entries(state).map(([key, value]) => saveSetting(key, value))
+      entries.map(([key, value]) => saveSetting(key, value))
     );
 
     setIsSaving(false);

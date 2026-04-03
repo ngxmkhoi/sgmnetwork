@@ -18,7 +18,7 @@ export function AnnouncementPopup({ title, content }: Props) {
 
   const handleClose = () => {
     setClosing(true);
-    setTimeout(() => setMounted(false), 350);
+    setTimeout(() => setMounted(false), 480);
   };
 
   if (!mounted) return null;
@@ -27,22 +27,23 @@ export function AnnouncementPopup({ title, content }: Props) {
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{
-        background: "rgba(0,0,0,0.75)",
-        backdropFilter: "blur(6px)",
+        background: "radial-gradient(circle at top, rgba(0,82,255,0.18), rgba(0,0,0,0.78) 42%)",
+        backdropFilter: "blur(10px)",
         opacity: visible && !closing ? 1 : 0,
-        transition: "opacity 0.35s ease",
+        transition: "opacity 0.42s cubic-bezier(0.22,1,0.36,1)",
       }}
     >
       <div
         style={{
-          transform: visible && !closing ? "scale(1) translateY(0)" : "scale(0.92) translateY(24px)",
+          transform: visible && !closing ? "scale(1) translateY(0)" : "scale(0.94) translateY(20px)",
           opacity: visible && !closing ? 1 : 0,
-          transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease",
+          filter: visible && !closing ? "blur(0px)" : "blur(10px)",
+          transition: "transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.38s ease-out, filter 0.38s ease-out",
         }}
-        className="glass-card relative w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden"
+        className="glass-card relative w-full max-w-lg overflow-hidden rounded-[28px] border border-border shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
       >
         {/* Header */}
-        <div className="relative border-b border-border px-5 py-4">
+        <div className="relative border-b border-border bg-gradient-to-r from-primary/[0.03] via-transparent to-primary/[0.08] px-5 py-4 dark:from-amber-400/[0.03] dark:to-amber-400/[0.08]">
           <h2 className="font-heading text-lg font-bold uppercase tracking-[0.08em] text-foreground text-center">
             {title || "THÔNG BÁO"}
           </h2>
@@ -63,11 +64,11 @@ export function AnnouncementPopup({ title, content }: Props) {
         />
 
         {/* Footer */}
-        <div className="border-t border-border px-[10px] pb-[10px] pt-[10px] flex justify-end">
+        <div className="flex justify-end border-t border-border bg-background/30 px-[10px] pb-[10px] pt-[10px] backdrop-blur-sm">
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-xl bg-primary px-6 py-2 text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground text-center"
+            className="rounded-xl bg-primary px-6 py-2 text-center text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground shadow-[0_10px_26px_rgba(0,82,255,0.22)] transition hover:brightness-110 dark:shadow-[0_12px_28px_rgba(247,147,26,0.22)]"
           >
             ĐÃ HIỂU
           </button>

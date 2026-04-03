@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getSettings, updateSetting } from "@/lib/data/content-service";
 import { enforceAdminApiAuth, enforceRateLimit } from "@/lib/server/api-guard";
 import { logAdminActivity } from "@/lib/server/admin-activity";
+import { sanitizePlainText, sanitizeRichText } from "@/lib/server/sanitize";
 
 const POPUP_ENABLED_KEY = "popup.enabled";
 const POPUP_CONTENT_KEY = "popup.content";
@@ -17,6 +18,9 @@ const popupSchema = z.object({
 export async function GET(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "popup-get", limit: 60, windowMs: 60_000 });
   if (limited) return limited;
+
+  const denied = await enforceAdminApiAuth({ minimumRole: "admin" });
+  if (denied) return denied;
 
   const settings = await getSettings();
   const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
@@ -41,10 +45,13 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "Dữ liệu không hợp lệ." }, { status: 400 });
   }
 
+  const sanitizedTitle = sanitizePlainText(parsed.data.title).slice(0, 200);
+  const sanitizedContent = sanitizeRichText(parsed.data.content).slice(0, 50_000);
+
   await Promise.all([
     updateSetting(POPUP_ENABLED_KEY, String(parsed.data.enabled)),
-    updateSetting(POPUP_TITLE_KEY, parsed.data.title),
-    updateSetting(POPUP_CONTENT_KEY, parsed.data.content),
+    updateSetting(POPUP_TITLE_KEY, sanitizedTitle),
+    updateSetting(POPUP_CONTENT_KEY, sanitizedContent),
   ]);
 
   await logAdminActivity({

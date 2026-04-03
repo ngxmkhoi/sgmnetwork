@@ -2,6 +2,30 @@ import type { SiteSetting } from "@/lib/types/content";
 import { siteConfig } from "@/lib/constants/site";
 
 export type HeroSliderEffect = "fade" | "zoom" | "slide" | "drift" | "cinematic";
+export const settingsFormFieldOrder = [
+  "home.hero.title",
+  "home.background.desktop_urls",
+  "home.background.mobile_urls",
+  "home.background.transition_effect",
+  "home.background.interval_seconds",
+  "home.background.transition_seconds",
+  "seo.default_title",
+  "social.facebook_url",
+  "social.tiktok_url",
+  "social.youtube_url",
+  "social.email",
+] as const;
+
+export const adminSettingsApiKeys = [
+  ...settingsFormFieldOrder,
+  "news.categories",
+] as const;
+
+export type SettingsFormFieldKey = (typeof settingsFormFieldOrder)[number];
+export type AdminSettingsApiKey = (typeof adminSettingsApiKeys)[number];
+
+const settingsFormFieldKeySet = new Set<string>(settingsFormFieldOrder);
+const adminSettingsApiKeySet = new Set<string>(adminSettingsApiKeys);
 
 export const defaultSiteSettingValues: Record<string, string> = {
   "home.hero.title": "SGM Network",
@@ -24,6 +48,23 @@ export const defaultSiteSettingValues: Record<string, string> = {
   "social.email": siteConfig.contactEmail,
   "site.description": "Mạng lưới cộng đồng số 1 về cung cấp thông tin, theo dõi sự kiện và các nội dung từ Garena Free Fire Việt Nam.",
 };
+
+export function isSettingsFormFieldKey(key: string): key is SettingsFormFieldKey {
+  return settingsFormFieldKeySet.has(key);
+}
+
+export function isAdminSettingsApiKey(key: string): key is AdminSettingsApiKey {
+  return adminSettingsApiKeySet.has(key);
+}
+
+export function getSettingsFormInitialState(settings: SiteSetting[]) {
+  const settingsMap = new Map(settings.map((item) => [item.key, item.value]));
+
+  return settingsFormFieldOrder.reduce<Record<SettingsFormFieldKey, string>>((acc, key) => {
+    acc[key] = settingsMap.get(key) ?? defaultSiteSettingValues[key] ?? "";
+    return acc;
+  }, {} as Record<SettingsFormFieldKey, string>);
+}
 
 export function buildSettingsMap(settings: SiteSetting[]) {
   return settings.reduce<Record<string, string>>((acc, item) => {

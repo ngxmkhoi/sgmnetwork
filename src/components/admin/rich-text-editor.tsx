@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -105,15 +105,24 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
 
   // Chỉ sync content từ ngoài vào khi editor chưa có nội dung (lần đầu mount)
   // KHÔNG sync liên tục để tránh reset định dạng khi đang gõ
-  const initializedRef = { current: false };
+  const initializedRef = useRef(false);
   useEffect(() => {
-    if (!editor || initializedRef.current) return;
-    if (value && editor.isEmpty) {
-      editor.commands.setContent(value);
+    if (!editor) return;
+
+    const normalizedValue = value.trim();
+    const currentHtml = editor.getHTML().trim();
+
+    if (
+      normalizedValue &&
+      currentHtml !== normalizedValue &&
+      (editor.isEmpty || !initializedRef.current)
+    ) {
+      editor.commands.setContent(normalizedValue, { emitUpdate: false });
     }
+
     initializedRef.current = true;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor]);
+  }, [editor, value]);
 
   const setLink = useCallback(() => {
     if (!editor) return;

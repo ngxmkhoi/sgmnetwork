@@ -16,7 +16,7 @@
     "clean:build": "node -e \"require('fs').rmSync('.next', { recursive: true, force: true });\" && npm run build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --incremental false",
     "supabase:ensure-admin": "node scripts/ensure-supabase-admin.mjs"
   },
   "dependencies": {

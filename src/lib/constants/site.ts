@@ -9,6 +9,7 @@ export const siteConfig = {
   favicon: "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035",
   sidebarIcon: "https://ik.imagekit.io/oyvgbkwyt/SGM%20NETWORK/29032026/b21232026.png?updatedAt=1774797861035",
   links: {
+    community: "https://zalo.me/g/pqlkhq011",
     facebook: "https://facebook.com",
     tiktok: "https://tiktok.com",
     youtube: "https://youtube.com",

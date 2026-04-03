@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants/site";
@@ -76,8 +77,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.youtube.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="dns-prefetch" href="https://googlevideo.com" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJCSBSTY7Y" />
-        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GJCSBSTY7Y');` }} />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GJCSBSTY7Y"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GJCSBSTY7Y');`}
+        </Script>
       </head>
       <body className={cn("font-body min-h-screen bg-background text-foreground antialiased")}>
         <AppProviders>{children}</AppProviders>
