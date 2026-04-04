@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { format } from "date-fns";
-import { vi } from "date-fns/locale";
 import { BreadcrumbJsonLd } from "next-seo";
 import { getNewsBySlug } from "@/lib/data/content-service";
 import { RichTextRenderer, injectHeadingIds } from "@/components/news/rich-text-renderer";
 import { NewsToc } from "@/components/news/news-toc";
 import { NewsRating } from "@/components/news/news-rating";
 import { siteConfig } from "@/lib/constants/site";
+import { formatVietnamDate } from "@/lib/utils/vietnam-time";
 
 type NewsDetailPageProps = { params: { slug: string } };
 
@@ -53,7 +52,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         <div className="text-xs uppercase tracking-[0.14em] text-primary">{article.category}</div>
         <h1 className="font-heading text-3xl font-bold text-foreground md:text-4xl">{article.title}</h1>
         <p className="text-sm text-muted-foreground">
-          {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
+          {formatVietnamDate(article.created_at)}
         </p>
       </div>
 
