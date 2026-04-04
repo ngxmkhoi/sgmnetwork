@@ -29,6 +29,11 @@ export function AnnouncementPopup({ title, content }: Props) {
   }, []);
 
   const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => setMounted(false), 480);
+  };
+
+  const handleDismiss3h = () => {
     try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch { /* ignore */ }
     setClosing(true);
     setTimeout(() => setMounted(false), 480);
@@ -81,7 +86,7 @@ export function AnnouncementPopup({ title, content }: Props) {
         <div className="flex justify-end border-t border-border px-[10px] pb-[10px] pt-[10px]">
           <button
             type="button"
-            onClick={handleClose}
+            onClick={handleDismiss3h}
             className="rounded-lg bg-primary px-6 py-2 text-center text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground shadow-[0_10px_26px_rgba(0,82,255,0.22)] transition hover:brightness-110 dark:shadow-[0_12px_28px_rgba(247,147,26,0.22)]"
           >
             ĐÓNG 3 GIỜ
