@@ -294,7 +294,7 @@ export function NewsEditorDialog({
       ) : null}
 
       <DialogContent className="flex max-h-[92vh] flex-col overflow-hidden border-border bg-card p-0 text-foreground sm:max-w-3xl">
-        <div className="overflow-y-auto px-6 py-6">
+        <div className="overflow-y-auto flex-1 px-6 py-6">
           <DialogHeader className="mb-4">
             <DialogTitle className="font-heading text-xl uppercase text-foreground pr-8">
               {initialData ? "CHỈNH SỬA TIN TỨC" : "TẠO TIN TỨC"}

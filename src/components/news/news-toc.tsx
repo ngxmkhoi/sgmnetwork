@@ -11,7 +11,7 @@ export function NewsToc({ html }: { html: string }) {
   useEffect(() => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
-    const headings = Array.from(doc.querySelectorAll("h1,h2,h3,h4,h5,h6"));
+    const headings = Array.from(doc.querySelectorAll("h1,h2"));
     const toc: TocItem[] = headings.map((h, i) => ({
       id: `heading-${i}`,
       text: h.textContent ?? "",
@@ -46,12 +46,12 @@ export function NewsToc({ html }: { html: string }) {
         <a
           key={item.id}
           href={`#${item.id}`}
-          className={`block truncate rounded-lg px-3 py-1.5 text-sm transition-colors hover:text-primary ${
+          className={`flex items-start gap-2 rounded-lg px-3 py-1.5 text-sm transition-colors hover:text-primary ${
             active === item.id ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground"
-          }`}
-          style={{ paddingLeft: `${(item.level - 1) * 12 + 12}px` }}
+          } ${item.level === 1 ? "font-semibold" : "pl-6 text-xs"}`}
         >
-          {item.text}
+          {item.level === 2 && <span className="mt-1 shrink-0 w-1 h-1 rounded-full bg-current opacity-50" />}
+          <span className="truncate">{item.text}</span>
         </a>
       ))}
     </nav>

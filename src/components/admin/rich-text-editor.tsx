@@ -159,7 +159,7 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
   if (!editor) return null;
 
   return (
-    <div className={cn("rounded-xl border border-border bg-background overflow-hidden", className)}>
+    <div className={cn("rounded-xl border border-border bg-background", className)}>
       {/* Toolbar - sticky khi cuộn */}
       <div className="sticky top-0 z-10 flex flex-wrap items-center gap-0.5 border-b border-border bg-muted/40 p-1.5 backdrop-blur-sm">
 
