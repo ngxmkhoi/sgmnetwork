@@ -12,11 +12,13 @@ export function NewsToc({ html }: { html: string }) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
     const headings = Array.from(doc.querySelectorAll("h1,h2"));
-    const toc: TocItem[] = headings.map((h, i) => ({
-      id: `heading-${i}`,
-      text: h.textContent ?? "",
-      level: Number(h.tagName[1]),
-    }));
+    const toc: TocItem[] = headings
+      .filter((h) => h.id) // chỉ lấy heading đã có id
+      .map((h) => ({
+        id: h.id,
+        text: h.textContent ?? "",
+        level: Number(h.tagName[1]),
+      }));
     setItems(toc);
   }, [html]);
 

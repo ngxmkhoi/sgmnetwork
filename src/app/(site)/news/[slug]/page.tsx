@@ -35,8 +35,11 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
   const processedHtml = injectHeadingIds(article.content);
 
+  // Kiểm tra có heading H1/H2 không để quyết định layout
+  const hasHeadings = /<h[12][\s>]/i.test(article.content);
+
   return (
-    <div className="mx-auto max-w-7xl pt-6 md:pt-8">
+    <div className="mx-auto max-w-7xl pt-6 md:pt-8 space-y-6">
       <BreadcrumbJsonLd
         items={[
           { name: "Trang chủ", item: siteConfig.url },
@@ -45,42 +48,44 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         ]}
       />
 
-      {/* Layout 2 cột - mục lục bên phải */}
-      <div className="grid gap-6 xl:grid-cols-[1fr_260px]">
+      {/* Header - full width */}
+      <div className="space-y-3">
+        <div className="text-xs uppercase tracking-[0.14em] text-primary">{article.category}</div>
+        <h1 className="font-heading text-3xl font-bold text-foreground md:text-4xl">{article.title}</h1>
+        <p className="text-sm text-muted-foreground">
+          {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
+        </p>
+      </div>
 
-        {/* Cột trái - toàn bộ nội dung */}
-        <div className="space-y-6 min-w-0">
-          {/* Header */}
-          <div className="space-y-3">
-            <div className="text-xs uppercase tracking-[0.14em] text-primary">{article.category}</div>
-            <h1 className="font-heading text-3xl font-bold text-foreground md:text-4xl">{article.title}</h1>
-            <p className="text-sm text-muted-foreground">
-              {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
-            </p>
+      {/* Ảnh bìa - luôn full width */}
+      <div className="overflow-hidden rounded-2xl border border-border">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={article.cover} alt={article.title} className="w-full h-auto object-contain" referrerPolicy="no-referrer" />
+      </div>
+
+      {/* Nội dung + mục lục - chỉ dùng 2 cột khi có heading */}
+      {hasHeadings ? (
+        <div className="grid gap-6 xl:grid-cols-[1fr_260px]">
+          <div className="space-y-6 min-w-0">
+            <div className="glass-card rounded-2xl p-6">
+              <RichTextRenderer html={processedHtml} />
+            </div>
+            <NewsRating slug={article.slug} title={article.title} />
           </div>
-
-          {/* Ảnh bìa */}
-          <div className="overflow-hidden rounded-2xl border border-border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={article.cover} alt={article.title} className="w-full h-auto object-contain" referrerPolicy="no-referrer" />
-          </div>
-
-          {/* Nội dung */}
+          <aside className="hidden xl:block">
+            <div className="sticky top-24">
+              <NewsToc html={processedHtml} />
+            </div>
+          </aside>
+        </div>
+      ) : (
+        <div className="space-y-6">
           <div className="glass-card rounded-2xl p-6">
             <RichTextRenderer html={processedHtml} />
           </div>
-
-          {/* Đánh giá */}
           <NewsRating slug={article.slug} title={article.title} />
         </div>
-
-        {/* Cột phải - mục lục sticky */}
-        <aside className="hidden xl:block">
-          <div className="sticky top-24 space-y-4">
-            <NewsToc html={article.content} />
-          </div>
-        </aside>
-      </div>
+      )}
     </div>
   );
 }
