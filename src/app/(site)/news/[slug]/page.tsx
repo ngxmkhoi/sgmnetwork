@@ -36,7 +36,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const processedHtml = injectHeadingIds(article.content);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 pt-6 md:pt-8">
+    <div className="mx-auto max-w-7xl pt-6 md:pt-8">
       <BreadcrumbJsonLd
         items={[
           { name: "Trang chủ", item: siteConfig.url },
@@ -45,34 +45,38 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         ]}
       />
 
-      {/* Header */}
-      <div className="space-y-3">
-        <div className="text-xs uppercase tracking-[0.14em] text-primary">{article.category}</div>
-        <h1 className="font-heading text-3xl font-bold text-foreground md:text-4xl">{article.title}</h1>
-        <p className="text-sm text-muted-foreground">
-          {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
-        </p>
-      </div>
-
-      {/* Ảnh bìa */}
-      <div className="overflow-hidden rounded-2xl border border-border">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={article.cover} alt={article.title} className="w-full h-auto object-contain" referrerPolicy="no-referrer" />
-      </div>
-
-      {/* Layout: nội dung + mục lục */}
+      {/* Layout 2 cột - mục lục bên phải */}
       <div className="grid gap-6 xl:grid-cols-[1fr_260px]">
-        {/* Nội dung chính */}
+
+        {/* Cột trái - toàn bộ nội dung */}
         <div className="space-y-6 min-w-0">
+          {/* Header */}
+          <div className="space-y-3">
+            <div className="text-xs uppercase tracking-[0.14em] text-primary">{article.category}</div>
+            <h1 className="font-heading text-3xl font-bold text-foreground md:text-4xl">{article.title}</h1>
+            <p className="text-sm text-muted-foreground">
+              {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
+            </p>
+          </div>
+
+          {/* Ảnh bìa */}
+          <div className="overflow-hidden rounded-2xl border border-border">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={article.cover} alt={article.title} className="w-full h-auto object-contain" referrerPolicy="no-referrer" />
+          </div>
+
+          {/* Nội dung */}
           <div className="glass-card rounded-2xl p-6">
             <RichTextRenderer html={processedHtml} />
           </div>
+
+          {/* Đánh giá */}
           <NewsRating slug={article.slug} title={article.title} />
         </div>
 
-        {/* Mục lục - sticky */}
+        {/* Cột phải - mục lục sticky */}
         <aside className="hidden xl:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
             <NewsToc html={article.content} />
           </div>
         </aside>
