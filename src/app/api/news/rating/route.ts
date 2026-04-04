@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
   try {
     const res = await fetch(webAppUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      redirect: "follow",
       body: JSON.stringify({
         time: new Date().toLocaleString("vi-VN"),
         slug,
@@ -39,7 +39,8 @@ export async function POST(request: NextRequest) {
       }),
     });
 
-    if (!res.ok) throw new Error(`Apps Script responded ${res.status}`);
+    // Apps Script trả về redirect 302 rồi mới có response - chỉ cần không throw là ok
+    console.log("[rating] Apps Script status:", res.status);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[rating] Apps Script error:", err);
