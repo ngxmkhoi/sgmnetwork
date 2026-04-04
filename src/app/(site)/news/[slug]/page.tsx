@@ -4,39 +4,25 @@ import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { BreadcrumbJsonLd } from "next-seo";
 import { getNewsBySlug } from "@/lib/data/content-service";
-import { RichTextRenderer } from "@/components/news/rich-text-renderer";
+import { RichTextRenderer, injectHeadingIds } from "@/components/news/rich-text-renderer";
+import { NewsToc } from "@/components/news/news-toc";
 import { NewsRating } from "@/components/news/news-rating";
 import { siteConfig } from "@/lib/constants/site";
 
-type NewsDetailPageProps = {
-  params: {
-    slug: string;
-  };
-};
+type NewsDetailPageProps = { params: { slug: string } };
 
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
   const article = await getNewsBySlug(params.slug);
-  if (!article) {
-    return {
-      title: "Không tìm thấy bài viết",
-    };
-  }
-
+  if (!article) return { title: "Không tìm thấy bài viết" };
   return {
     title: article.title,
     description: article.excerpt,
-    alternates: {
-      canonical: `${siteConfig.url}/news/${article.slug}`,
-    },
+    alternates: { canonical: `${siteConfig.url}/news/${article.slug}` },
     openGraph: {
       title: article.title,
       description: article.excerpt,
       url: `${siteConfig.url}/news/${article.slug}`,
-      images: [
-        {
-          url: article.cover,
-        },
-      ],
+      images: [{ url: article.cover }],
     },
   };
 }
@@ -45,13 +31,12 @@ export const revalidate = 60;
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const article = await getNewsBySlug(params.slug);
+  if (!article) notFound();
 
-  if (!article) {
-    notFound();
-  }
+  const processedHtml = injectHeadingIds(article.content);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 pt-6 md:pt-8">
+    <div className="mx-auto max-w-7xl space-y-6 pt-6 md:pt-8">
       <BreadcrumbJsonLd
         items={[
           { name: "Trang chủ", item: siteConfig.url },
@@ -59,6 +44,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           { name: article.title, item: `${siteConfig.url}/news/${article.slug}` },
         ]}
       />
+
+      {/* Header */}
       <div className="space-y-3">
         <div className="text-xs uppercase tracking-[0.14em] text-primary">{article.category}</div>
         <h1 className="font-heading text-3xl font-bold text-foreground md:text-4xl">{article.title}</h1>
@@ -66,14 +53,30 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           {format(new Date(article.created_at), "dd/MM/yyyy", { locale: vi })}
         </p>
       </div>
+
+      {/* Ảnh bìa */}
       <div className="overflow-hidden rounded-2xl border border-border">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={article.cover} alt={article.title} className="w-full h-auto object-contain" referrerPolicy="no-referrer" />
       </div>
-      <div className="glass-card rounded-2xl p-6">
-        <RichTextRenderer html={article.content} />
+
+      {/* Layout: nội dung + mục lục */}
+      <div className="grid gap-6 xl:grid-cols-[1fr_260px]">
+        {/* Nội dung chính */}
+        <div className="space-y-6 min-w-0">
+          <div className="glass-card rounded-2xl p-6">
+            <RichTextRenderer html={processedHtml} />
+          </div>
+          <NewsRating slug={article.slug} title={article.title} />
+        </div>
+
+        {/* Mục lục - sticky */}
+        <aside className="hidden xl:block">
+          <div className="sticky top-24">
+            <NewsToc html={article.content} />
+          </div>
+        </aside>
       </div>
-      <NewsRating slug={article.slug} title={article.title} />
     </div>
   );
 }

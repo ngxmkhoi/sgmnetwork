@@ -75,7 +75,7 @@ const newsFormSchema = z.object({
   cover: z.string().url("Ảnh bìa phải là URL hợp lệ."),
   category: z.string().min(2, "Danh mục cần ít nhất 2 ký tự.").max(60),
   created_at: z.string().min(1, "Vui lòng chọn ngày đăng."),
-  content: z.string().min(20, "Nội dung cần ít nhất 20 ký tự.").max(5000),
+  content: z.string().min(20, "Nội dung cần ít nhất 20 ký tự.").max(100000),
 });
 
 type NewsFormValues = z.infer<typeof newsFormSchema>;
@@ -293,8 +293,8 @@ export function NewsEditorDialog({
         </DialogTrigger>
       ) : null}
 
-      <DialogContent className="max-h-[92vh] overflow-visible border-border bg-card p-0 text-foreground sm:max-w-3xl">
-        <div className="max-h-[92vh] overflow-y-auto px-6 py-6">
+      <DialogContent className="flex max-h-[92vh] flex-col overflow-hidden border-border bg-card p-0 text-foreground sm:max-w-3xl">
+        <div className="overflow-y-auto px-6 py-6">
           <DialogHeader className="mb-4">
             <DialogTitle className="font-heading text-xl uppercase text-foreground pr-8">
               {initialData ? "CHỈNH SỬA TIN TỨC" : "TẠO TIN TỨC"}

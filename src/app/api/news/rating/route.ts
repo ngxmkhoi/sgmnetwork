@@ -27,20 +27,27 @@ export async function POST(request: NextRequest) {
   const { slug, title, name, stars } = parsed.data;
 
   try {
+    const body = JSON.stringify({
+      time: new Date().toLocaleString("vi-VN"),
+      slug,
+      title,
+      name,
+      stars,
+    });
+
+    console.log("[rating] Sending to:", webAppUrl);
+    console.log("[rating] Body:", body);
+
     const res = await fetch(webAppUrl, {
       method: "POST",
       redirect: "follow",
-      body: JSON.stringify({
-        time: new Date().toLocaleString("vi-VN"),
-        slug,
-        title,
-        name,
-        stars,
-      }),
+      body,
     });
 
-    // Apps Script trả về redirect 302 rồi mới có response - chỉ cần không throw là ok
-    console.log("[rating] Apps Script status:", res.status);
+    const text = await res.text().catch(() => "");
+    console.log("[rating] Response status:", res.status);
+    console.log("[rating] Response body:", text);
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[rating] Apps Script error:", err);

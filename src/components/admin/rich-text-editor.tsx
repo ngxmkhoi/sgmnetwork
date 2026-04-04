@@ -160,8 +160,8 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
 
   return (
     <div className={cn("rounded-xl border border-border bg-background overflow-hidden", className)}>
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-0.5 border-b border-border bg-muted/40 p-1.5">
+      {/* Toolbar - sticky khi cuộn */}
+      <div className="sticky top-0 z-10 flex flex-wrap items-center gap-0.5 border-b border-border bg-muted/40 p-1.5 backdrop-blur-sm">
 
         {/* Text style */}
         <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} title="In đậm">
@@ -253,7 +253,7 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
         <Divider />
 
         {/* Headings */}
-        {([1, 2, 3] as const).map((level) => (
+        {([1, 2, 3, 4, 5, 6] as const).map((level) => (
           <ToolbarButton
             key={level}
             onClick={() => editor.chain().focus().toggleHeading({ level }).run()}

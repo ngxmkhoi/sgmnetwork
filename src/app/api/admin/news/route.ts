@@ -9,6 +9,7 @@ import {
 import { enforceAdminApiAuth, enforceRateLimit } from "@/lib/server/api-guard";
 import { logAdminActivity } from "@/lib/server/admin-activity";
 import { sanitizePlainText, sanitizeRichText } from "@/lib/server/sanitize";
+import { sendPushNotification } from "@/lib/server/push-notify";
 
 function createSlug(value: string) {
   return value
@@ -79,6 +80,10 @@ export async function POST(request: NextRequest) {
       targetId: article.id,
       summary: `TAO BAI VIET ${article.title}`,
     });
+
+    // Gửi push notification cho subscribers
+    void sendPushNotification("📰 Tin tức mới", article.title, `/news/${article.slug}`).catch(() => null);
+
     return NextResponse.json({ article }, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to create news.";
