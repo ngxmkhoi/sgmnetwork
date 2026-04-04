@@ -1,3 +1,4 @@
+import type { PushSubscription } from "web-push";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { enforceAdminApiAuth, enforceRateLimit } from "@/lib/server/api-guard";
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
   const subs = await getStoredSubs();
   if (subs.length === 0) return NextResponse.json({ sent: 0, message: "Không có subscriber nào." });
 
-  const { default: webpush } = await import("web-push");
+  const webpush = await import("web-push");
   webpush.setVapidDetails(vapidSubject, vapidPublic, vapidPrivate);
 
   const notification = JSON.stringify({
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
   await Promise.allSettled(
     subs.map(async (subStr) => {
       try {
-        const sub = JSON.parse(subStr) as import("web-push").PushSubscription;
+        const sub = JSON.parse(subStr) as PushSubscription;
         await webpush.sendNotification(sub, notification);
         sent++;
       } catch {

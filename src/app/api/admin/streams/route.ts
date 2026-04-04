@@ -3,6 +3,7 @@ import { z } from "zod";
 import { enforceAdminApiAuth, enforceRateLimit } from "@/lib/server/api-guard";
 import { logAdminActivity } from "@/lib/server/admin-activity";
 import { sanitizePlainText } from "@/lib/server/sanitize";
+import { sendPushNotification } from "@/lib/server/push-notify";
 import {
   getStreams, createStream, updateStream, deleteStream,
   buildThumbnailUrl, getStreamCategories, saveStreamCategories,
@@ -68,6 +69,7 @@ export async function POST(request: NextRequest) {
   });
 
   await logAdminActivity({ action: "STREAM_CREATED", targetType: "STREAM", targetId: stream.id, summary: `Tạo stream ${stream.title}` });
+  void sendPushNotification("🔴 Phát trực tiếp mới", stream.title, "/esports").catch(() => null);
   return NextResponse.json({ stream }, { status: 201 });
 }
 
