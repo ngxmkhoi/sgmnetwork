@@ -53,7 +53,7 @@ export function NewsToc({ html }: { html: string }) {
           } ${item.level === 1 ? "font-semibold" : "pl-6 text-xs"}`}
         >
           {item.level === 2 && <span className="mt-1 shrink-0 w-1 h-1 rounded-full bg-current opacity-50" />}
-          <span className="truncate">{item.text}</span>
+          <span className="truncate uppercase">{item.text}</span>
         </a>
       ))}
     </nav>
