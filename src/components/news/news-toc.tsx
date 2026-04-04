@@ -48,6 +48,14 @@ export function NewsToc({ html }: { html: string }) {
         <a
           key={item.id}
           href={`#${item.id}`}
+          onClick={(e) => {
+            e.preventDefault();
+            const el = document.getElementById(item.id);
+            if (el) {
+              const top = el.getBoundingClientRect().top + window.scrollY - 100;
+              window.scrollTo({ top, behavior: "smooth" });
+            }
+          }}
           className={`flex items-start gap-2 rounded-lg px-3 py-1.5 text-sm transition-colors hover:text-primary ${
             active === item.id ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground"
           } ${item.level === 1 ? "font-semibold" : "pl-6 text-xs"}`}
