@@ -40,10 +40,10 @@ export function AnnouncementPopup({ title, content }: Props) {
           filter: visible && !closing ? "blur(0px)" : "blur(10px)",
           transition: "transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.38s ease-out, filter 0.38s ease-out",
         }}
-        className="glass-card relative w-full max-w-lg overflow-hidden rounded-[28px] border border-border shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
+        className="glass-card relative w-full max-w-lg overflow-hidden rounded-[28px] border border-border bg-card shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
       >
         {/* Header */}
-        <div className="flex items-start justify-between gap-3 border-b border-border bg-gradient-to-r from-primary/[0.03] via-transparent to-primary/[0.08] px-5 py-4 dark:from-amber-400/[0.03] dark:to-amber-400/[0.08]">
+        <div className="flex items-start justify-between gap-3 border-b border-border px-5 py-4">
           <h2
             className="font-heading text-lg font-bold uppercase text-foreground text-center flex-1"
             dangerouslySetInnerHTML={{ __html: title || "THÔNG BÁO" }}
@@ -65,7 +65,7 @@ export function AnnouncementPopup({ title, content }: Props) {
         />
 
         {/* Footer */}
-        <div className="flex justify-end border-t border-border bg-background/30 px-[10px] pb-[10px] pt-[10px] backdrop-blur-sm">
+        <div className="flex justify-end border-t border-border px-[10px] pb-[10px] pt-[10px]">
           <button
             type="button"
             onClick={handleClose}
