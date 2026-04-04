@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
+const STORAGE_KEY = "sgm_popup_dismissed";
+const DISMISS_DURATION_MS = 3 * 60 * 60 * 1000; // 3 giờ
+
 type Props = { title: string; content: string };
 
 export function AnnouncementPopup({ title, content }: Props) {
@@ -11,12 +14,22 @@ export function AnnouncementPopup({ title, content }: Props) {
   const [closing, setClosing] = useState(false);
 
   useEffect(() => {
+    // Kiểm tra đã đóng trong 3 giờ chưa
+    try {
+      const dismissed = localStorage.getItem(STORAGE_KEY);
+      if (dismissed) {
+        const dismissedAt = Number(dismissed);
+        if (Date.now() - dismissedAt < DISMISS_DURATION_MS) return;
+      }
+    } catch { /* ignore */ }
+
     setMounted(true);
     const t = setTimeout(() => setVisible(true), 300);
     return () => clearTimeout(t);
   }, []);
 
   const handleClose = () => {
+    try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch { /* ignore */ }
     setClosing(true);
     setTimeout(() => setMounted(false), 480);
   };
@@ -40,7 +53,7 @@ export function AnnouncementPopup({ title, content }: Props) {
           filter: visible && !closing ? "blur(0px)" : "blur(10px)",
           transition: "transform 0.48s cubic-bezier(0.22,1,0.36,1), opacity 0.38s ease-out, filter 0.38s ease-out",
         }}
-        className="glass-card relative w-full max-w-lg overflow-hidden rounded-[28px] border border-border bg-card shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
+        className="glass-card relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
       >
         {/* Header */}
         <div className="flex items-start justify-between gap-3 border-b border-border px-5 py-4">
@@ -69,9 +82,9 @@ export function AnnouncementPopup({ title, content }: Props) {
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-xl bg-primary px-6 py-2 text-center text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground shadow-[0_10px_26px_rgba(0,82,255,0.22)] transition hover:brightness-110 dark:shadow-[0_12px_28px_rgba(247,147,26,0.22)]"
+            className="rounded-lg bg-primary px-6 py-2 text-center text-xs font-bold uppercase tracking-[0.1em] text-primary-foreground shadow-[0_10px_26px_rgba(0,82,255,0.22)] transition hover:brightness-110 dark:shadow-[0_12px_28px_rgba(247,147,26,0.22)]"
           >
-            ĐÃ HIỂU
+            ĐÓNG 3 GIỜ
           </button>
         </div>
       </div>
