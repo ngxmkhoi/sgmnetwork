@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { enforceRateLimit } from "@/lib/server/api-guard";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
-
-function db(supabase: NonNullable<ReturnType<typeof createAdminSupabaseClient>>) {
-  return supabase as unknown as { from: (t: string) => ReturnType<typeof supabase.from> };
-}
+import { untypedFrom } from "@/lib/supabase/untyped";
 
 const schema = z.object({
   rating_id: z.string().uuid(),
@@ -25,7 +22,7 @@ export async function POST(request: NextRequest) {
   if (!supabase) return NextResponse.json({ error: "Server error" }, { status: 500 });
 
   const { rating_id, anonymous_id, type } = parsed.data;
-  await db(supabase).from("rating_likes").upsert(
+  await untypedFrom(supabase, "rating_likes").upsert(
     { rating_id, anonymous_id, type } as never,
     { onConflict: "rating_id,anonymous_id" } as never
   );
@@ -43,6 +40,6 @@ export async function DELETE(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ error: "Server error" }, { status: 500 });
 
-  await db(supabase).from("rating_likes").delete().eq("rating_id", rating_id).eq("anonymous_id", anonymous_id);
+  await untypedFrom(supabase, "rating_likes").delete().eq("rating_id", rating_id).eq("anonymous_id", anonymous_id);
   return NextResponse.json({ ok: true });
 }
