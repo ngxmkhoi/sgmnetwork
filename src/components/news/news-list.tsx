@@ -31,6 +31,7 @@ export function NewsList({ news: initialNews }: NewsListProps) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [activeDate, setActiveDate] = useState<"from" | "to" | null>(null);
   const { data: news = initialNews } = useNewsQuery("published");
 
   const categories = useMemo(() => ["all", ...Array.from(new Set(news.map((item) => item.category)))], [news]);
@@ -104,12 +105,24 @@ export function NewsList({ news: initialNews }: NewsListProps) {
 
         <div className="space-y-1">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">TỪ NGÀY</p>
-          <DatePickerInput value={fromDate} onChange={setFromDate} />
+          <DatePickerInput
+            value={fromDate}
+            onChange={(v) => { setFromDate(v); setActiveDate(null); }}
+            forceClose={activeDate === "to"}
+            onOpen={() => setActiveDate("from")}
+            placeholder="TỪ NGÀY"
+          />
         </div>
 
         <div className="space-y-1">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">ĐẾN NGÀY</p>
-          <DatePickerInput value={toDate} onChange={setToDate} />
+          <DatePickerInput
+            value={toDate}
+            onChange={(v) => { setToDate(v); setActiveDate(null); }}
+            forceClose={activeDate === "from"}
+            onOpen={() => setActiveDate("to")}
+            placeholder="ĐẾN NGÀY"
+          />
         </div>
         </div>
       </div>
