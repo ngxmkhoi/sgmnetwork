@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     "lịch sự kiện Free Fire",
     "Free Fire fan made",
     "game mobile Việt Nam",
+    "Free Fire OB47",
+    "Free Fire update",
+    "Free Fire tournament",
+    "Garena Free Fire",
+    "SGM Network Free Fire",
   ],
   openGraph: {
     title: siteConfig.name,
