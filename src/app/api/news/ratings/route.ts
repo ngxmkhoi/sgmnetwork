@@ -13,7 +13,11 @@ const submitSchema = z.object({
 
 type LikeRow = { anonymous_id: string; type: string };
 type ReplyRow = { id: string; content: string; created_at: string };
-type RatingRow = { id: string; anonymous_id: string; stars: number; review: string | null; created_at: string; likes: LikeRow[]; replies: ReplyRow[] };
+type RatingRow = { id: string; anonymous_id: string; stars: number; review: string | null; created_at: string; admin_liked: boolean; likes: LikeRow[]; replies: ReplyRow[] };
+
+function db(supabase: NonNullable<ReturnType<typeof createAdminSupabaseClient>>) {
+  return supabase as unknown as { from: (t: string) => ReturnType<typeof supabase.from> };
+}
 
 export async function GET(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "ratings-get", limit: 60, windowMs: 60_000 });
@@ -26,13 +30,12 @@ export async function GET(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ ratings: [], stats: {} });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data } = await (supabase as any)
-    .from("news_ratings")
-    .select(`id, anonymous_id, stars, review, created_at,
+  const { data } = await db(supabase).from("news_ratings")
+    .select(`id, anonymous_id, stars, review, created_at, admin_liked,
       likes:rating_likes(anonymous_id, type),
       replies:rating_replies(id, content, created_at)`)
     .eq("slug", slug)
+    .order("admin_liked", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(20) as { data: RatingRow[] | null };
 
@@ -54,9 +57,7 @@ export async function POST(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ error: "Server error." }, { status: 500 });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: existing } = await (supabase as any)
-    .from("news_ratings")
+  const { data: existing } = await db(supabase).from("news_ratings")
     .select("id")
     .eq("slug", parsed.data.slug)
     .eq("anonymous_id", parsed.data.anonymous_id)
@@ -64,29 +65,21 @@ export async function POST(request: NextRequest) {
 
   if (existing) return NextResponse.json({ error: "Bạn đã đánh giá bài viết này rồi." }, { status: 409 });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { error } = await (supabase as any).from("news_ratings").insert({
+  const { error } = await db(supabase).from("news_ratings").insert({
     slug: parsed.data.slug,
     title: parsed.data.title,
     anonymous_id: parsed.data.anonymous_id,
     stars: parsed.data.stars,
     review: parsed.data.review || null,
-  });
+  } as never);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json({ error: (error as { message: string }).message }, { status: 500 });
 
   const webAppUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
   if (webAppUrl) {
     void fetch(webAppUrl, {
       method: "POST",
-      body: JSON.stringify({
-        time: new Date().toLocaleString("vi-VN"),
-        slug: parsed.data.slug,
-        title: parsed.data.title,
-        name: parsed.data.anonymous_id,
-        stars: parsed.data.stars,
-        review: parsed.data.review,
-      }),
+      body: JSON.stringify({ time: new Date().toLocaleString("vi-VN"), slug: parsed.data.slug, title: parsed.data.title, name: parsed.data.anonymous_id, stars: parsed.data.stars, review: parsed.data.review }),
     }).catch(() => null);
   }
 

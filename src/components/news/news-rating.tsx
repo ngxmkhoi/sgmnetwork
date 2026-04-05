@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 type LikeRow = { anonymous_id: string; type: string };
 type ReplyRow = { id: string; content: string; created_at: string };
-type RatingItem = { id: string; anonymous_id: string; stars: number; review: string | null; created_at: string; likes: LikeRow[]; replies: ReplyRow[] };
+type RatingItem = { id: string; anonymous_id: string; stars: number; review: string | null; created_at: string; admin_liked: boolean; likes: LikeRow[]; replies: ReplyRow[] };
 type Stats = Record<number, number>;
 type Props = { slug: string; title: string };
 
@@ -38,29 +38,22 @@ function RatingCard({ r, anonId, onRefresh, isAdmin }: { r: RatingItem; anonId: 
 
   const handleLike = async (type: "like" | "unlike") => {
     if (myLike?.type === type) {
-      await fetch("/api/news/ratings/like", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rating_id: r.id, anonymous_id: anonId }),
-      });
+      await fetch("/api/news/ratings/like", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ rating_id: r.id, anonymous_id: anonId }) });
     } else {
-      await fetch("/api/news/ratings/like", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rating_id: r.id, anonymous_id: anonId, type }),
-      });
+      await fetch("/api/news/ratings/like", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ rating_id: r.id, anonymous_id: anonId, type }) });
     }
+    onRefresh();
+  };
+
+  const handleAdminLike = async () => {
+    await fetch("/api/admin/ratings", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: r.id, admin_liked: !r.admin_liked }) });
     onRefresh();
   };
 
   const handleReply = async () => {
     if (!replyText.trim()) return;
     setSending(true);
-    const res = await fetch("/api/admin/ratings/reply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ rating_id: r.id, content: replyText.trim() }),
-    });
+    const res = await fetch("/api/admin/ratings/reply", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ rating_id: r.id, content: replyText.trim() }) });
     setSending(false);
     if (!res.ok) { toast.error("Không thể gửi phản hồi."); return; }
     setReplyText("");
@@ -69,7 +62,12 @@ function RatingCard({ r, anonId, onRefresh, isAdmin }: { r: RatingItem; anonId: 
   };
 
   return (
-    <div className="rounded-xl border border-border bg-background/60 px-4 py-3 space-y-2">
+    <div className={`rounded-xl border px-4 py-3 space-y-2 transition-colors ${r.admin_liked ? "border-primary/40 bg-primary/5 dark:bg-primary/10" : "border-border bg-background/60"}`}>
+      {r.admin_liked && (
+        <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+          <span>⭐</span> NỔI BẬT
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <span className="text-xs font-semibold text-foreground">{r.anonymous_id}</span>
         <div className="flex gap-0.5">
@@ -81,7 +79,6 @@ function RatingCard({ r, anonId, onRefresh, isAdmin }: { r: RatingItem; anonId: 
 
       {r.review && <p className="text-sm text-muted-foreground">{r.review}</p>}
 
-      {/* Replies từ admin */}
       {r.replies.length > 0 && (
         <div className="space-y-1.5 pl-3 border-l-2 border-primary/30">
           {r.replies.map((reply) => (
@@ -93,7 +90,6 @@ function RatingCard({ r, anonId, onRefresh, isAdmin }: { r: RatingItem; anonId: 
         </div>
       )}
 
-      {/* Actions */}
       <div className="flex items-center gap-3 pt-1">
         <button type="button" onClick={() => handleLike("like")}
           className={`flex items-center gap-1 text-xs transition-colors ${myLike?.type === "like" ? "text-primary font-semibold" : "text-muted-foreground hover:text-primary"}`}>
@@ -104,14 +100,20 @@ function RatingCard({ r, anonId, onRefresh, isAdmin }: { r: RatingItem; anonId: 
           <ThumbsDown size={13} /> {unlikeCount > 0 && unlikeCount}
         </button>
         {isAdmin && (
-          <button type="button" onClick={() => setReplyOpen(!replyOpen)}
-            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors ml-auto">
-            <MessageSquare size={13} /> Trả lời
-          </button>
+          <div className="flex items-center gap-2 ml-auto">
+            <button type="button" onClick={handleAdminLike}
+              className={`text-xs transition-colors ${r.admin_liked ? "text-primary font-bold" : "text-muted-foreground hover:text-primary"}`}
+              title={r.admin_liked ? "Bỏ nổi bật" : "Đánh dấu nổi bật"}>
+              {r.admin_liked ? "★ Nổi bật" : "☆ Nổi bật"}
+            </button>
+            <button type="button" onClick={() => setReplyOpen(!replyOpen)}
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors">
+              <MessageSquare size={13} /> Trả lời
+            </button>
+          </div>
         )}
       </div>
 
-      {/* Reply form - chỉ admin */}
       {isAdmin && replyOpen && (
         <div className="flex gap-2 pt-1">
           <Textarea value={replyText} onChange={(e) => setReplyText(e.target.value)}

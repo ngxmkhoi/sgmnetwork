@@ -3,6 +3,10 @@ import { z } from "zod";
 import { enforceAdminApiAuth, enforceRateLimit } from "@/lib/server/api-guard";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
+function db(supabase: NonNullable<ReturnType<typeof createAdminSupabaseClient>>) {
+  return supabase as unknown as { from: (t: string) => ReturnType<typeof supabase.from> };
+}
+
 const replySchema = z.object({
   rating_id: z.string().uuid(),
   content: z.string().min(1).max(500),
@@ -21,11 +25,10 @@ export async function POST(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ error: "Server error" }, { status: 500 });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (supabase as any).from("rating_replies").insert({
+  const { data, error } = await db(supabase).from("rating_replies").insert({
     rating_id: parsed.data.rating_id,
     content: parsed.data.content,
-  }).select("*").single();
+  } as never).select("*").single() as { data: unknown; error: { message: string } | null };
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ reply: data });
@@ -43,7 +46,6 @@ export async function DELETE(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ error: "Server error" }, { status: 500 });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (supabase as any).from("rating_replies").delete().eq("id", id);
+  await db(supabase).from("rating_replies").delete().eq("id", id);
   return NextResponse.json({ ok: true });
 }
