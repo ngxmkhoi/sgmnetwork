@@ -24,6 +24,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "dl.gmc.freefiremobile.com",
+      },
+      {
+        protocol: "https",
         hostname: "upload.wikimedia.org",
       },
       {
