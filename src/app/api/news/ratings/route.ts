@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { enforceRateLimit } from "@/lib/server/api-guard";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
 const submitSchema = z.object({
@@ -12,7 +11,10 @@ const submitSchema = z.object({
   review: z.string().max(500).optional().default(""),
 });
 
-// GET - lấy ratings theo slug
+type LikeRow = { anonymous_id: string; type: string };
+type ReplyRow = { id: string; content: string; created_at: string };
+type RatingRow = { id: string; anonymous_id: string; stars: number; review: string | null; created_at: string; likes: LikeRow[]; replies: ReplyRow[] };
+
 export async function GET(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "ratings-get", limit: 60, windowMs: 60_000 });
   if (limited) return limited;
@@ -24,23 +26,23 @@ export async function GET(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ ratings: [], stats: {} });
 
-  const { data } = await supabase
-    .from("news_ratings" as never)
-    .select("id, anonymous_id, stars, review, created_at")
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase as any)
+    .from("news_ratings")
+    .select(`id, anonymous_id, stars, review, created_at,
+      likes:rating_likes(anonymous_id, type),
+      replies:rating_replies(id, content, created_at)`)
     .eq("slug", slug)
     .order("created_at", { ascending: false })
-    .limit(50) as { data: Array<{ id: string; anonymous_id: string; stars: number; review: string | null; created_at: string }> | null };
+    .limit(20) as { data: RatingRow[] | null };
 
   const ratings = data ?? [];
-
-  // Thống kê số lượng mỗi sao
   const stats: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   for (const r of ratings) stats[r.stars] = (stats[r.stars] ?? 0) + 1;
 
   return NextResponse.json({ ratings, stats });
 }
 
-// POST - gửi đánh giá
 export async function POST(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "ratings-post", limit: 3, windowMs: 60_000 });
   if (limited) return limited;
@@ -52,9 +54,9 @@ export async function POST(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ error: "Server error." }, { status: 500 });
 
-  // Kiểm tra anonymous_id đã đánh giá bài này chưa
-  const { data: existing } = await supabase
-    .from("news_ratings" as never)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: existing } = await (supabase as any)
+    .from("news_ratings")
     .select("id")
     .eq("slug", parsed.data.slug)
     .eq("anonymous_id", parsed.data.anonymous_id)
@@ -62,17 +64,17 @@ export async function POST(request: NextRequest) {
 
   if (existing) return NextResponse.json({ error: "Bạn đã đánh giá bài viết này rồi." }, { status: 409 });
 
-  const { error } = await supabase.from("news_ratings" as never).insert({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase as any).from("news_ratings").insert({
     slug: parsed.data.slug,
     title: parsed.data.title,
     anonymous_id: parsed.data.anonymous_id,
     stars: parsed.data.stars,
     review: parsed.data.review || null,
-  } as never);
+  });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  // Cũng gửi về Google Sheet nếu có
   const webAppUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
   if (webAppUrl) {
     void fetch(webAppUrl, {
