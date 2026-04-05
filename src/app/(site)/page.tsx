@@ -21,7 +21,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Trang Chủ",
-  description: "Cộng đồng game fan-made hiện đại với event timeline, tin tức và gallery.",
+  description: "SGM Network – Trang chủ cộng đồng Free Fire. Xem sự kiện mới nhất, tin tức Esports và nội dung cộng đồng được cập nhật hàng ngày.",
 };
 
 export const revalidate = 60;

@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "SGM Network",
+  name: "SGM Network - Trang Tin Tức Cộng Đồng Free Fire",
   shortName: "SGM Network",
   description:
-    "Cộng đồng game fan-made với lịch sự kiện, tin tức, gallery và hệ thống quản trị hiện đại theo phong cách Free Fire.",
+    "SGM Network – Cổng thông tin cộng đồng Free Fire hàng đầu. Cập nhật nhanh nhất các sự kiện in-game, tin tức Esports chuyên sâu và các hoạt động cộng đồng nổi bật. Trang độc lập, khách quan, được vận hành và phát triển bởi đội ngũ SGM Network.",
   url: "https://sgmnetwork.vercel.app",
   productionUrl: "https://sgmnetwork.vercel.app",
   ogImage: "/og-image.png",

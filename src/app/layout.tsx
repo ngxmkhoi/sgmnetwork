@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
-    template: `${siteConfig.name} | %s`,
+    template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
   alternates: {
@@ -24,10 +24,15 @@ export const metadata: Metadata = {
   },
   keywords: [
     "SGM Network",
-    "Free Fire fan made",
-    "lịch sự kiện Free Fire",
+    "Free Fire",
+    "Free Fire Việt Nam",
     "tin tức Free Fire",
-    "cộng đồng game",
+    "sự kiện Free Fire",
+    "esports Free Fire",
+    "cộng đồng Free Fire",
+    "lịch sự kiện Free Fire",
+    "Free Fire fan made",
+    "game mobile Việt Nam",
   ],
   openGraph: {
     title: siteConfig.name,

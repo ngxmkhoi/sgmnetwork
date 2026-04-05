@@ -8,7 +8,7 @@ export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Phát Trực Tiếp",
-  description: "Xem trực tiếp và theo dõi các buổi phát sóng của cộng đồng SGM Network.",
+  description: "Xem trực tiếp các buổi phát sóng Esports Free Fire từ cộng đồng SGM Network. Theo dõi stream live, upcoming và các trận đấu đã kết thúc.",
 };
 
 export default async function EsportsPage() {
