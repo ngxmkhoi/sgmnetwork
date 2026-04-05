@@ -31,6 +31,7 @@ export async function DELETE(request: NextRequest) {
   const supabase = createAdminSupabaseClient();
   if (!supabase) return NextResponse.json({ error: "Server error." }, { status: 500 });
 
-  await (supabase.from("news_ratings" as never) as ReturnType<typeof supabase.from>).delete().eq("id", id);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (supabase as any).from("news_ratings").delete().eq("id", id);
   return NextResponse.json({ ok: true });
 }

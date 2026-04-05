@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { RatingsAdminPanel } from "@/components/admin/ratings-admin-panel";
+import { RatingsAdminPanel } from "../../../components/admin/ratings-admin-panel";
 
 export const metadata: Metadata = { title: "Quản Lý Đánh Giá" };
 
