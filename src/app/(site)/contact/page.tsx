@@ -34,12 +34,11 @@ export default async function ContactPage() {
       href: socialLinks.tiktok,
       icon: TiktokBrandIcon,
     },
-    {
-      label: "YOUTUBE",
-      href: socialLinks.youtube,
-      icon: YoutubeBrandIcon,
-    },
-  ] as const;
+    // Chỉ hiện YouTube nếu admin đã điền URL thật
+    ...(socialLinks.youtube && socialLinks.youtube !== "https://youtube.com"
+      ? [{ label: "YOUTUBE", href: socialLinks.youtube, icon: YoutubeBrandIcon }]
+      : []),
+  ];
 
   return (
     <div className="space-y-8 pt-6 md:pt-8">
