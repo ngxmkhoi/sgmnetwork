@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants/site";
 import { AppProviders } from "@/components/providers/app-providers";
 import { SecurityGuard } from "@/components/common/security-guard";
+import { PageViewTracker } from "@/components/common/page-view-tracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -92,6 +93,7 @@ export default function RootLayout({
       </head>
       <body className={cn("font-body min-h-screen bg-background text-foreground antialiased")}>
         <AppProviders>{children}</AppProviders>
+        <PageViewTracker />
         <SecurityGuard />
         <Analytics />
         <SpeedInsights />
