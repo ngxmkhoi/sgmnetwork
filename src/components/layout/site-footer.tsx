@@ -33,7 +33,10 @@ export async function SiteFooter() {
   const socialLinks = [
     { label: "Facebook", href: resolvedSocialLinks.facebook, icon: FacebookBrandIcon },
     { label: "TikTok", href: resolvedSocialLinks.tiktok, icon: TiktokBrandIcon },
-    { label: "YouTube", href: resolvedSocialLinks.youtube, icon: YoutubeBrandIcon },
+    // Chỉ hiện YouTube nếu admin đã điền URL (không phải URL mặc định placeholder)
+    ...(resolvedSocialLinks.youtube && resolvedSocialLinks.youtube !== "https://youtube.com"
+      ? [{ label: "YouTube", href: resolvedSocialLinks.youtube, icon: YoutubeBrandIcon }]
+      : []),
     {
       label: "Gmail",
       href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(resolvedSocialLinks.email)}`,
@@ -79,16 +82,16 @@ export async function SiteFooter() {
           </div>
 
           {/* Col 2: Navigation */}
-          <div className="flex flex-col space-y-5">
-            <h3 className="font-heading text-lg font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-heading text-sm font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
               Điều Hướng
             </h3>
-            <ul className="flex flex-col space-y-3">
+            <ul className="flex flex-col space-y-2.5">
               {footerNav.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="group inline-flex items-center text-[15px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                    className="group inline-flex items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary/40 transition-all group-hover:bg-primary dark:bg-amber-400/40 dark:group-hover:bg-amber-400" />
                     {link.label}
@@ -99,16 +102,16 @@ export async function SiteFooter() {
           </div>
 
           {/* Col 3: Legal */}
-          <div className="flex flex-col space-y-5">
-            <h3 className="font-heading text-lg font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-heading text-sm font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
               Pháp Lý
             </h3>
-            <ul className="flex flex-col space-y-3">
+            <ul className="flex flex-col space-y-2.5">
               {footerLegal.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="group inline-flex items-center text-[15px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                    className="group inline-flex items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary/40 transition-all group-hover:bg-primary dark:bg-amber-400/40 dark:group-hover:bg-amber-400" />
                     {link.label}
@@ -117,22 +120,24 @@ export async function SiteFooter() {
               ))}
             </ul>
 
-            <div className="mt-2 pt-2">
-              <p className="text-[14px] font-medium text-muted-foreground">
-                <strong className="text-foreground">Email:</strong> {resolvedSocialLinks.email}
+            <div className="space-y-1.5 pt-1">
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Email:</span>{" "}
+                {resolvedSocialLinks.email}
               </p>
-              <p className="mt-1 text-[14px] font-medium text-muted-foreground">
-                <strong className="text-foreground">Website:</strong> {siteConfig.url}
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Website:</span>{" "}
+                {siteConfig.url}
               </p>
             </div>
           </div>
 
           {/* Col 4: Social Connections */}
-          <div className="flex flex-col space-y-5">
-            <h3 className="font-heading text-lg font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-heading text-sm font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
               Kết Nối
             </h3>
-            <p className="text-[14px] text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               Theo dõi chúng tôi trên các nền tảng mạng xã hội để không bỏ lỡ thông tin mới nhất.
             </p>
             <div className="flex flex-wrap gap-3">

@@ -194,7 +194,7 @@ export function DatePickerInput({
                       const nextMonth = Number(event.target.value);
                       setCursorDate(new Date(cursorDate.getFullYear(), nextMonth, 1));
                     }}
-                    className="theme-control-surface h-10 rounded-xl px-3 text-sm font-semibold uppercase tracking-[0.08em] text-foreground"
+                    className="theme-control-surface h-9 rounded-xl px-2 text-xs font-semibold uppercase text-foreground w-full"
                   >
                     {monthLabels.map((label, index) => (
                       <option key={label} value={index}>
@@ -209,7 +209,7 @@ export function DatePickerInput({
                       const nextYear = Number(event.target.value);
                       setCursorDate(new Date(nextYear, cursorDate.getMonth(), 1));
                     }}
-                    className="theme-control-surface h-10 rounded-xl px-3 text-sm font-semibold uppercase tracking-[0.08em] text-foreground"
+                    className="theme-control-surface h-9 rounded-xl px-2 text-xs font-semibold text-foreground w-full"
                   >
                     {yearOptions.map((year) => (
                       <option key={year} value={year}>
