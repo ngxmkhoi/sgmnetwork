@@ -51,6 +51,7 @@ export function SiteNavbar() {
               alt={siteConfig.shortName}
               width={40}
               height={40}
+              priority
               className="block aspect-square object-cover drop-shadow-[0_8px_22px_rgba(15,23,42,0.18)] dark:hidden"
             />
             <Image
@@ -58,6 +59,7 @@ export function SiteNavbar() {
               alt={siteConfig.shortName}
               width={40}
               height={40}
+              priority
               className="hidden aspect-square object-cover drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] dark:block"
             />
           </motion.div>

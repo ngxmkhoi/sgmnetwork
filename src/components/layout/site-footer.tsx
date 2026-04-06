@@ -100,11 +100,11 @@ export async function SiteFooter() {
             <p className="text-sm font-bold uppercase tracking-widest text-foreground">Liên Hệ</p>
             <div className="flex flex-col gap-2">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/50 mb-0.5">Email</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-0.5">Email</p>
                 <p className="text-sm text-muted-foreground">{resolvedSocialLinks.email}</p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/50 mb-0.5">Website</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-0.5">Website</p>
                 <p className="text-sm text-muted-foreground">{siteConfig.url.replace("https://", "")}</p>
               </div>
             </div>

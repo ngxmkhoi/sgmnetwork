@@ -37,6 +37,9 @@ export default async function HomePage() {
   const settingsMap = buildSettingsMap(settings);
   const socialLinks = resolveSocialLinks(settingsMap);
   const heroSlider = resolveHeroSliderSettings(settingsMap);
+
+  // Preload ảnh hero đầu tiên để cải thiện LCP
+  const firstHeroImage = heroSlider.desktopImages[0];
   const latestEvents = [...events].sort((left, right) => new Date(right.start_date).getTime() - new Date(left.start_date).getTime());
   const latestNews = [...news].sort((left, right) => new Date(right.created_at).getTime() - new Date(left.created_at).getTime());
   const latestGallery = [...gallery].sort((left, right) => new Date(right.created_at).getTime() - new Date(left.created_at).getTime());
@@ -49,6 +52,10 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-14">
+      {firstHeroImage && (
+        // eslint-disable-next-line @next/next/no-head-element
+        <link rel="preload" as="image" href={firstHeroImage} fetchPriority="high" />
+      )}
       {popupEnabled && popupContent && (
         <AnnouncementPopup title={popupTitle} content={popupContent} />
       )}
