@@ -90,6 +90,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://googlevideo.com" />
         {/* Preload font chính để giảm blocking */}
         <link rel="preload" href="/fonts/GFF-Latin-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        {/* DMCA verification */}
+        <meta name="dmca-site-verification" content="cmE4MmRVTTUvU1ozdU9Xb0lHQmxodDZwemQ0bFgyc1MvNHY5M2VWZUxYTT01" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GJCSBSTY7Y"
           strategy="afterInteractive"
