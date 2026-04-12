@@ -57,12 +57,10 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           {formatVietnamDate(article.created_at)}
         </p>
       </div>
-      <div className="relative h-[320px] overflow-hidden rounded-2xl border border-border">
+      {/* Ảnh bìa */}
+      <div className="relative w-full overflow-hidden rounded-2xl border border-border" style={{ aspectRatio: "16/7" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={article.cover} alt={article.title} className="h-full w-full object-cover" />
-      </div>
-      <div className="glass-card rounded-2xl p-6">
-        <RichTextRenderer html={article.content} />
+        <img src={article.cover} alt={article.title} className="absolute inset-0 h-full w-full object-cover" />
       </div>
 
       {/* Nội dung + mục lục - chỉ dùng 2 cột khi có heading */}
