@@ -17,6 +17,7 @@ const footerNav = [
   { label: "Trang Chủ", href: "/" },
   { label: "Lịch", href: "/calendar" },
   { label: "Sự Kiện", href: "/events" },
+  { label: "Phát Trực Tiếp", href: "/esports" },
   { label: "Tin Tức", href: "/news" },
   { label: "Liên Hệ", href: "/contact" },
 ];
@@ -33,64 +34,46 @@ export async function SiteFooter() {
   const socialLinks = [
     { label: "Facebook", href: resolvedSocialLinks.facebook, icon: FacebookBrandIcon },
     { label: "TikTok", href: resolvedSocialLinks.tiktok, icon: TiktokBrandIcon },
-    { label: "YouTube", href: resolvedSocialLinks.youtube, icon: YoutubeBrandIcon },
+    ...(resolvedSocialLinks.youtube && resolvedSocialLinks.youtube !== "https://youtube.com"
+      ? [{ label: "YouTube", href: resolvedSocialLinks.youtube, icon: YoutubeBrandIcon }]
+      : []),
     {
       label: "Gmail",
       href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(resolvedSocialLinks.email)}`,
       icon: GmailBrandIcon,
     },
-  ] as const;
+  ];
 
   return (
-    <footer className="relative mt-12 border-t-2 border-border/80 bg-white dark:bg-[#07090b]">
-      {/* Premium Gradient Overlays */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[2px] w-1/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary dark:via-amber-400 to-transparent opacity-50" />
+    <footer className="relative mt-16 border-t border-border bg-card">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/60 dark:via-amber-400/60 to-transparent" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
 
-        {/* Main 4-column layout */}
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-12">
 
-          {/* Col 1: Brand */}
-          <div className="flex flex-col items-start space-y-5 lg:pr-4">
-            <div className="flex items-center gap-3">
-              <Image
-                src={LOGO_LIGHT}
-                alt="SGM Network"
-                width={64}
-                height={64}
-                className="block aspect-square object-cover drop-shadow-[0_4px_12px_rgba(0,82,255,0.15)] dark:hidden"
-              />
-              <Image
-                src={LOGO_DARK}
-                alt="SGM Network"
-                width={64}
-                height={64}
-                className="hidden aspect-square object-cover drop-shadow-[0_4px_12px_rgba(247,147,26,0.2)] dark:block"
-              />
-              <span className="font-heading text-3xl font-black tracking-[0.05em] text-foreground">
-                SGM NETWORK
-              </span>
+          {/* Cột 1: Brand */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-3 -ml-2">
+              <Image src={LOGO_LIGHT} alt="SGM Network" width={52} height={52} className="block rounded-xl dark:hidden shrink-0" />
+              <Image src={LOGO_DARK} alt="SGM Network" width={52} height={52} className="hidden rounded-xl dark:block shrink-0" />
+              <div className="flex flex-col -ml-1" style={{ lineHeight: 1.15 }}>
+                <span className="font-heading text-2xl font-black uppercase text-foreground">SGM</span>
+                <span className="font-heading text-2xl font-black uppercase text-foreground">NETWORK</span>
+              </div>
             </div>
-            <p className="text-[15px] leading-relaxed text-muted-foreground text-justify">
-              {settingsMap["site.description"]}
+            <p className="text-sm leading-6 text-muted-foreground max-w-[280px] text-justify">
+              {settingsMap["site.description"] ?? siteConfig.description}
             </p>
           </div>
 
-          {/* Col 2: Navigation */}
-          <div className="flex flex-col space-y-5">
-            <h3 className="font-heading text-lg font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
-              Điều Hướng
-            </h3>
-            <ul className="flex flex-col space-y-3">
+          {/* Cột 2: Điều hướng */}
+          <div className="flex flex-col gap-4">
+            <p className="text-sm font-bold uppercase tracking-widest text-foreground">Điều Hướng</p>
+            <ul className="flex flex-col gap-2">
               {footerNav.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center text-[15px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary/40 transition-all group-hover:bg-primary dark:bg-amber-400/40 dark:group-hover:bg-amber-400" />
+                  <Link href={link.href} className="text-sm text-muted-foreground transition hover:text-foreground">
                     {link.label}
                   </Link>
                 </li>
@@ -98,44 +81,34 @@ export async function SiteFooter() {
             </ul>
           </div>
 
-          {/* Col 3: Legal */}
-          <div className="flex flex-col space-y-5">
-            <h3 className="font-heading text-lg font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
-              Pháp Lý
-            </h3>
-            <ul className="flex flex-col space-y-3">
+          {/* Cột 3: Pháp lý */}
+          <div className="flex flex-col gap-4">
+            <p className="text-sm font-bold uppercase tracking-widest text-foreground">Pháp Lý</p>
+            <ul className="flex flex-col gap-2">
               {footerLegal.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center text-[15px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary/40 transition-all group-hover:bg-primary dark:bg-amber-400/40 dark:group-hover:bg-amber-400" />
+                  <Link href={link.href} className="text-sm text-muted-foreground transition hover:text-foreground">
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-
-            <div className="mt-2 pt-2">
-              <p className="text-[14px] font-medium text-muted-foreground">
-                <strong className="text-foreground">Email:</strong> {resolvedSocialLinks.email}
-              </p>
-              <p className="mt-1 text-[14px] font-medium text-muted-foreground">
-                <strong className="text-foreground">Website:</strong> {siteConfig.url}
-              </p>
-            </div>
           </div>
 
-          {/* Col 4: Social Connections */}
-          <div className="flex flex-col space-y-5">
-            <h3 className="font-heading text-lg font-bold uppercase tracking-[0.1em] text-primary dark:text-amber-400">
-              Kết Nối
-            </h3>
-            <p className="text-[14px] text-muted-foreground">
-              Theo dõi chúng tôi trên các nền tảng mạng xã hội để không bỏ lỡ thông tin mới nhất.
-            </p>
-            <div className="flex flex-wrap gap-3">
+          {/* Cột 4: Liên hệ */}
+          <div className="flex flex-col gap-4">
+            <p className="text-sm font-bold uppercase tracking-widest text-foreground">Liên Hệ</p>
+            <div className="flex flex-col gap-2">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-0.5">Email</p>
+                <p className="text-sm text-muted-foreground">{resolvedSocialLinks.email}</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-0.5">Website</p>
+                <p className="text-sm text-muted-foreground">{siteConfig.url.replace("https://", "")}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 pt-1">
               {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
@@ -145,9 +118,9 @@ export async function SiteFooter() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={link.label}
-                    className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-slate-100 text-slate-700 transition hover:bg-primary hover:text-white dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-amber-400 dark:hover:text-[#0f172a]"
+                    className="flex size-9 items-center justify-center rounded-xl bg-muted text-muted-foreground transition hover:bg-primary hover:text-white dark:hover:bg-amber-400 dark:hover:text-black"
                   >
-                    <Icon className="size-5" />
+                    <Icon className="size-[18px]" />
                   </Link>
                 );
               })}
@@ -157,14 +130,14 @@ export async function SiteFooter() {
         </div>
 
         {/* Divider */}
-        <div className="mt-16 h-px w-full bg-border/60" />
+        <div className="mt-6 border-t border-border" />
 
-        {/* Bottom Copyright Area */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-2 text-center">
+        {/* Copyright */}
+        <div className="mt-4 flex flex-col items-center gap-1 text-center">
           <p className="text-[15px] font-bold text-foreground">
             © 2026 SGM Network. All Rights Reserved.
           </p>
-          <p className="text-[14px] font-semibold text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             All images and related assets are the property of Garena Free Fire Vietnam.
           </p>
         </div>

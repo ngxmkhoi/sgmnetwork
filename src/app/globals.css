@@ -13,11 +13,64 @@
 }
 
 /* Cho phép select trong input/textarea */
-input, textarea, [contenteditable] {
+input, textarea, [contenteditable], .tiptap {
   -webkit-user-select: text;
   -moz-user-select: text;
   user-select: text;
 }
+
+/* Cho phép select toàn bộ trang admin */
+[data-admin-page] * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+}
+
+/* GFF Latin font có built-in spacing rộng - reset tracking */
+.font-heading,
+.font-heading[class*="tracking-"],
+[class*="tracking-"].font-heading {
+  letter-spacing: 0.01em !important;
+}
+
+/* Body text cũng dùng GFF Latin */
+body, .font-body {
+  letter-spacing: 0.005em;
+}
+
+/* Editor Tiptap list styles */
+.tiptap ul { list-style: disc; padding-left: 1.25rem; margin: 0.3em 0; }
+.tiptap ol { list-style: decimal; padding-left: 1.25rem; margin: 0.3em 0; }
+.tiptap li { margin: 0.1em 0; }
+.popup-content {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  color: hsl(var(--foreground));
+}
+.popup-content > * + * { margin-top: 0.6rem; }
+.popup-content p { margin: 0 0 0.4em; }
+.popup-content p:last-child { margin-bottom: 0; }
+.popup-content h2 { font-size: 1.1rem; font-weight: 700; margin: 0.6em 0 0.3em; }
+.popup-content h3 { font-size: 1rem; font-weight: 600; margin: 0.5em 0 0.25em; }
+.popup-content h4 { font-size: 0.95rem; font-weight: 700; margin: 0.45em 0 0.2em; }
+.popup-content strong { font-weight: 700; }
+.popup-content em { font-style: italic; }
+.popup-content u { text-decoration: underline; }
+.popup-content ul { list-style: disc; padding-left: 1.25rem; margin: 0.3em 0; }
+.popup-content ol { list-style: decimal; padding-left: 1.25rem; margin: 0.3em 0; }
+.popup-content li { margin: 0.1em 0; }
+.popup-content a { color: #0052ff; text-decoration: underline; cursor: pointer; }
+.popup-content hr { display: none; }
+.popup-content blockquote { border-left: 3px solid rgba(0, 82, 255, 0.22); padding-left: 0.9rem; margin: 0.15rem 0; font-style: italic; color: hsl(var(--muted-foreground)); background: rgba(0, 82, 255, 0.03); border-radius: 0 12px 12px 0; padding-top: 0.6rem; padding-bottom: 0.6rem; }
+.popup-content img { display: block; max-width: 100%; height: auto; border-radius: 14px; box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12); }
+.popup-content table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 12px; }
+.popup-content th,
+.popup-content td { border: 1px solid rgba(148, 163, 184, 0.28); padding: 0.65rem 0.75rem; vertical-align: top; }
+.popup-content th { background: rgba(148, 163, 184, 0.14); font-weight: 700; text-align: left; }
+.popup-content code { border-radius: 6px; background: rgba(148, 163, 184, 0.12); padding: 0.12rem 0.4rem; font-size: 0.85em; }
+.popup-content pre { overflow-x: auto; background: rgba(15,23,42,0.05); border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; }
+.popup-content pre code { background: transparent; padding: 0; }
 
 @layer base {
   :root {
@@ -98,7 +151,7 @@ input, textarea, [contenteditable] {
   h5,
   h6 {
     font-family: var(--font-heading), sans-serif;
-    letter-spacing: 0.01em;
+    letter-spacing: 0em;
     text-transform: uppercase;
   }
 
@@ -383,6 +436,33 @@ input, textarea, [contenteditable] {
 
   .dark .policy-item {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  }
+
+  .policy-interactive-card {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform, box-shadow, border-color, filter;
+  }
+
+  .policy-hero-orb {
+    animation: policy-orb-float 18s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    will-change: transform, opacity;
+  }
+
+  .policy-hero-orb--slow {
+    animation-duration: 24s;
+    animation-delay: -6s;
+  }
+
+  @keyframes policy-orb-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+      transform: translate3d(14px, -18px, 0) scale(1.06);
+    }
   }
 }
 

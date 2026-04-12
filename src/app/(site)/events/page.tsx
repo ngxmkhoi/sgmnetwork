@@ -5,7 +5,7 @@ import { getEvents } from "@/lib/data/content-service";
 
 export const metadata: Metadata = {
   title: "Sự Kiện",
-  description: "Danh sách sự kiện dạng card, lọc trạng thái và lọc khoảng ngày từ - đến.",
+  description: "Lịch sự kiện Free Fire đầy đủ nhất – sự kiện đang diễn ra, sắp tới và đã kết thúc. Theo dõi và đừng bỏ lỡ bất kỳ sự kiện nào từ SGM Network.",
 };
 
 export const revalidate = 60;

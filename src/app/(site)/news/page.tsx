@@ -6,7 +6,7 @@ import { getNews } from "@/lib/data/content-service";
 
 export const metadata: Metadata = {
   title: "Tin Tức",
-  description: "Trang tin tức cộng đồng với bộ lọc ngày đăng, chuyên mục và danh sách bài viết gần đây.",
+  description: "Tin tức Free Fire mới nhất – sự kiện in-game, cập nhật patch, tin Esports và hoạt động cộng đồng SGM Network. Đọc ngay để không bỏ lỡ.",
 };
 
 export const revalidate = 60;

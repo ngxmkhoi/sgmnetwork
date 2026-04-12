@@ -5,10 +5,11 @@ export type StreamStatus = "live" | "upcoming" | "ended";
 export type StreamItem = {
   id: string;
   title: string;
-  youtube_url: string;       // full YouTube URL hoặc video ID
-  thumbnail_url: string;     // https://i.ytimg.com/vi/{id}/maxresdefault.jpg
-  scheduled_at: string;      // ISO datetime
+  youtube_url: string;
+  thumbnail_url: string;
+  scheduled_at: string;
   status: StreamStatus;
+  category: string;
   created_at: string;
 };
 

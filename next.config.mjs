@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const isDevelopment = process.env.NODE_ENV !== "production";
+
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
@@ -22,17 +24,49 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "dl.gmc.freefiremobile.com",
+      },
+      {
+        protocol: "https",
         hostname: "upload.wikimedia.org",
       },
       {
         protocol: "https",
         hostname: "ik.imagekit.io",
       },
+      {
+        protocol: "https",
+        hostname: "files.garena.vn",
+      },
+      {
+        protocol: "https",
+        hostname: "*.garena.vn",
+      },
     ],
     minimumCacheTTL: 31536000,
     formats: ['image/avif', 'image/webp'],
   },
   async headers() {
+    const scriptSrc = [
+      "'self'",
+      "'unsafe-inline'",
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      ...(isDevelopment ? ["'unsafe-eval'", "https://va.vercel-scripts.com"] : []),
+    ].join(" ");
+
+    const connectSrc = [
+      "'self'",
+      "https://*.supabase.co",
+      "https://www.googleapis.com",
+      "https://i.ytimg.com",
+      "https://www.youtube-nocookie.com",
+      "https://www.google-analytics.com",
+      "https://region1.google-analytics.com",
+      "https://vitals.vercel-insights.com",
+      ...(isDevelopment ? ["https://va.vercel-scripts.com"] : []),
+    ].join(" ");
+
     const contentSecurityPolicy = [
       "default-src 'self'",
       "base-uri 'self'",
@@ -42,8 +76,8 @@ const nextConfig = {
       "media-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-      "connect-src 'self' https://*.supabase.co https://www.googleapis.com https://i.ytimg.com https://www.youtube-nocookie.com",
+      `script-src ${scriptSrc}`,
+      `connect-src ${connectSrc}`,
       "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
       "form-action 'self' https://mail.google.com https://accounts.google.com",
       "upgrade-insecure-requests",

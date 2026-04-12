@@ -24,6 +24,8 @@ type DatePickerInputProps = {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  forceClose?: boolean;
+  onOpen?: () => void;
 };
 
 const weekdayLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
@@ -51,6 +53,8 @@ export function DatePickerInput({
   onChange,
   placeholder = "CHỌN NGÀY",
   className,
+  forceClose,
+  onOpen,
 }: DatePickerInputProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -72,7 +76,7 @@ export function DatePickerInput({
     }
 
     const rect = triggerRef.current.getBoundingClientRect();
-    const panelWidth = Math.min(Math.max(rect.width, 300), 340);
+    const panelWidth = Math.min(Math.max(rect.width, 320), 360);
     const safeLeft = Math.max(12, Math.min(rect.left, window.innerWidth - panelWidth - 12));
     const estimatedPanelHeight = 420;
     const padding = 12;
@@ -101,6 +105,10 @@ export function DatePickerInput({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (forceClose) setOpen(false);
+  }, [forceClose]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -162,7 +170,7 @@ export function DatePickerInput({
       <button
         ref={triggerRef}
         type="button"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => { setOpen((current) => !current); if (!open) onOpen?.(); }}
         className="theme-control-surface flex h-11 w-full items-center justify-between rounded-xl px-3 text-left text-sm font-semibold uppercase tracking-[0.08em] text-foreground"
       >
         <span className={cn(!selectedDate && "text-muted-foreground")}>{displayValue}</span>
@@ -238,7 +246,7 @@ export function DatePickerInput({
               {weekdayLabels.map((label) => (
                 <span
                   key={label}
-                  className="flex h-8 items-center justify-center text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground"
+                  className="flex h-7 items-center justify-center text-[10px] font-semibold uppercase tracking-widest text-muted-foreground"
                 >
                   {label}
                 </span>
@@ -261,7 +269,7 @@ export function DatePickerInput({
                       setOpen(false);
                     }}
                     className={cn(
-                      "flex h-10 items-center justify-center rounded-xl text-sm font-semibold transition",
+                      "flex h-9 items-center justify-center rounded-xl text-[11px] font-semibold transition",
                       isSelected
                         ? "bg-primary text-primary-foreground shadow-[0_10px_22px_rgba(0,82,255,0.2)] dark:shadow-[0_0_20px_-8px_rgba(247,147,26,0.55)]"
                         : "text-foreground hover:bg-primary/10 hover:text-primary dark:hover:text-amber-300",

@@ -75,7 +75,7 @@ const newsFormSchema = z.object({
   cover: z.string().url("Ảnh bìa phải là URL hợp lệ."),
   category: z.string().min(2, "Danh mục cần ít nhất 2 ký tự.").max(60),
   created_at: z.string().min(1, "Vui lòng chọn ngày đăng."),
-  content: z.string().min(20, "Nội dung cần ít nhất 20 ký tự.").max(5000),
+  content: z.string().min(20, "Nội dung cần ít nhất 20 ký tự.").max(100000),
 });
 
 type NewsFormValues = z.infer<typeof newsFormSchema>;
@@ -224,7 +224,9 @@ export function NewsEditorDialog({
         created_at: formatVietnamDateInput(initialData.created_at),
         content: initialData.content ?? "",
       });
-      setContent(initialData.content ?? "");
+      const initialContent = initialData.content ?? "";
+      setContent(initialContent);
+      setValue("content", initialContent, { shouldValidate: false });
       return;
     }
 
@@ -236,7 +238,8 @@ export function NewsEditorDialog({
       content: "",
     });
     setContent("");
-  }, [initialData, loadCategories, open, reset]);
+    setValue("content", "", { shouldValidate: false });
+  }, [initialData, loadCategories, open, reset, setValue]);
 
   useEffect(() => {
     setValue("content", content, { shouldValidate: true });
@@ -290,10 +293,10 @@ export function NewsEditorDialog({
         </DialogTrigger>
       ) : null}
 
-      <DialogContent className="max-h-[92vh] overflow-visible border-border bg-card p-0 text-foreground sm:max-w-3xl">
-        <div className="max-h-[92vh] overflow-y-auto px-6 py-6">
-          <DialogHeader className="mb-4 pr-10">
-            <DialogTitle className="font-heading text-xl uppercase tracking-[0.08em] text-foreground">
+      <DialogContent className="flex max-h-[92vh] flex-col overflow-hidden border-border bg-card p-0 text-foreground sm:max-w-3xl">
+        <div className="overflow-y-auto flex-1 px-6 py-6">
+          <DialogHeader className="mb-4">
+            <DialogTitle className="font-heading text-xl uppercase text-foreground pr-8">
               {initialData ? "CHỈNH SỬA TIN TỨC" : "TẠO TIN TỨC"}
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
@@ -335,6 +338,7 @@ export function NewsEditorDialog({
                 NỘI DUNG TIN TỨC
               </label>
               <RichTextEditor
+                key={initialData?.id ?? "new"}
                 value={content}
                 onChange={(html) => {
                   setContent(html);

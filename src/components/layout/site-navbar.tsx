@@ -27,8 +27,8 @@ export function SiteNavbar() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const isHomePage = pathname === "/";
   const navLinkClass = isHomePage
-    ? "relative py-2 text-sm font-semibold uppercase tracking-[0.08em] text-slate-700 transition hover:text-slate-950 dark:text-white dark:hover:text-white/80"
-    : "relative py-2 text-sm font-semibold uppercase tracking-[0.08em] text-muted-foreground transition hover:text-foreground dark:text-white dark:hover:text-white/80";
+    ? "relative py-2 text-sm font-semibold uppercase tracking-[0.02em] text-slate-700 transition hover:text-slate-950 dark:text-white dark:hover:text-white/80"
+    : "relative py-2 text-sm font-semibold uppercase tracking-[0.02em] text-muted-foreground transition hover:text-foreground dark:text-white dark:hover:text-white/80";
   const activeNavClass = isHomePage ? "text-primary dark:text-amber-300" : "text-primary dark:text-amber-300";
   const homeControlClass =
     "theme-control-surface border-slate-200/90 bg-white/84 text-slate-900 hover:bg-white dark:border-white/15 dark:bg-[#0F1115]/72 dark:text-white dark:hover:bg-[#151820]";
@@ -51,6 +51,7 @@ export function SiteNavbar() {
               alt={siteConfig.shortName}
               width={40}
               height={40}
+              priority
               className="block aspect-square object-cover drop-shadow-[0_8px_22px_rgba(15,23,42,0.18)] dark:hidden"
             />
             <Image
@@ -58,6 +59,7 @@ export function SiteNavbar() {
               alt={siteConfig.shortName}
               width={40}
               height={40}
+              priority
               className="hidden aspect-square object-cover drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] dark:block"
             />
           </motion.div>

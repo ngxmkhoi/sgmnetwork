@@ -16,7 +16,7 @@ export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Liên Hệ",
-  description: "Kênh liên hệ cộng đồng game fan-made qua social và biểu mẫu hỗ trợ.",
+  description: "Liên hệ với đội ngũ SGM Network qua email, Facebook, TikTok hoặc YouTube. Gửi góp ý, báo lỗi hoặc đề xuất hợp tác với cộng đồng Free Fire.",
 };
 
 export default async function ContactPage() {
@@ -34,12 +34,11 @@ export default async function ContactPage() {
       href: socialLinks.tiktok,
       icon: TiktokBrandIcon,
     },
-    {
-      label: "YOUTUBE",
-      href: socialLinks.youtube,
-      icon: YoutubeBrandIcon,
-    },
-  ] as const;
+    // Chỉ hiện YouTube nếu admin đã điền URL thật
+    ...(socialLinks.youtube && socialLinks.youtube !== "https://youtube.com"
+      ? [{ label: "YOUTUBE", href: socialLinks.youtube, icon: YoutubeBrandIcon }]
+      : []),
+  ];
 
   return (
     <div className="space-y-8 pt-6 md:pt-8">

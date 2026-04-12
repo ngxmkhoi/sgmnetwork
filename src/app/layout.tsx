@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants/site";
 import { AppProviders } from "@/components/providers/app-providers";
 import { SecurityGuard } from "@/components/common/security-guard";
+import { PageViewTracker } from "@/components/common/page-view-tracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 // GFF Fonts are loaded from fonts.css
 // Heading: --font-heading (GFF Latin ExtraBold)
@@ -14,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
-    template: `${siteConfig.name} | %s`,
+    template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
   alternates: {
@@ -22,10 +25,20 @@ export const metadata: Metadata = {
   },
   keywords: [
     "SGM Network",
-    "Free Fire fan made",
-    "lịch sự kiện Free Fire",
+    "Free Fire",
+    "Free Fire Việt Nam",
     "tin tức Free Fire",
-    "cộng đồng game",
+    "sự kiện Free Fire",
+    "esports Free Fire",
+    "cộng đồng Free Fire",
+    "lịch sự kiện Free Fire",
+    "Free Fire fan made",
+    "game mobile Việt Nam",
+    "Free Fire OB47",
+    "Free Fire update",
+    "Free Fire tournament",
+    "Garena Free Fire",
+    "SGM Network Free Fire",
   ],
   openGraph: {
     title: siteConfig.name,
@@ -67,18 +80,31 @@ export default function RootLayout({
   const faviconUrl = siteConfig.favicon;
   return (
     <html lang="vi" suppressHydrationWarning>
-      {/* Manually declared link tags for favicon to bypass caching or next-metadata bugs */}
-      <link rel="icon" href={faviconUrl} sizes="any" />
-      <link rel="apple-touch-icon" href={faviconUrl} />
-      <link rel="shortcut icon" href={faviconUrl} />
-      {/* Preconnect YouTube để giảm độ trễ khi load video */}
-      <link rel="preconnect" href="https://www.youtube-nocookie.com" />
-      <link rel="preconnect" href="https://www.youtube.com" />
-      <link rel="preconnect" href="https://i.ytimg.com" />
-      <link rel="dns-prefetch" href="https://googlevideo.com" />
+      <head>
+        <link rel="icon" href={faviconUrl} sizes="any" />
+        <link rel="apple-touch-icon" href={faviconUrl} />
+        <link rel="shortcut icon" href={faviconUrl} />
+        <link rel="preconnect" href="https://www.youtube-nocookie.com" />
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://googlevideo.com" />
+        {/* Preload font chính để giảm blocking */}
+        <link rel="preload" href="/fonts/GFF-Latin-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        {/* DMCA verification */}
+        <meta name="dmca-site-verification" content="cmE4MmRVTTUvU1ozdU9Xb0lHQmxodDZwemQ0bFgyc1MvNHY5M2VWZUxYTT01" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GJCSBSTY7Y"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GJCSBSTY7Y');`}
+        </Script>
+      </head>
       <body className={cn("font-body min-h-screen bg-background text-foreground antialiased")}>
         <AppProviders>{children}</AppProviders>
+        <PageViewTracker />
         <SecurityGuard />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>

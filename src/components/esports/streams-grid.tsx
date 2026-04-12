@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Radio } from "lucide-react";
 import { StreamModal } from "@/components/esports/stream-modal";
 import { EmptyState } from "@/components/common/empty-state";
@@ -19,6 +19,7 @@ async function fetchStreams(): Promise<StreamItem[]> {
 
 type StreamsGridProps = {
   initialStreams: StreamItem[];
+  categories?: string[];
 };
 
 const statusCardClass: Record<StreamStatus, string> = {
@@ -27,174 +28,140 @@ const statusCardClass: Record<StreamStatus, string> = {
   ended: "border-border hover:border-muted-foreground",
 };
 
-const statusBadgeClass: Record<StreamStatus, string> = {
-  live: "bg-[#FF0000] text-white",
-  upcoming: "bg-[#4CAF50] text-white",
-  ended: "bg-muted text-muted-foreground",
-};
-
 const statusLabel: Record<StreamStatus, string> = {
   live: "TRỰC TIẾP",
   upcoming: "SẮP DIỄN RA",
   ended: "ĐÃ KẾT THÚC",
 };
 
-export function StreamsGrid({ initialStreams }: StreamsGridProps) {
+export function StreamsGrid({ initialStreams, categories = [] }: StreamsGridProps) {
   const { data: streams = initialStreams } = useQuery({
     queryKey: ["streams"],
     queryFn: fetchStreams,
-    refetchInterval: 2 * 60 * 1000, // 2 phút — khớp với server cooldown
+    refetchInterval: 2 * 60 * 1000,
     refetchOnWindowFocus: true,
   });
 
   const [selectedStream, setSelectedStream] = useState<StreamItem | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("TẤT CẢ");
 
-  // Smart polling: chỉ sync khi gần đến giờ stream
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
-
     const getNextInterval = (): number | null => {
       const now = Date.now();
       let minMs: number | null = null;
-
       for (const s of streams) {
         if (s.status === "ended") continue;
-
-        if (s.status === "live") {
-          // Đang live → poll mỗi 60s để detect khi kết thúc
-          return 60_000;
-        }
-
+        if (s.status === "live") return 60_000;
         if (s.status === "upcoming") {
-          const scheduledAt = new Date(s.scheduled_at).getTime();
-          const diff = scheduledAt - now;
-
-          if (diff <= 0) {
-            // Đã qua giờ nhưng chưa live → poll mỗi 20s
-            return 20_000;
-          }
-
-          if (diff <= 5 * 60 * 1000) {
-            // Còn < 5 phút → poll mỗi 20s
-            const ms = 20_000;
-            minMs = minMs === null ? ms : Math.min(minMs, ms);
-          }
-          // Còn > 5 phút → không poll
+          const diff = new Date(s.scheduled_at).getTime() - now;
+          if (diff <= 0) return 20_000;
+          if (diff <= 5 * 60 * 1000) { minMs = minMs === null ? 20_000 : Math.min(minMs, 20_000); }
         }
       }
-
       return minMs;
     };
-
     const scheduleNext = () => {
       if (interval) clearInterval(interval);
       const ms = getNextInterval();
-      if (!ms) return; // Không cần poll
-
+      if (!ms) return;
       interval = setInterval(async () => {
         await fetch("/api/streams/sync", { method: "POST" }).catch(() => null);
-        scheduleNext(); // Recalculate sau mỗi lần sync
+        scheduleNext();
       }, ms);
     };
-
-    // Trigger ngay khi load
     fetch("/api/streams/sync", { method: "POST" }).catch(() => null);
     scheduleNext();
-
     return () => { if (interval) clearInterval(interval); };
   }, [streams]);
 
-  // Hiện tất cả: live, upcoming, và ended (để xem lại)
-  const visibleStreams = streams;
-
-  if (visibleStreams.length === 0) {
-    return (
-      <EmptyState
-        title="CHƯA CÓ STREAM NÀO"
-        description="Các buổi phát trực tiếp sắp tới sẽ xuất hiện ở đây."
-      />
-    );
-  }
+  const allCategories = ["TẤT CẢ", ...categories];
+  const visibleStreams = activeCategory === "TẤT CẢ"
+    ? streams
+    : streams.filter((s) => (s.category ?? "") === activeCategory);
 
   return (
     <>
-      {selectedStream && (
-        <div
-          className="fixed left-0 top-0 z-40 h-screen w-screen bg-black/40 backdrop-blur-sm transition-opacity duration-300"
-          onClick={() => setSelectedStream(null)}
-        />
+      {/* Category filter tabs */}
+      {categories.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {allCategories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveCategory(cat)}
+              className={cn(
+                "rounded-xl border px-4 py-1.5 text-xs font-bold uppercase tracking-[0.1em] transition",
+                activeCategory === cat
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground",
+              )}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {visibleStreams.map((stream: StreamItem) => (
-          <article
-            key={stream.id}
-            onClick={() => setSelectedStream(stream)}
-            onMouseEnter={() => setHoveredId(stream.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            className={cn(
-              "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all duration-300 dark:bg-card",
-              statusCardClass[stream.status],
-              selectedStream && "opacity-40 scale-[0.98]",
-            )}
-          >
-            <div className="grid-sheen pointer-events-none absolute inset-y-0 left-0 z-20" />
-            <div className="relative overflow-hidden rounded-[8px]">
-              <div className="aspect-video w-full overflow-hidden rounded-[8px] bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={stream.thumbnail_url}
-                  alt={stream.title}
-                  className="h-full w-full object-cover"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                />
-              </div>
-              <Badge
-                variant="outline"
-                className={cn(
+      {selectedStream && (
+        <div className="fixed left-0 top-0 z-40 h-screen w-screen bg-black/40 backdrop-blur-sm" onClick={() => setSelectedStream(null)} />
+      )}
+
+      {visibleStreams.length === 0 ? (
+        <EmptyState title="CHƯA CÓ STREAM NÀO" description="Các buổi phát trực tiếp sắp tới sẽ xuất hiện ở đây." />
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {visibleStreams.map((stream: StreamItem) => (
+            <article
+              key={stream.id}
+              onClick={() => setSelectedStream(stream)}
+              onMouseEnter={() => setHoveredId(stream.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className={cn(
+                "group relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-white px-4 pt-4 pb-2 transition-all duration-300 dark:bg-card",
+                statusCardClass[stream.status],
+                selectedStream && "opacity-40 scale-[0.98]",
+              )}
+            >
+              <div className="relative overflow-hidden rounded-[8px]">
+                <div className="aspect-video w-full overflow-hidden rounded-[8px] bg-black">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={stream.thumbnail_url} alt={stream.title} className="h-full w-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                </div>
+                {/* Status badge */}
+                <Badge variant="outline" className={cn(
                   "absolute right-0 top-0 z-10 inline-flex items-center gap-1.5 rounded-[6px] border px-[7px] py-3 text-[0.8rem] font-bold uppercase leading-none tracking-[0.06em] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
                   stream.status === "live" && "border-[#ff4444] bg-[#FF0000] text-white",
                   stream.status === "upcoming" && "border-[#81c784] bg-[#4CAF50] text-white",
                   stream.status === "ended" && "border-border bg-muted text-muted-foreground",
-                )}
-              >
-                {stream.status === "live" && <Radio className="size-3 animate-pulse" />}
-                {statusLabel[stream.status]}
-              </Badge>
-            </div>
+                )}>
+                  {stream.status === "live" && <Radio className="size-3 animate-pulse" />}
+                  {statusLabel[stream.status]}
+                </Badge>
+                {/* Category badge - ẩn */}
+              </div>
+              <div className="flex flex-1 items-center justify-center p-3 text-center">
+                <h3 className="font-heading text-[0.95rem] font-bold uppercase tracking-[0.04em] text-[#0052ff] dark:text-amber-400 line-clamp-1">
+                  {stream.title}
+                </h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
 
-            <div className="flex flex-1 items-center justify-center p-3 text-center">
-              <h3 className="font-heading text-[0.95rem] font-bold uppercase tracking-[0.04em] text-[#0052ff] dark:text-amber-400 line-clamp-1">
-                {stream.title}
-              </h3>
-            </div>
-          </article>
-        ))}
-      </div>
+      <StreamModal stream={selectedStream} open={Boolean(selectedStream)} onOpenChange={(open) => { if (!open) setSelectedStream(null); }} />
 
-      <StreamModal
-        stream={selectedStream}
-        open={Boolean(selectedStream)}
-        onOpenChange={(open) => { if (!open) setSelectedStream(null); }}
-      />
-
-      {/* Preload iframe ẩn khi hover để giảm độ trễ khi click */}
       {hoveredId && (() => {
         const s = visibleStreams.find((x: StreamItem) => x.id === hoveredId);
         if (!s || s.status === "upcoming") return null;
         return (
-          <iframe
-            key={hoveredId}
-            src={buildEmbedUrl(s.youtube_url).replace("autoplay=1", "autoplay=0")}
-            className="pointer-events-none absolute opacity-0 h-0 w-0"
-            aria-hidden
-            tabIndex={-1}
-            title="preload"
-          />
+          <iframe key={hoveredId} src={buildEmbedUrl(s.youtube_url).replace("autoplay=1", "autoplay=0")}
+            className="pointer-events-none absolute opacity-0 h-0 w-0" aria-hidden tabIndex={-1} title="preload" />
         );
       })()}
     </>
   );
 }
-

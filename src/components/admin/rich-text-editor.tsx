@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -73,6 +73,7 @@ function Divider() {
 
 export function RichTextEditor({ value, onChange, placeholder = "Nhập nội dung...", className }: RichTextEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({ strike: false }),
       Underline,
@@ -102,11 +103,26 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
     },
   });
 
+  // Chỉ sync content từ ngoài vào khi editor chưa có nội dung (lần đầu mount)
+  // KHÔNG sync liên tục để tránh reset định dạng khi đang gõ
+  const initializedRef = useRef(false);
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
-      editor.commands.setContent(value);
+    if (!editor) return;
+
+    const normalizedValue = value.trim();
+    const currentHtml = editor.getHTML().trim();
+
+    if (
+      normalizedValue &&
+      currentHtml !== normalizedValue &&
+      (editor.isEmpty || !initializedRef.current)
+    ) {
+      editor.commands.setContent(normalizedValue, { emitUpdate: false });
     }
-  }, [value, editor]);
+
+    initializedRef.current = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor, value]);
 
   const setLink = useCallback(() => {
     if (!editor) return;
@@ -143,9 +159,9 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
   if (!editor) return null;
 
   return (
-    <div className={cn("rounded-xl border border-border bg-background overflow-hidden", className)}>
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-0.5 border-b border-border bg-muted/40 p-1.5">
+    <div className={cn("rounded-xl border border-border bg-background", className)}>
+      {/* Toolbar - sticky khi cuộn */}
+      <div className="sticky top-0 z-10 flex flex-wrap items-center gap-0.5 border-b border-border bg-muted/40 p-1.5 backdrop-blur-sm">
 
         {/* Text style */}
         <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} title="In đậm">
@@ -237,7 +253,7 @@ export function RichTextEditor({ value, onChange, placeholder = "Nhập nội du
         <Divider />
 
         {/* Headings */}
-        {([1, 2, 3] as const).map((level) => (
+        {([1, 2, 3, 4, 5, 6] as const).map((level) => (
           <ToolbarButton
             key={level}
             onClick={() => editor.chain().focus().toggleHeading({ level }).run()}

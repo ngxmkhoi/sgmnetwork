@@ -1,5 +1,5 @@
-﻿import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/lib/constants/site";
 import { Sparkles } from "lucide-react";
 
 export function JoinCommunityCta() {
@@ -16,13 +16,16 @@ export function JoinCommunityCta() {
           </p>
         </div>
         <Button asChild size="lg" className="rounded-xl">
-          <Link href="/contact">
+          <a
+            href={siteConfig.links.community}
+            target="_blank"
+            rel="noreferrer"
+          >
             <Sparkles className="mr-2 size-4" />
             THAM GIA CỘNG ĐỒNG
-          </Link>
+          </a>
         </Button>
       </div>
     </section>
   );
 }
-

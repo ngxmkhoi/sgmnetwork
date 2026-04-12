@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: siteConfig.url, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
     { url: `${siteConfig.url}/events`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${siteConfig.url}/su-kien`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
+    { url: `${siteConfig.url}/esports`, lastModified: new Date(), changeFrequency: "daily", priority: 0.85 },
     { url: `${siteConfig.url}/news`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${siteConfig.url}/tin-tuc`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${siteConfig.url}/calendar`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },

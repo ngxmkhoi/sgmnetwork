@@ -10,6 +10,7 @@ import { enforceAdminApiAuth, enforceRateLimit } from "@/lib/server/api-guard";
 import { sanitizePlainText } from "@/lib/server/sanitize";
 import { logAdminActivity } from "@/lib/server/admin-activity";
 import { getEventStatusInVietnam } from "@/lib/utils/vietnam-time";
+import { sendPushNotification } from "@/lib/server/push-notify";
 
 export async function GET(request: NextRequest) {
   const limited = enforceRateLimit(request, { name: "admin-events", limit: 80, windowMs: 60_000 });
@@ -73,6 +74,8 @@ export async function POST(request: NextRequest) {
       targetId: event.id,
       summary: `Tạo sự kiện ${event.title}`,
     });
+
+    void sendPushNotification("📅 Sự kiện mới", event.title, "/events").catch(() => null);
 
     return NextResponse.json({ event }, { status: 201 });
   } catch (error) {

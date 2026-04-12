@@ -10,7 +10,7 @@ export const newsSchema = z.object({
     .regex(/^[a-z0-9-]+$/)
     .optional(),
   excerpt: z.string().max(280).optional().default(""),
-  content: z.string().min(20).max(5000),
+  content: z.string().min(20).max(100000),
   cover: z.string().url(),
   category: z.string().min(2).max(60).optional().default("ESPORTS"),
   created_at: z.string().datetime().optional(),
