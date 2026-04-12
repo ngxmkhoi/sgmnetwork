@@ -105,6 +105,7 @@ export function StreamModal({ stream, open, onOpenChange }: StreamModalProps) {
                     src={stream.thumbnail_url}
                     alt={stream.title}
                     className="h-full w-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                     <span className="rounded-xl bg-black/60 px-4 py-2 text-sm font-bold uppercase tracking-widest text-white">

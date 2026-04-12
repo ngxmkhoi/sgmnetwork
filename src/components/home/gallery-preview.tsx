@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Reveal } from "@/components/common/reveal";
 import { SectionHeading } from "@/components/common/section-heading";
 import type { GalleryItem } from "@/lib/types/content";
@@ -37,12 +36,13 @@ export function GalleryPreview({ gallery }: GalleryPreviewProps) {
                       <div className="media-updating text-xs">Updating...</div>
                     </div>
                   ) : (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       src={item.image_url}
                       alt={item.tag}
-                      width={800}
-                      height={900}
                       className="h-auto w-full object-cover transition duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
                       onError={() => handleImageError(item.image_url)}
                     />
                   )}

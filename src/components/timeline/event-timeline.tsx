@@ -9,7 +9,6 @@ import {
   isBefore,
   startOfDay,
 } from "date-fns";
-import Image from "next/image";
 import { Search } from "lucide-react";
 import { DatePickerInput } from "@/components/common/date-picker-input";
 import { EmptyState } from "@/components/common/empty-state";
@@ -71,6 +70,7 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
   const [toDate, setToDate] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
   const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
+  const [thumbErrors, setThumbErrors] = useState<Record<string, boolean>>({});
 
   const { data: events = initialEvents, isLoading } = useEventsQuery({
     search,
@@ -145,7 +145,7 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
           <span className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">BỘ LỌC</span>
           <span className="text-xs text-muted-foreground">{filterOpen ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
         </button>
-        <div className={cn("grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr,220px,170px,170px]", filterOpen ? "mt-3" : "hidden md:grid")}>
+        <div className={cn("grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr,220px,200px,200px]", filterOpen ? "mt-3" : "hidden md:grid")}>
           <div className="space-y-1">
             <p className="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">TÌM KIẾM</p>
             <div className="relative">
@@ -242,6 +242,7 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
                   const startOffset = Math.max(0, differenceInCalendarDays(clampedStart, rangeStart));
                   const span = Math.max(1, differenceInCalendarDays(clampedEnd, clampedStart) + 1);
                   const showMeta = span >= 5;
+                  const showThumb = span >= 3;
 
                   return (
                     <div key={event.id} className="relative h-14">
@@ -257,22 +258,35 @@ export function EventTimeline({ initialEvents }: EventTimelineProps) {
                           width: span * dayWidth,
                         }}
                       >
-                        <div className="theme-control-surface relative h-10 w-16 shrink-0 overflow-hidden rounded-[3px] p-0.5">
-                          {(event.thumbnail_url?.trim() || event.image_url?.trim()) && !imgErrors[event.id] ? (
-                            <Image
-                              src={event.thumbnail_url?.trim() || event.image_url}
-                              alt={event.title}
-                              fill
-                              sizes="64px"
-                              className="object-cover"
-                              onError={() => setImgErrors((prev) => ({ ...prev, [event.id]: true }))}
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center border border-dashed border-border rounded-[3px]">
-                              <span className="text-[7px] font-bold uppercase text-muted-foreground/50 text-center leading-tight px-0.5">ĐANG CẬP NHẬT</span>
-                            </div>
-                          )}
-                        </div>
+                        {showThumb && (() => {
+                          const thumb = event.thumbnail_url?.trim();
+                          const img = event.image_url?.trim();
+                          const useThumb = thumb && !thumbErrors[event.id];
+                          const activeSrc = useThumb ? thumb : img;
+                          const allFailed = imgErrors[event.id];
+
+                          if (activeSrc && !allFailed) {
+                            return (
+                              <div className="relative h-10 w-16 shrink-0 overflow-hidden rounded-[3px]">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={activeSrc}
+                                  alt=""
+                                  className="absolute inset-0 h-full w-full object-cover"
+                                  decoding="async"
+                                  onError={() => {
+                                    if (useThumb && img && img !== thumb) {
+                                      setThumbErrors((prev) => ({ ...prev, [event.id]: true }));
+                                    } else {
+                                      setImgErrors((prev) => ({ ...prev, [event.id]: true }));
+                                    }
+                                  }}
+                                />
+                              </div>
+                            );
+                          }
+                          return null;
+                        })()}
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-foreground">{event.title}</p>
                           <p className="text-xs text-foreground/85">

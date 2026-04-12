@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Trash2, UploadCloud } from "lucide-react";
@@ -134,7 +133,8 @@ export function GalleryManager() {
           {gallery.map((item) => (
             <article key={item.id} className="glass-card overflow-hidden rounded-2xl">
               <div className="relative h-44">
-                <Image src={item.image_url} alt={item.tag} fill className="object-cover" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.image_url} alt={item.tag} className="h-full w-full object-cover" />
               </div>
               <div className="flex items-center justify-between gap-2 p-3">
                 <span className="text-sm font-medium uppercase tracking-[0.08em] text-foreground">{item.tag}</span>

@@ -137,11 +137,13 @@ export function formatVietnamDayNumber(value: Date | string) {
   }).format(new Date(value));
 }
 
+const WEEKDAY_SHORT = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+
 export function formatVietnamWeekdayShort(value: Date | string) {
-  return new Intl.DateTimeFormat("vi-VN", {
-    timeZone: VIETNAM_TIMEZONE,
-    weekday: "short",
-  })
-    .format(new Date(value))
-    .toUpperCase();
+  const date = new Date(value);
+  // Tính ngày trong tuần theo giờ Việt Nam (UTC+7)
+  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
+  const vnMs = utcMs + 7 * 3600000;
+  const dayOfWeek = new Date(vnMs).getDay(); // 0=CN, 1=T2...6=T7
+  return WEEKDAY_SHORT[dayOfWeek];
 }

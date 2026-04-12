@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     action: "GALLERY_CREATED",
     targetType: "GALLERY",
     targetId: item.id,
-    summary: `THEM ANH GALLERY TAG ${item.tag}`,
+    summary: `Thêm ảnh gallery tag ${item.tag}`,
   });
 
   return NextResponse.json({ item }, { status: 201 });

@@ -28,18 +28,18 @@ type DatePickerInputProps = {
 
 const weekdayLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
 const monthLabels = [
-  "THÁNG 1",
-  "THÁNG 2",
-  "THÁNG 3",
-  "THÁNG 4",
-  "THÁNG 5",
-  "THÁNG 6",
-  "THÁNG 7",
-  "THÁNG 8",
-  "THÁNG 9",
-  "THÁNG 10",
-  "THÁNG 11",
-  "THÁNG 12",
+  "THG 1",
+  "THG 2",
+  "THG 3",
+  "THG 4",
+  "THG 5",
+  "THG 6",
+  "THG 7",
+  "THG 8",
+  "THG 9",
+  "THG 10",
+  "THG 11",
+  "THG 12",
 ];
 
 function parseInputDate(value: string) {
@@ -194,7 +194,7 @@ export function DatePickerInput({
                       const nextMonth = Number(event.target.value);
                       setCursorDate(new Date(cursorDate.getFullYear(), nextMonth, 1));
                     }}
-                    className="theme-control-surface h-10 rounded-xl px-3 text-sm font-semibold uppercase tracking-[0.08em] text-foreground"
+                    className="theme-control-surface h-10 w-full min-w-0 rounded-xl px-2 text-sm font-semibold text-foreground"
                   >
                     {monthLabels.map((label, index) => (
                       <option key={label} value={index}>
@@ -209,7 +209,7 @@ export function DatePickerInput({
                       const nextYear = Number(event.target.value);
                       setCursorDate(new Date(nextYear, cursorDate.getMonth(), 1));
                     }}
-                    className="theme-control-surface h-10 rounded-xl px-3 text-sm font-semibold uppercase tracking-[0.08em] text-foreground"
+                    className="theme-control-surface h-10 w-full min-w-0 rounded-xl px-2 text-sm font-semibold text-foreground"
                   >
                     {yearOptions.map((year) => (
                       <option key={year} value={year}>

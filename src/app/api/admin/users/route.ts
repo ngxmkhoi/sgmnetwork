@@ -47,7 +47,7 @@ export async function PATCH(request: NextRequest) {
     action: "USER_ROLE_UPDATED",
     targetType: "USER",
     targetId: user.id,
-    summary: `CAP NHAT VAI TRO ${user.email} THANH ${user.role}`,
+    summary: `Cập nhật vai trò ${user.email} thành ${user.role}`,
   });
   return NextResponse.json({ user });
 }

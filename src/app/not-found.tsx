@@ -7,10 +7,10 @@ export default function NotFoundPage() {
       <div className="glass-card w-full space-y-4 rounded-2xl p-6 text-center">
         <h1 className="font-heading text-4xl font-bold text-foreground">404</h1>
         <p className="text-sm text-muted-foreground">
-          Trang ban tim khong ton tai hoac da duoc di chuyen.
+          Trang bạn tìm kiếm không tồn tại hoặc đã được di chuyển.
         </p>
         <Button asChild className="rounded-xl">
-        <Link href="/">Về trang chủ</Link>
+          <Link href="/">Về trang chủ</Link>
         </Button>
       </div>
     </main>

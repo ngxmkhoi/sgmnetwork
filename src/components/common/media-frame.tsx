@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Image as IKImage } from "@imagekit/react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type MediaFrameProps = {
@@ -17,18 +16,17 @@ type MediaFrameProps = {
 export function MediaFrame({
   src,
   alt,
-  sizes = "100vw",
   frameClassName,
   imageClassName,
   aspectClassName = "aspect-[16/9]",
 }: MediaFrameProps) {
   const [imageError, setImageError] = useState(false);
-  const normalizedSrc = src?.trim();
-  const isImageKitSource =
-    normalizedSrc?.startsWith("https://ik.imagekit.io/oyvgbkwyt") ||
-    normalizedSrc?.startsWith("/");
+  const normalizedSrc = src?.trim() || "";
 
-  // Show fallback if no src or image failed to load
+  const isImageKitSource =
+    normalizedSrc.startsWith("https://ik.imagekit.io/oyvgbkwyt") ||
+    normalizedSrc.startsWith("/");
+
   const showFallback = !normalizedSrc || imageError;
 
   return (
@@ -50,19 +48,19 @@ export function MediaFrame({
         <IKImage
           src={normalizedSrc}
           alt={alt}
-          sizes={sizes}
+          responsive={false}
           className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-300", imageClassName)}
           onError={() => setImageError(true)}
         />
       ) : (
-        <Image
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={normalizedSrc}
           alt={alt}
-          fill
-          sizes={sizes}
-          className={cn("object-cover transition-opacity duration-300", imageClassName)}
-          referrerPolicy="no-referrer"
+          className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-300", imageClassName)}
           onError={() => setImageError(true)}
+          loading="lazy"
+          decoding="async"
         />
       )}
     </div>

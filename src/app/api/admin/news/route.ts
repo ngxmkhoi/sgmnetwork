@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       action: "NEWS_CREATED",
       targetType: "NEWS",
       targetId: article.id,
-      summary: `TAO BAI VIET ${article.title}`,
+      summary: `Tạo bài viết ${article.title}`,
     });
     return NextResponse.json({ article }, { status: 201 });
   } catch (error) {
@@ -120,7 +120,7 @@ export async function PATCH(request: NextRequest) {
       action: "NEWS_UPDATED",
       targetType: "NEWS",
       targetId: article.id,
-      summary: `CAP NHAT BAI VIET ${article.title}`,
+      summary: `Cập nhật bài viết ${article.title}`,
     });
     return NextResponse.json({ article });
   } catch (error) {
