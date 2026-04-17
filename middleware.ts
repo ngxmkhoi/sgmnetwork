@@ -16,6 +16,7 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
+  // Chỉ check auth cho /admin pages (không phải /api/admin - đã có enforceAdminApiAuth)
   if (!pathname.startsWith("/admin")) {
     return response;
   }

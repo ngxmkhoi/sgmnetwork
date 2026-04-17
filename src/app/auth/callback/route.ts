@@ -25,7 +25,8 @@ export async function GET(request: NextRequest) {
   const loginRedirectUrl = new URL("/auth/login", requestUrl.origin);
 
   if (!code || !hasSupabaseEnv || !supabaseAnonKey || !supabaseUrl) {
-    return NextResponse.redirect(redirectUrl);
+    // KHÔNG redirect vào admin khi không có code - redirect về login
+    return NextResponse.redirect(new URL("/auth/login?error=missing_code", requestUrl.origin));
   }
 
   const response = NextResponse.redirect(redirectUrl);

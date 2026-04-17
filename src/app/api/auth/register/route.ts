@@ -16,7 +16,7 @@ const schema = z.object({
 });
 
 export async function POST(request: NextRequest) {
-  const limited = enforceRateLimit(request, { name: "auth-register", limit: 10, windowMs: 60_000 });
+  const limited = enforceRateLimit(request, { name: "auth-register", limit: 3, windowMs: 60_000 });
   if (limited) return limited;
 
   const payload = await request.json().catch(() => null);
